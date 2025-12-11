@@ -1,0 +1,113 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useState, useEffect, useRef } from "react";
+import "./Home.css";
+
+export default function HomePage() {
+  const [user, setUser] = useState(null);
+  // const [loading, setLoading] = useState(true);
+  const fileInputRef = useRef(null);
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      try {
+        const res = await fetch("/user/check-login", { credentials: "include" });
+        const data = await res.json();
+        if (data.loggedIn) setUser(data.user.fullName || data.user.name);
+        else setUser(null);
+      } catch (err) {
+        console.error("Login check failed:", err);
+      } 
+    };
+    checkLogin();
+  }, []);
+
+  const handleLogout = async () => {
+    await fetch("/user/logout", { credentials: "include" });
+    setUser(null);
+    window.location.reload();
+  };
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) alert(`Selected file: ${file.name}`);
+  };
+
+  const openFileDialog = () => fileInputRef.current.click();
+
+ const handleLoginClick = async () => {
+  const email = prompt("Enter your registered email to login:");
+  if (!email) return;
+
+  try {
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL || "http://localhost:8000"}/user/check-email?email=${encodeURIComponent(email)}`,
+      { credentials: "include" }
+    );
+    const data = await res.json();
+
+    if (data.exists) {
+      window.location = "/signin";
+    } else {
+      alert("This email is not registered. Please sign up first.");
+      window.location = "/signup";
+    }
+  } catch (error) {
+    console.error("Error checking email:", error);
+    alert("Something went wrong. Please try again.");
+  }
+};
+
+
+  return (
+    <div className="home-container">
+      {/* NAVBAR */}
+      <nav className="navbar">
+        <div className="logo">CareerAI</div>
+        <ul className="nav-links">
+          <li>Overview</li>
+          <li>Jobs</li>
+          <li>AI Hub</li>
+          <li>Resources</li>
+        </ul>
+        <div className="nav-buttons">
+          {user ? (
+            <>
+              <span className="username">{user}</span>
+              <button onClick={handleLogout}>Logout</button>
+              <button className="resume-nav" onClick={openFileDialog}>
+                Add Resume
+              </button>
+            </>
+          ) : (
+            <>
+              <button onClick={handleLoginClick}>Login</button>
+              <button onClick={() => (window.location = "/signup")}>Register</button>
+            </>
+          )}
+        </div>
+      </nav>
+
+     
+      {/* HIDDEN FILE INPUT */}
+      <input
+        type="file"
+        accept=".pdf,.doc,.docx"
+        ref={fileInputRef}
+        style={{ display: "none" }}
+        onChange={handleFileUpload}
+      />
+    </div>
+  );
+}

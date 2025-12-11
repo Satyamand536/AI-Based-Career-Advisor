@@ -1,0 +1,22 @@
+# PYTHON (AI folder)
+venv/
+.venv/
+ai/venv/
+ai/.venv/
+__pycache__/
+*.pyc
+
+# FRONTEND & BACKEND (Node)
+node_modules/
+dist/
+.env
+.env.local
+.env.*.local
+logs/
+*.log
+npm-debug.log*
+yarn-error.log*
+
+# Common
+.DS_Store
+Thumbs.db
