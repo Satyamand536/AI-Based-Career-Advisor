@@ -11,12 +11,25 @@ const recommendationSchema = new Schema({
     ref: "job",
     required: true,
   },
-  matchScore: Number, // 0-100
-  matchReason: String,
-  skillMatch: {
-    matched: [String],
-    missing: [String],
+  matchScore: {
+    type: Number,
+    min: 0,
+    max: 100,
   },
+  reason: String,
+  
+  // Explainability object for transparent recommendations
+  explainability: {
+    skill_matches: [
+      {
+        skill: String,
+        weight: Number,
+      }
+    ],
+    embedding_similarity: Number,
+    experience_score: Number,
+  },
+  
   recommendedAt: {
     type: Date,
     default: Date.now,
@@ -25,5 +38,9 @@ const recommendationSchema = new Schema({
   applied: { type: Boolean, default: false },
 }, { timestamps: true });
 
-const recommendation = model("recommendation", recommendationSchema);
-module.exports = recommendation;
+// Index for efficient queries
+recommendationSchema.index({ userId: 1, recommendedAt: -1 });
+recommendationSchema.index({ jobId: 1 });
+
+const Recommendation = model("recommendation", recommendationSchema);
+module.exports = Recommendation;

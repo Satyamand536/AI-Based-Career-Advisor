@@ -1,0 +1,179 @@
+[
+  {
+    "jobId": "J001", "title": "Senior React Developer", "company": "TechVision", "location": "Remote", "jobType": "Full-time",
+    "description": "Expert React developer needed to lead frontend architecture. Must define best practices.",
+    "requiredSkills": ["react", "javascript", "redux", "webpack", "typescript"], "experience_required": 5, "tags": ["frontend", "react", "lead"],
+    "category": "Frontend Developer"
+  },
+  {
+    "jobId": "J002", "title": "Python Data Scientist", "company": "DataCorp", "location": "Bangalore", "jobType": "Full-time",
+    "description": "Analyze large datasets using Python and Pandas. Build predictive models with Scikit-learn.",
+    "requiredSkills": ["python", "pandas", "scikit-learn", "numpy", "sql"], "experience_required": 3, "tags": ["data science", "python", "ml"],
+    "category": "Data Scientist"
+  },
+  {
+    "jobId": "J003", "title": "DevOps Engineer", "company": "CloudSystems", "location": "Hyderabad", "jobType": "Full-time",
+    "description": "Manage AWS infrastructure and CI/CD pipelines. Docker and Kubernetes experience essential.",
+    "requiredSkills": ["aws", "docker", "kubernetes", "jenkins", "linux"], "experience_required": 4, "tags": ["devops", "cloud", "aws"],
+    "category": "DevOps Engineer"
+  },
+  {
+    "jobId": "J004", "title": "Node.js Backend Developer", "company": "WebScale", "location": "Pune", "jobType": "Contract",
+    "description": "Build high-performance REST APIs using Node.js and Express. Experience with MongoDB is a must.",
+    "requiredSkills": ["node", "express", "mongodb", "javascript", "rest"], "experience_required": 2, "tags": ["backend", "node", "api"],
+    "category": "Backend Developer"
+  },
+  {
+    "jobId": "J005", "title": "Java Spring Boot Developer", "company": "Enterprise IT", "location": "Chennai", "jobType": "Full-time",
+    "description": "Develop enterprise-grade microservices using Java and Spring Boot.",
+    "requiredSkills": ["java", "spring", "hibernate", "sql", "microservices"], "experience_required": 3, "tags": ["backend", "java", "spring"],
+    "category": "Backend Developer"
+  },
+  {
+    "jobId": "J006", "title": "Machine Learning Engineer", "company": "AI Labs", "location": "Gurgaon", "jobType": "Full-time",
+    "description": "Design and deploy deep learning models using PyTorch and TensorFlow.",
+    "requiredSkills": ["python", "pytorch", "tensorflow", "deep learning", "nlp"], "experience_required": 2, "tags": ["ai", "ml", "research"],
+    "category": "Data Scientist"
+  },
+  {
+    "jobId": "J007", "title": "Frontend Developer (Vue.js)", "company": "CreativeWeb", "location": "Remote", "jobType": "Full-time",
+    "description": "Create interactive UIs using Vue.js and Tailwind CSS.",
+    "requiredSkills": ["vue", "javascript", "html", "css", "tailwind"], "experience_required": 2, "tags": ["frontend", "vue", "ui"],
+    "category": "Frontend Developer"
+  },
+  {
+    "jobId": "J008", "title": "UI/UX Designer", "company": "DesignHub", "location": "Mumbai", "jobType": "Full-time",
+    "description": "Design intuitive user interfaces using Figma and Adobe XD. Conduct user research.",
+    "requiredSkills": ["figma", "adobe xd", "ui", "ux", "prototyping"], "experience_required": 3, "tags": ["design", "ui", "ux"],
+    "category": "UI/UX Designer"
+  },
+  {
+    "jobId": "J009", "title": "Product Designer", "company": "CreativeSoft", "location": "Bangalore", "jobType": "Full-time",
+    "description": "Create beautiful and functional product designs. Collaborate with engineering.",
+    "requiredSkills": ["sketch", "figma", "product design", "wireframing"], "experience_required": 4, "tags": ["design", "product"],
+    "category": "UI/UX Designer"
+  },
+  {
+    "jobId": "J010", "title": "Cloud Architect (Azure)", "company": "CloudSolutions", "location": "Pune", "jobType": "Full-time",
+    "description": "Design cloud infrastructure solutions on Azure platform.",
+    "requiredSkills": ["azure", "cloud", "architecture", "security", "networking"], "experience_required": 8, "tags": ["cloud", "azure", "architect"],
+    "category": "Cloud/Platform Engineer"
+  },
+  {
+    "jobId": "J011", "title": "Data Analyst", "company": "InsightCorp", "location": "Delhi", "jobType": "Full-time",
+    "description": "Interpret data and turn it into information which can offer ways to improve a business.",
+    "requiredSkills": ["sql", "tableau", "excel", "data analysis", "python"], "experience_required": 2, "tags": ["data", "analytics"],
+    "category": "Data Scientist"
+  },
+  {
+    "jobId": "J012", "title": "Angular Developer", "company": "EnterpiseWeb", "location": "Hyderabad", "jobType": "Full-time",
+    "description": "Develop enterprise web apps using Angular framework.",
+    "requiredSkills": ["angular", "typescript", "rxjs", "html", "css"], "experience_required": 3, "tags": ["frontend", "angular"],
+    "category": "Frontend Developer"
+  },
+  {
+    "jobId": "J013", "title": "Django Developer", "company": "PyWeb", "location": "Remote", "jobType": "Contract",
+    "description": "Build backend systems using Python and Django.",
+    "requiredSkills": ["python", "django", "rest", "sql", "redis"], "experience_required": 3, "tags": ["backend", "python"],
+    "category": "Backend Developer"
+  },
+  {
+    "jobId": "J014", "title": "SRE (Site Reliability Engineer)", "company": "ReliableOps", "location": "Bangalore", "jobType": "Full-time",
+    "description": "Ensure site reliability and uptime. Automate operations.",
+    "requiredSkills": ["linux", "python", "ansible", "terraform", "monitoring"], "experience_required": 4, "tags": ["devops", "sre"],
+    "category": "Cloud/Platform Engineer"
+  },
+  {
+    "jobId": "J015", "title": "Visual Designer", "company": "ArtStudio", "location": "Goa", "jobType": "Part-time",
+    "description": "Create visual assets for marketing and web.",
+    "requiredSkills": ["photoshop", "illustrator", "visual design", "branding"], "experience_required": 2, "tags": ["design", "visual"],
+    "category": "UI/UX Designer"
+  },
+
+  {
+    "jobId": "J016", "title": "Cyber Security Analyst", "company": "SecureNet", "location": "Bangalore", "jobType": "Full-time",
+    "description": "Monitor and analyze security alerts. Perform incident response.",
+    "requiredSkills": ["siem", "network security", "firewalls", "incident response", "linux"], "experience_required": 3, "tags": ["security", "cyber", "analyst"],
+    "category": "Cyber Security"
+  },
+  {
+    "jobId": "J017", "title": "Penetration Tester", "company": "RedTeam Ops", "location": "Pune", "jobType": "Contract",
+    "description": "Conduct ethical hacking and vulnerability assessments.",
+    "requiredSkills": ["penetration testing", "ethical hacking", "burp suite", "metasploit", "python"], "experience_required": 4, "tags": ["security", "pentest", "hacking"],
+    "category": "Cyber Security"
+  },
+  {
+    "jobId": "J018", "title": "SOC Analyst", "company": "CyberGuard", "location": "Mumbai", "jobType": "Full-time",
+    "description": "24/7 Security Operations Center monitoring and threat hunting.",
+    "requiredSkills": ["soc", "threat hunting", "siem", "wireshark", "security"], "experience_required": 2, "tags": ["security", "soc"],
+    "category": "Cyber Security"
+  },
+
+  {
+    "jobId": "J019", "title": "Android Developer", "company": "Appify", "location": "Noida", "jobType": "Full-time",
+    "description": "Build native Android applications using Kotlin.",
+    "requiredSkills": ["android", "kotlin", "java", "android studio", "api"], "experience_required": 3, "tags": ["mobile", "android", "kotlin"],
+    "category": "Mobile App Developer"
+  },
+  {
+    "jobId": "J020", "title": "iOS Developer", "company": "AppleTech", "location": "Remote", "jobType": "Full-time",
+    "description": "Develop premium iOS apps using Swift and SwiftUI.",
+    "requiredSkills": ["ios", "swift", "swiftui", "xcode", "mobile"], "experience_required": 4, "tags": ["mobile", "ios", "swift"],
+    "category": "Mobile App Developer"
+  },
+  {
+    "jobId": "J021", "title": "Flutter Developer", "company": "CrossPlatform", "location": "Hyderabad", "jobType": "Full-time",
+    "description": "Build cross-platform mobile apps using Flutter.",
+    "requiredSkills": ["flutter", "dart", "mobile", "ios", "android"], "experience_required": 2, "tags": ["mobile", "flutter", "hybrid"],
+    "category": "Mobile App Developer"
+  },
+
+  {
+    "jobId": "J022", "title": "Platform Engineer", "company": "InfraScale", "location": "Bangalore", "jobType": "Full-time",
+    "description": "Build and maintain internal developer IDP platforms.",
+    "requiredSkills": ["kubernetes", "golang", "aws", "terraform", "platform"], "experience_required": 5, "tags": ["platform", "infrastructure", "k8s"],
+    "category": "Cloud/Platform Engineer"
+  },
+  {
+    "jobId": "J023", "title": "DevSecOps Engineer", "company": "SecureCloud", "location": "Remote", "jobType": "Full-time",
+    "description": "Integrate key security principles into the DevOps pipeline.",
+    "requiredSkills": ["devops", "security", "ci/cd", "jenkins", "aws"], "experience_required": 4, "tags": ["devops", "security", "cloud"],
+    "category": "Cloud/Platform Engineer"
+  },
+  {
+    "jobId": "J024", "title": "Blockchain Developer", "company": "Web3Works", "location": "Remote", "jobType": "Full-time",
+    "description": "Develop smart contracts and decentralized applications.",
+    "requiredSkills": ["solidity", "ethereum", "web3.js", "smart contracts", "blockchain"], "experience_required": 2, "tags": ["blockchain", "web3", "crypto"],
+    "category": "Blockchain Developer"
+  },
+  {
+    "jobId": "J025", "title": "Embedded Engineer (IoT)", "company": "SmartThings", "location": "Bangalore", "jobType": "Full-time",
+    "description": "Develop firmware for IoT devices using C++.",
+    "requiredSkills": ["c++", "embedded", "firmware", "iot", "mqtt"], "experience_required": 3, "tags": ["iot", "embedded", "hardware"],
+    "category": "IoT Engineer"
+  },
+  {
+    "jobId": "J026", "title": "AI Engineer (GenAI)", "company": "FutureAI", "location": "SF/Remote", "jobType": "Full-time",
+    "description": "Build Generative AI applications using LLMs and LangChain.",
+    "requiredSkills": ["python", "langchain", "openai", "llm", "vector databases"], "experience_required": 2, "tags": ["ai", "genai", "ml"],
+    "category": "AI Engineer"
+  },
+  {
+    "jobId": "J027", "title": "NLP Engineer", "company": "TextIntel", "location": "London/Remote", "jobType": "Full-time",
+    "description": "Work on advanced NLP models for text analysis and chatbots.",
+    "requiredSkills": ["nlp", "bert", "transformers", "pytorch", "huggingface"], "experience_required": 3, "tags": ["nlp", "ai", "text"],
+    "category": "NLP Engineer"
+  },
+  {
+    "jobId": "J028", "title": "QA Automation Engineer", "company": "QualityFirst", "location": "Bangalore", "jobType": "Full-time",
+    "description": "Develop automated test scripts using Selenium and Java.",
+    "requiredSkills": ["selenium", "java", "automation", "testing", "junit"], "experience_required": 3, "tags": ["qa", "automation", "testing"],
+    "category": "QA Engineer"
+  },
+  {
+    "jobId": "J029", "title": "Software Tester (Manual)", "company": "BugFree", "location": "Pune", "jobType": "Contract",
+    "description": "Execute manual test cases and track bugs in JIRA.",
+    "requiredSkills": ["manual testing", "jira", "sql", "testing", "agile"], "experience_required": 1, "tags": ["qa", "testing", "manual"],
+    "category": "QA Engineer"
+  }
+]

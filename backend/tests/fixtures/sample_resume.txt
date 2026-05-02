@@ -1,0 +1,34 @@
+JOHN DOE
+Full Stack Developer
+
+Contact Information:
+Email: john.doe@email.com
+Phone: +91-9876543210
+
+Professional Summary:
+Experienced Full Stack Developer with 3 years of hands-on experience in building scalable web applications using modern technologies. Passionate about clean code and user experience.
+
+Technical Skills:
+- Frontend: React, JavaScript, TypeScript, HTML, CSS, Next.js
+- Backend: Node.js, Express, MongoDB, REST APIs
+- Tools: Git, Docker, npm, Webpack
+- Other: Agile methodologies, Test-Driven Development
+
+Work Experience:
+Software Engineer - Tech Solutions Inc (2021 - Present)
+- Developed and maintained React-based web applications
+- Built RESTful APIs using Node.js and Express
+- Worked with MongoDB for database management
+- Collaborated with cross-functional teams in Agile environment
+
+Education:
+Bachelor of Technology in Computer Science
+XYZ University, 2020
+
+Projects:
+- E-commerce Platform: Built a full-stack e-commerce application using MERN stack
+- Task Management App: Developed a real-time task tracker with React and WebSockets
+
+Certifications:
+- AWS Certified Developer Associate
+- MongoDB Certified Developer

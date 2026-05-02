@@ -6,6 +6,21 @@ ai/.venv/
 __pycache__/
 *.pyc
 
+# Local Test Scripts and Keys (AI folder)
+ai/*test*.py
+ai/key_*.txt
+ai/write_env.py
+ai/update_key.py
+ai/direct_test.py
+ai/check_models.py
+ai/compare_api.py
+ai/debug_llm.py
+ai/diag_openrouter.py
+ai/replicate_error.py
+ai/verify_*.py
+ai/verify_*.txt
+ai/call_debug.py
+
 # FRONTEND & BACKEND (Node)
 node_modules/
 dist/
@@ -16,6 +31,10 @@ logs/
 *.log
 npm-debug.log*
 yarn-error.log*
+
+# Uploads (user resumes - sensitive data)
+backend/uploads/
+uploads/
 
 # Common
 .DS_Store

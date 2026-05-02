@@ -21,7 +21,7 @@ export default function SigninModal({ close, openSignup, onLoginSuccess }) {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch("/user/signin", {
+      const res = await fetch("/api/user/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -31,11 +31,24 @@ export default function SigninModal({ close, openSignup, onLoginSuccess }) {
       const data = await res.json();
 
       if (res.status === 200) {
-        toast.success("Login successful!");
+        toast.success("Welcome back! Login successful.", {
+          style: {
+            border: '1px solid #1890ff',
+            padding: '16px',
+            color: '#1890ff',
+          },
+          iconTheme: {
+            primary: '#1890ff',
+            secondary: '#FFFAEE',
+          },
+        });
+
+        // ✅ Clear previous user's cached data before loading new user's dashboard
+        sessionStorage.clear();
 
         // ✅ Fetch user details for navbar
         try {
-          const chk = await fetch("/user/check-login", { credentials: "include" });
+          const chk = await fetch("/api/user/check-login", { credentials: "include" });
           const chkData = await chk.json();
           if (chkData.loggedIn) {
             onLoginSuccess(chkData.user.fullName || chkData.user.email);
@@ -48,15 +61,27 @@ export default function SigninModal({ close, openSignup, onLoginSuccess }) {
 
         close();
       } else if (res.status === 404) {
-        toast.error("User not registered. Please sign up first.");
+        toast.error("Account not found. Please register to continue.", {
+          style: {
+            border: '1px solid #ff4d4f',
+            padding: '16px',
+            color: '#ff4d4f',
+          },
+        });
         setTimeout(() => {
           close();
           openSignup();
-        }, 800);
+        }, 1200);
       } else if (res.status === 401) {
-        toast.error("Incorrect password. Try again.");
+        toast.error("Invalid credentials. Please verify your password.", {
+          style: {
+            border: '1px solid #faad14',
+            padding: '16px',
+            color: '#faad14',
+          },
+        });
       } else {
-        toast.error(data.error || "Signin failed");
+        toast.error(data.error || "Authentication failed. Please try again.");
       }
     } catch (err) {
       console.error("Signin error:", err);

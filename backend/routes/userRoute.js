@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/User");
+const User = require("../models/user");
 const { validateToken } = require("../services/authentication");
 
 // ----------------------------
@@ -56,13 +56,24 @@ router.post("/signup", async (req, res) => {
       });
     }
 
-    const existingUser = await User.findOne({ email: email.toLowerCase() });
+    const normalizedEmail = email.toLowerCase();
+    const normalizedPassword = password.toLowerCase();
+
+    // ⛔ BLOCKED PATTERNS (per user request)
+    if (normalizedEmail.includes("testuser") || fullName.toLowerCase().includes("testuser")) {
+      return res.status(400).json({ error: "Registration with 'testuser' patterns is not allowed." });
+    }
+    if (normalizedPassword === "password@123") {
+      return res.status(400).json({ error: "This password is too common and not allowed." });
+    }
+
+    const existingUser = await User.findOne({ email: normalizedEmail });
     if (existingUser)
       return res.status(409).json({ error: "User already exists" });
 
     const newUser = new User({
       fullName,
-      email: email.toLowerCase(),
+      email: normalizedEmail,
       password,
     });
 
@@ -101,15 +112,28 @@ router.post("/signin", async (req, res) => {
 
     return res.json({
       message: "Signin successful",
-      user: { fullName: user.fullName, email: user.email },
+      user: { 
+        _id: user._id, 
+        fullName: user.fullName, 
+        email: user.email,
+        role: user.role,
+        current_stage: user.current_stage,
+        readiness_score: user.readiness_score,
+        profile: user.profile,
+        resume_url: user.resume_url
+      },
     });
   } catch (err) {
-    console.error("Signin error:", err);
+    if (err.message === "User not found!" || err.message === "User not found") {
+      return res.status(404).json({ error: "User not found" });
+    }
 
-    if (err.message?.toLowerCase().includes("incorrect")) {
+    if (err.message === "Incorrect password") {
+      // No need to log known password errors as full server errors
       return res.status(401).json({ error: "Incorrect password" });
     }
 
+    console.error("Signin unexpected error:", err);
     return res.status(500).json({ error: "Internal server error" });
   }
 });
@@ -118,23 +142,50 @@ router.post("/signin", async (req, res) => {
 // CHECK LOGIN
 // ----------------------------
 router.get("/check-login", async (req, res) => {
+  // Prevent aggressive browser caching of user session
+  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "0");
+  res.setHeader("Surrogate-Control", "no-store");
+
   try {
     const token = req.cookies.token;
     if (!token) return res.json({ loggedIn: false });
 
     const decoded = validateToken(token);
-    const user = await User.findById(decoded._id).select("fullName email");
+    const user = await User.findById(decoded._id).select("fullName email role current_stage readiness_score profile resume_url");
 
     if (!user) return res.json({ loggedIn: false });
 
     return res.json({
       loggedIn: true,
-      user: { fullName: user.fullName, email: user.email },
+      user: { 
+        _id: user._id,
+        fullName: user.fullName, 
+        email: user.email,
+        role: user.role,
+        current_stage: user.current_stage,
+        readiness_score: user.readiness_score,
+        profile: user.profile,
+        resume_url: user.resume_url
+      },
     });
   } catch (err) {
     console.error("Check login error:", err);
     return res.status(401).json({ loggedIn: false });
   }
+});
+
+// ----------------------------
+// LOGOUT
+// ----------------------------
+router.post("/logout", (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+  });
+  return res.json({ message: "Logged out successfully" });
 });
 
 module.exports = router;

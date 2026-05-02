@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+// src/components/Navbar.jsx
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import SigninModal from "./Signin";
@@ -9,11 +10,31 @@ export default function Navbar() {
   const [user, setUser] = useState(null);
   const [showSignin, setShowSignin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
+
+  // Check if user is logged in on component mount
+  useEffect(() => {
+    checkLoginStatus();
+  }, []);
+
+  const checkLoginStatus = async () => {
+    try {
+      const res = await fetch("/api/user/check-login", { 
+        credentials: "include" 
+      });
+      const data = await res.json();
+      if (data.loggedIn && data.user) {
+        setUser(data.user.fullName || data.user.email);
+      }
+    } catch (err) {
+      console.error("Check login error:", err);
+    }
+  };
 
   const handleLogout = async () => {
     try {
-      await fetch("/user/logout", { credentials: "include" });
+      await fetch("/api/user/logout", { credentials: "include" });
       setUser(null);
       toast.success("Logged out");
       navigate("/");
@@ -36,28 +57,40 @@ export default function Navbar() {
       <nav className="navbar">
         <div 
           className="logo" 
-          style={{ cursor: "pointer" }} 
+          style={{ cursor: "pointer", zIndex: 101 }} 
           onClick={() => navigate("/")}
         >
           CareerAI
         </div>
 
-        <ul className="nav-links">
-          <li onClick={() => navigate("/")}>Overview</li>
-          <li onClick={() => navigate("/")}>Jobs</li>
-          {user && (
-            <li 
-              onClick={() => navigate("/dashboard")}
-              style={{ color: "royalblue", fontWeight: "bold" }}
-            >
-              📊 Dashboard
-            </li>
-          )}
-          <li>AI Hub</li>
-          <li>Resources</li>
+        {/* Desktop Menu */}
+        <ul className={`nav-links ${mobileMenuOpen ? "force-show" : ""}`}>
+          <li onClick={() => { navigate("/"); setMobileMenuOpen(false); }}>Overview</li>
+          <li onClick={() => { navigate("/"); setMobileMenuOpen(false); }}>Jobs</li>
+          <li onClick={() => { navigate("/chat"); setMobileMenuOpen(false); }}>AI Career Mentor</li>
+          <li onClick={() => { setMobileMenuOpen(false); }}>Resources</li>
+          
+          {/* Mobile Only Buttons inside Menu */}
+          <div className="mobile-nav-buttons">
+            {user ? (
+                <>
+                  <span className="username-mobile">Hi, {user}</span>
+                  <button onClick={() => { handleDashboardClick(); setMobileMenuOpen(false); }}>
+                    📊 Dashboard
+                  </button>
+                  <button onClick={() => { handleLogout(); setMobileMenuOpen(false); }}>Logout</button>
+                </>
+            ) : (
+                <>
+                  <button onClick={() => { setShowSignup(true); setMobileMenuOpen(false); }}>Register</button>
+                  <button onClick={() => { setShowSignin(true); setMobileMenuOpen(false); }}>Login</button>
+                </>
+            )}
+          </div>
         </ul>
 
-        <div className="nav-buttons">
+        {/* Desktop Buttons (Hidden on Mobile) */}
+        <div className="nav-buttons desktop-only">
           {user ? (
             <>
               <span className="username">{user}</span>
@@ -75,6 +108,17 @@ export default function Navbar() {
               <button onClick={() => setShowSignin(true)}>Login</button>
             </>
           )}
+        </div>
+
+        {/* Hamburger Icon */}
+        <div className="hamburger" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                {mobileMenuOpen ? (
+                    <path d="M18 6L6 18M6 6l12 12" />
+                ) : (
+                    <path d="M3 12h18M3 6h18M3 18h18" />
+                )}
+            </svg>
         </div>
       </nav>
 

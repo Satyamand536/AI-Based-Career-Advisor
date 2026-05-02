@@ -1,0 +1,5 @@
+- [x] Update job card layout in Dashboard.jsx:
+  - Remove duplicated reason display on the right side
+  - Remove "Why:" label from the reason paragraph
+  - Highlight match percentage in a colored badge
+  - Ensure clean layout: title, company, location/work type, match badge, reason

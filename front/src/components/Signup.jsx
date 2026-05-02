@@ -6,7 +6,7 @@ import "./Modal.css";
 // Regex rules
 const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
-export default function SignupModal({ close, openSignin }) {
+export default function SignupModal({ close, openSignin, onSignupSuccess }) {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -95,7 +95,7 @@ export default function SignupModal({ close, openSignin }) {
 
     try {
       const res = await axios.post(
-        "/user/signup",
+        "/api/user/signup",
         { fullName, email, password },
         {
           withCredentials: true,
@@ -104,22 +104,34 @@ export default function SignupModal({ close, openSignin }) {
       );
 
       if (res.status === 201) {
-        toast.success("Signup successful!");
+        toast.success("Account created! Welcome to AI Career Advisor.", {
+          style: { border: '1px solid #52c41a', padding: '16px', color: '#52c41a' },
+        });
 
         setTimeout(() => {
-          if (typeof close === "function") close();
-          if (typeof openSignin === "function") openSignin();
-        }, 700);
+          if (typeof onSignupSuccess === "function") {
+            onSignupSuccess(fullName); // Auto redirect to dashboard
+          } else {
+            if (typeof close === "function") close();
+            if (typeof openSignin === "function") openSignin();
+          }
+        }, 800);
       }
     } catch (err) {
-      const msg = err.response?.data?.error || "Signup failed";
-      toast.error(msg);
+      const msg = err.response?.data?.error || "Registration failed. Please try again.";
+      toast.error(msg, {
+        style: {
+          border: '1px solid #ff4d4f',
+          padding: '16px',
+          color: '#ff4d4f',
+        },
+      });
 
       if (err.response?.status === 409) {
         setTimeout(() => {
           if (typeof close === "function") close();
           if (typeof openSignin === "function") openSignin();
-        }, 700);
+        }, 1500);
       }
     } finally {
       setLoading(false);

@@ -1,173 +1,332 @@
-import React, { useState, useEffect, useRef } from "react";
-import toast from "react-hot-toast";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";  // ✅ Import करो
-import "./Home.css";
+import toast from "react-hot-toast";
+import SigninModal from "../components/Signin";
+import SignupModal from "../components/Signup";
+
+const FEATURES = [
+    { icon: "🧠", title: "Profile Intelligence", desc: "AI parses your resume and builds a deep skill intelligence graph with experience scoring." },
+    { icon: "🎯", title: "Tech Job Match", desc: "Hybrid AI engine (embeddings + skills + experience) ranks real tech jobs by match percentage." },
+    { icon: "🧪", title: "Skill Gap Tests", desc: "Take adaptive AI-generated assessments across 10 domains and track your readiness score." },
+    { icon: "🗺️", title: "Learning Roadmap", desc: "Auto-generates a week-by-week placement-focused learning path based on your gaps." },
+    { icon: "🤖", title: "AI Career Mentor", desc: "An LLM-powered mentor that knows your profile and coaches you toward your target role." },
+    { icon: "📊", title: "Career Dashboard", desc: "Mission control showing readiness score, test results, top match, and next roadmap step." },
+];
+
+const PIPELINE = [
+    { label: "Resume Upload", icon: "📄" },
+    { label: "Skill Analysis", icon: "🧬" },
+    { label: "Job Matching", icon: "🎯" },
+    { label: "Gap Detection", icon: "🔍" },
+    { label: "AI Tests", icon: "🧪" },
+    { label: "Roadmap", icon: "🗺️" },
+    { label: "Job Ready", icon: "🚀" },
+];
 
 export default function HomePage() {
-  const [user, setUser] = useState(null);
-  const navigate = useNavigate();
-  const fileInputRef = useRef(null);
+    const [user, setUser] = useState(null);
+    const [showSignin, setShowSignin] = useState(false);
+    const [showSignup, setShowSignup] = useState(false);
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    const checkLogin = async () => {
-      try {
-        const res = await fetch("/user/check-login", {
-          credentials: "include",
-        });
-        const data = await res.json();
-        if (data.loggedIn) setUser(data.user.fullName || data.user.name);
-        else setUser(null);
-      } catch (err) {
-        console.error("Login check failed:", err);
-      }
+    useEffect(() => {
+        const checkLogin = async () => {
+            try {
+                const res = await fetch("/api/user/check-login", { credentials: "include" });
+                const data = await res.json();
+                if (data.loggedIn) {
+                    setUser(data.user?.fullName || data.user?.name || "User");
+                }
+            } catch (err) { /* silent */ }
+        };
+        checkLogin();
+    }, []);
+
+    const handleGetStarted = () => {
+        if (user) navigate("/dashboard");
+        else setShowSignin(true);
     };
-    checkLogin();
-  }, []);
 
-  const handleGetStarted = () => {
-    if (user) {
-      navigate("/dashboard");
-    } else {
-      toast.error("Please login first");
-    }
-  };
+    const handleLogout = async () => {
+        try {
+            await fetch("/api/user/logout", { credentials: "include" });
+            sessionStorage.clear(); // Ensure cache is zeroed out
+            setUser(null);
+            toast.success("Logged out");
+        } catch (_) {}
+    };
 
-  const handleFileUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) toast.success(`Selected: ${file.name}`);
-  };
+    return (
+        <div style={s.page}>
+            {/* ── NAVBAR ── */}
+            <nav style={s.navbar}>
+                <div style={s.logo}>
+                    <span style={{ color: "#f59e0b", marginRight: 8 }}>⚡</span>CareerAI
+                </div>
+                <div style={s.navRight}>
+                    {user ? (
+                        <>
+                            <span style={s.navUser}>👤 {user}</span>
+                            <button style={s.navBtnOutline} onClick={() => navigate("/dashboard")}>Dashboard</button>
+                            <button style={s.navBtnGhost} onClick={handleLogout}>Logout</button>
+                        </>
+                    ) : (
+                        <>
+                            <button style={s.navBtnGhost} onClick={() => setShowSignin(true)}>Login</button>
+                            <button style={s.navBtnPrimary} onClick={() => setShowSignup(true)}>Get Started Free</button>
+                        </>
+                    )}
+                </div>
+            </nav>
 
-  return (
-    <div className="home-container">
-      {/* USE NAVBAR COMPONENT */}
-      <Navbar />
+            {/* ── HERO ── */}
+            <section style={s.hero}>
+                <div style={s.heroBadge}>🚀 AI-Powered Career Intelligence Platform</div>
+                <h1 style={s.heroTitle}>
+                    Land your dream<br />
+                    <span style={s.heroGradient}>tech job with AI</span>
+                </h1>
+                <p style={s.heroDesc}>
+                    Upload your resume. Get AI-matched to real tech jobs. Identify skill gaps, take adaptive tests,
+                    and follow a personalized roadmap to become placement-ready.
+                </p>
+                <div style={s.heroActions}>
+                    <button style={s.ctaPrimary} onClick={handleGetStarted}>
+                        {user ? "Go to Dashboard →" : "Start for Free →"}
+                    </button>
+                    <button style={s.ctaSecondary} onClick={() => setShowSignin(true)}>
+                        {user ? "View My Profile" : "Login"}
+                    </button>
+                </div>
+                <div style={s.heroStats}>
+                    {[["10+", "Tech Domains Covered"], ["3", "Real Job APIs"], ["AI-Powered", "Scoring Engine"]].map(([val, label]) => (
+                        <div key={label} style={s.statItem}>
+                            <div style={s.statVal}>{val}</div>
+                            <div style={s.statLabel}>{label}</div>
+                        </div>
+                    ))}
+                </div>
+            </section>
 
-      {/* HERO SECTION */}
-      <div className="hero">
-        <div className="hero-content">
-          <h1>Unlock your career potential with AI guidance</h1>
-          <p>
-            Navigate your professional journey with AI insights. Get smart,
-            data-backed recommendations to achieve your goals.
-          </p>
-          <div className="hero-buttons">
-            <button className="btn-primary" onClick={handleGetStarted}>
-              Get Started
-            </button>
-            <button className="btn-secondary">Learn More</button>
-          </div>
+            {/* ── PIPELINE ── */}
+            <section style={s.section}>
+                <div style={s.sectionInner}>
+                    <div style={s.sectionBadge}>Career Intelligence Pipeline</div>
+                    <h2 style={s.sectionTitle}>From resume to offer letter — in one platform</h2>
+                    <div style={s.pipeline}>
+                        {PIPELINE.map((step, i) => (
+                            <React.Fragment key={step.label}>
+                                <div style={s.pipelineStep}>
+                                    <div style={s.pipelineIcon}>{step.icon}</div>
+                                    <div style={s.pipelineLabel}>{step.label}</div>
+                                </div>
+                                {i < PIPELINE.length - 1 && <div style={s.pipelineArrow}>→</div>}
+                            </React.Fragment>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* ── FEATURES ── */}
+            <section style={{ ...s.section, background: "#0f172a" }}>
+                <div style={s.sectionInner}>
+                    <div style={s.sectionBadge}>Platform Features</div>
+                    <h2 style={s.sectionTitle}>Everything you need to advance your tech career</h2>
+                    <div style={s.featureGrid}>
+                        {FEATURES.map(f => (
+                            <div key={f.title} style={s.featureCard}>
+                                <div style={s.featureIcon}>{f.icon}</div>
+                                <h3 style={s.featureTitle}>{f.title}</h3>
+                                <p style={s.featureDesc}>{f.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* ── CTA BANNER ── */}
+            <section style={s.ctaBanner}>
+                <div style={s.sectionInner}>
+                    <h2 style={{ ...s.sectionTitle, marginBottom: 12 }}>Ready to accelerate your career?</h2>
+                    <p style={{ color: "#94a3b8", fontSize: 16, marginBottom: 32 }}>
+                        Join the platform built for serious tech professionals and students.
+                    </p>
+                    <button style={s.ctaPrimary} onClick={handleGetStarted}>
+                        {user ? "Back to Dashboard →" : "Create Free Account →"}
+                    </button>
+                </div>
+            </section>
+
+            {/* ── FOOTER ── */}
+            <footer style={s.footer}>
+                <div style={s.footerInner}>
+                    <div style={s.footerBrand}>
+                        <div style={s.logo}><span style={{ color: "#f59e0b", marginRight: 8 }}>⚡</span>CareerAI</div>
+                        <p style={{ color: "#475569", fontSize: 13, marginTop: 10, lineHeight: 1.7, maxWidth: 260 }}>
+                            The AI-powered career operating system for tech professionals and students.
+                        </p>
+                    </div>
+                    <div style={s.footerLinks}>
+                        <div style={s.footerCol}>
+                            <div style={s.footerColTitle}>Platform</div>
+                            {["Profile Intelligence","Tech Job Match","Skill Gap Tests","Learning Roadmap","AI Career Mentor"].map(f => (
+                                <div key={f} style={s.footerLink}>{f}</div>
+                            ))}
+                        </div>
+                        <div style={s.footerCol}>
+                            <div style={s.footerColTitle}>For Developers</div>
+                            {["Software Engineers","Data Scientists","DevOps Engineers","AI/ML Engineers","Full Stack Devs"].map(f => (
+                                <div key={f} style={s.footerLink}>{f}</div>
+                            ))}
+                        </div>
+                        <div style={s.footerCol}>
+                            <div style={s.footerColTitle}>Powered By</div>
+                            {["OpenRouter LLM","MPNet Embeddings","Adzuna Jobs API","The Muse API","MongoDB Atlas"].map(f => (
+                                <div key={f} style={s.footerLink}>{f}</div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+                <div style={s.footerBottom}>
+                    <div style={{ width: "100%", height: 1, background: "rgba(255,255,255,0.04)", marginBottom: 24 }} />
+                    <span style={{ color: "#334155", fontSize: 13 }}>© 2026 CareerAI. Built for tech professionals — not generic job seekers.</span>
+                </div>
+            </footer>
+
+            {/* ── MODALS ── */}
+            {showSignin && (
+                <SigninModal
+                    close={() => setShowSignin(false)}
+                    openSignup={() => { setShowSignin(false); setShowSignup(true); }}
+                    onLoginSuccess={(name) => {
+                        setUser(name);
+                        setShowSignin(false);
+                        navigate("/dashboard");
+                    }}
+                />
+            )}
+            {showSignup && (
+                <SignupModal
+                    close={() => setShowSignup(false)}
+                    openSignin={() => { setShowSignup(false); setShowSignin(true); }}
+                    onSignupSuccess={(name) => {
+                        setUser(name);
+                        setShowSignup(false);
+                        navigate("/dashboard");
+                    }}
+                />
+            )}
         </div>
-
-        <div className="hero-image">
-          <img src="/images/right1.png" alt="AI Guidance Illustration" />
-        </div>
-      </div>
-
-      {/* FEATURE SECTION */}
-      <section className="features">
-        <h2>Powerful career development tools</h2>
-        <div className="cards">
-          <div className="card">
-            <h3>Personalized Career Recommendations</h3>
-            <p>AI suggestions tailored to your skills and interests.</p>
-          </div>
-          <div className="card">
-            <h3>Curated Learning Paths</h3>
-            <p>Grow with guided plans matching your career goals.</p>
-          </div>
-          <div className="card">
-            <h3>Precision Job Matching</h3>
-            <p>Find ideal job roles using data-driven analysis.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* AI SECTION */}
-      <section className="ai-section">
-        <div className="ai-text">
-          <h2>How our AI transforms career guidance</h2>
-          <p>
-            Advanced algorithms analyze your profile to suggest personalized
-            learning and job strategies.
-          </p>
-          <button onClick={handleGetStarted}>Learn More</button>
-        </div>
-        <div className="ai-image"></div>
-      </section>
-
-      {/* GROWTH SECTION */}
-      <section className="growth">
-        <h2>Your Career Growth Accelerator</h2>
-        <div className="growth-cards">
-          <div className="growth-card">
-            <h3>Launch your professional journey</h3>
-            <p>Start your path with personalized guidance and insights.</p>
-          </div>
-          <div className="growth-card">
-            <h3>Elevate your career trajectory</h3>
-            <p>Gain tools and support for sustained professional growth.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* SERVICES SECTION */}
-      <section className="services">
-        <h2>Comprehensive Career Support</h2>
-        <div className="cards">
-          <div className="card">
-            <h3>Strategic Career Counseling</h3>
-            <p>Get expert advice for your professional direction.</p>
-          </div>
-          <div className="card">
-            <h3>Skill Development Programs</h3>
-            <p>Enhance your competencies with structured modules.</p>
-          </div>
-          <div className="card">
-            <h3>Precision Job Opportunities</h3>
-            <p>Discover job roles that match your aspirations.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* TESTIMONIALS */}
-      <section className="testimonials">
-        <h2>Real Stories of Success</h2>
-        <div className="testimonials-container">
-          <div className="testimonial">
-            <p>"The platform helped me find my perfect job path!"</p>
-            <span>- Rahul Sharma</span>
-          </div>
-          <div className="testimonial">
-            <p>"The AI insights boosted my learning curve!"</p>
-            <span>- Neha Patel</span>
-          </div>
-          <div className="testimonial">
-            <p>"Smart recommendations changed my career!"</p>
-            <span>- Aarav Mehta</span>
-          </div>
-        </div>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="footer">
-        <div className="footer-content">
-          <div className="footer-logo">CareerAI</div>
-          <p>Empowering your career with smart AI insights.</p>
-        </div>
-        <div className="footer-bottom">
-          © 2025 CareerAI. All rights reserved.
-        </div>
-      </footer>
-
-      {/* Hidden file input */}
-      <input
-        type="file"
-        accept=".pdf,.doc,.docx"
-        ref={fileInputRef}
-        style={{ display: "none" }}
-        onChange={handleFileUpload}
-      />
-    </div>
-  );
+    );
 }
+
+const s = {
+    page: { minHeight: "100vh", background: "#0a0f1e", color: "#e2e8f0", fontFamily: "'Inter', sans-serif", overflowX: "hidden" },
+    navbar: {
+        display: "flex", justifyContent: "space-between", alignItems: "center",
+        padding: "20px 60px", background: "rgba(15,23,42,0.95)", backdropFilter: "blur(16px)",
+        borderBottom: "1px solid rgba(255,255,255,0.05)", position: "sticky", top: 0, zIndex: 100,
+    },
+    logo: { fontSize: 22, fontWeight: 800, color: "#f8fafc", letterSpacing: "-0.5px" },
+    navRight: { display: "flex", alignItems: "center", gap: 12 },
+    navUser: { fontSize: 14, color: "#94a3b8", marginRight: 4 },
+    navBtnPrimary: {
+        padding: "9px 20px", background: "linear-gradient(135deg, #3b82f6, #2563eb)",
+        color: "#fff", border: "none", borderRadius: 10, fontWeight: 600, fontSize: 14,
+        cursor: "pointer", boxShadow: "0 4px 12px rgba(37,99,235,0.3)",
+    },
+    navBtnOutline: {
+        padding: "9px 20px", background: "transparent", color: "#e2e8f0",
+        border: "1px solid rgba(255,255,255,0.15)", borderRadius: 10, fontWeight: 600,
+        fontSize: 14, cursor: "pointer",
+    },
+    navBtnGhost: {
+        padding: "9px 20px", background: "transparent", color: "#94a3b8",
+        border: "none", borderRadius: 10, fontWeight: 500, fontSize: 14, cursor: "pointer",
+    },
+    hero: {
+        padding: "100px 60px 80px", maxWidth: 900, margin: "0 auto", textAlign: "center",
+    },
+    heroBadge: {
+        display: "inline-block", padding: "6px 16px",
+        background: "rgba(59,130,246,0.1)", border: "1px solid rgba(59,130,246,0.25)",
+        borderRadius: 20, fontSize: 13, color: "#60a5fa", fontWeight: 600, marginBottom: 28,
+    },
+    heroTitle: {
+        fontSize: "clamp(2.4rem, 5vw, 4rem)", fontWeight: 900, lineHeight: 1.15,
+        margin: "0 0 24px", color: "#f8fafc",
+    },
+    heroGradient: {
+        background: "linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899)",
+        WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+    },
+    heroDesc: {
+        fontSize: 18, color: "#94a3b8", lineHeight: 1.7, maxWidth: 640,
+        margin: "0 auto 40px",
+    },
+    heroActions: { display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap", marginBottom: 56 },
+    ctaPrimary: {
+        padding: "15px 36px", background: "linear-gradient(135deg, #3b82f6, #2563eb)",
+        color: "#fff", border: "none", borderRadius: 12, fontSize: 16, fontWeight: 700,
+        cursor: "pointer", boxShadow: "0 8px 24px rgba(37,99,235,0.4)", transition: "all 0.2s",
+    },
+    ctaSecondary: {
+        padding: "15px 36px", background: "rgba(255,255,255,0.05)",
+        color: "#e2e8f0", border: "1px solid rgba(255,255,255,0.1)",
+        borderRadius: 12, fontSize: 16, fontWeight: 600, cursor: "pointer",
+    },
+    heroStats: { display: "flex", gap: 48, justifyContent: "center", flexWrap: "wrap" },
+    statItem: { textAlign: "center" },
+    statVal: { fontSize: 28, fontWeight: 900, color: "#f8fafc" },
+    statLabel: { fontSize: 12, color: "#64748b", marginTop: 4, textTransform: "uppercase", letterSpacing: "0.5px" },
+    section: { background: "#0f172a", padding: "80px 60px" },
+    sectionInner: { maxWidth: 1100, margin: "0 auto", textAlign: "center" },
+    sectionBadge: {
+        display: "inline-block", padding: "5px 14px",
+        background: "rgba(139,92,246,0.1)", border: "1px solid rgba(139,92,246,0.2)",
+        borderRadius: 20, fontSize: 12, color: "#a78bfa", fontWeight: 600,
+        textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 20,
+    },
+    sectionTitle: { fontSize: "clamp(1.6rem, 3vw, 2.4rem)", fontWeight: 800, color: "#f8fafc", margin: "0 0 48px" },
+    pipeline: {
+        display: "flex", alignItems: "center", justifyContent: "center",
+        gap: 8, flexWrap: "wrap",
+    },
+    pipelineStep: { textAlign: "center" },
+    pipelineIcon: {
+        width: 56, height: 56, borderRadius: 14,
+        background: "#1e293b", border: "1px solid rgba(255,255,255,0.08)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        fontSize: 24, margin: "0 auto 8px",
+    },
+    pipelineLabel: { fontSize: 11, color: "#94a3b8", fontWeight: 600 },
+    pipelineArrow: { color: "#334155", fontSize: 20, margin: "0 4px", paddingBottom: 24 },
+    featureGrid: {
+        display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+        gap: 20, textAlign: "left",
+    },
+    featureCard: {
+        background: "#1e293b", borderRadius: 16, padding: 28,
+        border: "1px solid rgba(255,255,255,0.05)",
+        transition: "transform 0.2s, border-color 0.2s",
+    },
+    featureIcon: { fontSize: 32, marginBottom: 16 },
+    featureTitle: { margin: "0 0 10px", fontSize: 18, fontWeight: 700, color: "#f1f5f9" },
+    featureDesc: { margin: 0, fontSize: 14, color: "#94a3b8", lineHeight: 1.7 },
+    ctaBanner: {
+        background: "linear-gradient(135deg, #1e3a8a 0%, #312e81 100%)",
+        padding: "80px 60px", textAlign: "center",
+        borderTop: "1px solid rgba(255,255,255,0.05)",
+    },
+    footer: {
+        padding: "60px 60px 24px", borderTop: "1px solid rgba(255,255,255,0.05)",
+        background: "#070c18",
+    },
+    footerInner: { display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 40, marginBottom: 40, maxWidth: 1100, margin: "0 auto 40px" },
+    footerBrand: { flexShrink: 0 },
+    footerLinks: { display: "flex", gap: 60, flexWrap: "wrap" },
+    footerCol: { minWidth: 140 },
+    footerColTitle: { fontSize: 12, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 14 },
+    footerLink: { fontSize: 13, color: "#334155", marginBottom: 8 },
+    footerBottom: { textAlign: "center", maxWidth: 1100, margin: "0 auto" },
+};

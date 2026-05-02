@@ -1,47 +1,23 @@
-const { Schema, model } = require("mongoose");
+// backend/models/UserProfile.js
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
-const userProfileSchema = new Schema({
-  userId: {
-    type: Schema.Types.ObjectId,
-    ref: "user",
-    required: true,
+const UserProfileSchema = new Schema({
+  userId: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: "user", 
+    required: true, 
     unique: true,
+    index: true
   },
-  resume: {
-    filePath: String,
-    parsedText: String,
-    uploadedAt: Date,
-  },
-  education: {
-    degree: String,
-    branch: String,
-    university: String,
-    gpa: Number,
-    passingYear: Number,
-  },
-  skills: [String],
-  experience: {
-    totalYears: Number,
-    companies: [
-      {
-        name: String,
-        role: String,
-        years: Number,
-      },
-    ],
-  },
-  preferredLocations: [String],
-  preferredJobTypes: [String],
-  salaryExpectation: {
-    min: Number,
-    max: Number,
-  },
-  careerGoals: String,
-  // AI ke liye
-  profileEmbedding: [Number],
-  skills_vector: [Number],
-  
-}, { timestamps: true });
+  name: { type: String },
+  email: { type: String },
+  phone: { type: String },
+  skills: { type: [String], default: [] },
+  experience_years: { type: Number, default: 0 },
+  education: { type: [String], default: [] },
+  resumePath: { type: String },
+  createdAt: { type: Date, default: Date.now },
+});
 
-const userProfile = model("userProfile", userProfileSchema);
-module.exports = userProfile;
+module.exports = mongoose.model('UserProfile', UserProfileSchema);
