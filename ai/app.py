@@ -77,9 +77,9 @@ def initialize_services():
     logger.info("=" * 60)
 
     try:
-        logger.info("🧠 Loading Embedding Service (all-mpnet-base-v2)...")
+        logger.info("🧠 Loading Embedding Service (all-MiniLM-L6-v2 - Light Version)...")
         from services.embedding_service import EmbeddingService
-        embedding_service = EmbeddingService(model_name="all-mpnet-base-v2")
+        embedding_service = EmbeddingService(model_name="all-MiniLM-L6-v2")
         
         logger.info("🧠 Loading LLM Service (OpenRouter Core)...")
         from services.llm_service import LLMService

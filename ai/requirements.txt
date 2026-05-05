@@ -8,6 +8,7 @@ flask-cors==4.0.0
 
 # NLP & Machine Learning
 sentence-transformers>=3.0.1
+--extra-index-url https://download.pytorch.org/whl/cpu
 torch>=2.0.0
 transformers>=4.40.0
 
