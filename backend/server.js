@@ -17,7 +17,7 @@ const { startJobCron } = require('./cron/jobCron');
 
 // ===== MIDDLEWARE =====
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3005'],
+  origin: process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : true,
   credentials: true,
 }));
 

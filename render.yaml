@@ -1,0 +1,53 @@
+services:
+  # 1. AI Service (Python Flask)
+  - type: web
+    name: career-ai-service
+    env: python
+    region: singapore # Change to your preferred region
+    plan: starter # AI models need more RAM than the free tier (512MB)
+    rootDir: ai
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: PORT
+        value: 5001
+      - key: OPENROUTER_API_KEY_B64
+        sync: false # Set this in Render Dashboard
+      - key: OPENROUTER_CHAT_API_KEY
+        sync: false # Set this in Render Dashboard
+
+  # 2. Backend Service (Node.js)
+  - type: web
+    name: career-backend-service
+    env: node
+    region: singapore
+    plan: starter
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: MONGO_URL
+        sync: false # Set your MongoDB Atlas Link here
+      - key: JWT_SECRET
+        generateValue: true
+      - key: PORT
+        value: 8000
+      - key: AI_SERVICE_URL
+        value: http://career-ai-service:5001
+      - key: ALLOWED_ORIGINS
+        sync: false # Add your frontend URL here after first deploy
+
+  # 3. Frontend Service (React Static Site)
+  - type: static
+    name: career-frontend
+    env: static
+    rootDir: front
+    buildCommand: npm install && npm run build
+    publishPath: build
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: https://career-backend-service.onrender.com/api/*
+      - type: rewrite
+        source: /*
+        destination: /index.html
