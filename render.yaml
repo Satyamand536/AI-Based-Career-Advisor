@@ -38,7 +38,7 @@ services:
         sync: false # Add your frontend URL here after first deploy
 
   # 3. Frontend Service (React Static Site)
-  - type: static
+  - type: web
     name: career-frontend
     env: static
     rootDir: front
