@@ -134,6 +134,17 @@ def validate_request_json(required_fields: list) -> tuple:
     return data, None
 
 
+@app.route('/', methods=['GET'])
+def index():
+    """Root endpoint for service discovery."""
+    return jsonify({
+        "ok": True,
+        "message": "AI Career Advisor API is running",
+        "endpoints": [
+            "/health", "/api/status", "/parse-resume", "/api/recommend"
+        ]
+    }), 200
+
 @app.route('/health', methods=['GET'])
 def health():
     """Health check endpoint."""
