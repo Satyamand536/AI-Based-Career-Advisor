@@ -22,6 +22,7 @@ const AI_SERVICE_URL = process.env.AI_SERVICE_URL || "http://127.0.0.1:5001";
  */
 router.post("/generate", checkForAuthenticationCookie("token"), async (req, res) => {
     try {
+        if (!req.user) return res.status(401).json({ ok: false, error: "Session expired. Please log in again." });
         const { goal, hours_per_week } = req.body;
         const userId = req.user._id;
 
@@ -148,6 +149,7 @@ router.post("/generate", checkForAuthenticationCookie("token"), async (req, res)
  */
 router.get("/me", checkForAuthenticationCookie("token"), async (req, res) => {
     try {
+        if (!req.user) return res.status(401).json({ ok: false, error: "Session expired. Please log in again." });
         const roadmap = await TrainingRoadmap.findOne({ user_id: req.user._id })
             .sort({ createdAt: -1 })
             .lean();

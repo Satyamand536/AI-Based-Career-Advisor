@@ -216,6 +216,21 @@ async function runJobIngestion() {
     ...(joobleJobs.status === "fulfilled" ? joobleJobs.value : []),
   ];
 
+  if (all.length === 0) {
+    console.log("⚠️ [JobFetcher] No jobs found from APIs. Loading fallback sample jobs...");
+    try {
+      const fs = require('fs');
+      const path = require('path');
+      const samplePath = path.resolve(__dirname, '../data/sample_jobs.json');
+      if (fs.existsSync(samplePath)) {
+        const samples = JSON.parse(fs.readFileSync(samplePath, 'utf8'));
+        all.push(...samples);
+      }
+    } catch (e) {
+      console.error("[JobFetcher] Failed to load sample jobs:", e.message);
+    }
+  }
+
   console.log(`📋 [JobFetcher] Raw fetched: ${all.length} jobs`);
 
   // 2. Filter only tech jobs

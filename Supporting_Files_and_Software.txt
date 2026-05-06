@@ -1,0 +1,662 @@
+
+================================================================================
+         AI-BASED CAREER ADVISOR — SUPPORTING FILES & SOFTWARE DOCUMENT
+                        Final Year Project Documentation
+================================================================================
+
+  Project Name   :  AI-Based Career Advisor
+  Document Type  :  Supporting Files, Libraries & Software Reference
+  Prepared By    :  Project Team
+  Date           :  May 2026
+  Version        :  1.0 (Final)
+
+================================================================================
+                              TABLE OF CONTENTS
+================================================================================
+
+   1.  Project Overview
+   2.  System Architecture (3 Services)
+   3.  Software Requirements (What to Install)
+   4.  All Libraries & Their Purpose
+         4A. Python AI Service Libraries
+         4B. Node.js Backend Libraries
+         4C. React Frontend Libraries
+   5.  Environment & Config Files
+   6.  Important Project Files (With Their Purpose)
+   7.  External APIs & Services Used
+   8.  How to Run the Project (Step by Step)
+   9.  Helpful Links & References
+   10. Hardware Requirements
+   11. Manuals, Help Files & Documentation
+   12. Security Practices Used in This Project
+   13. Common Troubleshooting
+
+================================================================================
+  SECTION 1 — PROJECT OVERVIEW
+================================================================================
+
+  What is this project?
+
+  This is an AI-powered web application that helps users figure out the best
+  career path for themselves. A user can upload their resume (PDF or Word file),
+  and the system will:
+
+    - Read and understand the resume using AI
+    - Find the best matching job roles for that person
+    - Show a skill gap — what skills the user is missing
+    - Generate a personalised learning roadmap
+    - Provide career advice powered by Google Gemini AI
+    - Show job market trends and intelligence
+
+  In simple words: Upload your resume → Get career advice → Know what to learn.
+
+================================================================================
+  SECTION 2 — SYSTEM ARCHITECTURE (3 SEPARATE SERVICES)
+================================================================================
+
+  This project is split into 3 parts that talk to each other:
+
+  ┌─────────────────────────────────────────────────────────────────────────┐
+  │                                                                         │
+  │   [1] FRONTEND (React)          → Runs on Port 3000                     │
+  │       What it does: The website the user sees and uses                  │
+  │       Folder: /front                                                    │
+  │                                                                         │
+  │   [2] BACKEND (Node.js/Express)  → Runs on Port 8000                   │
+  │       What it does: Handles users, authentication, database, APIs       │
+  │       Folder: /backend                                                  │
+  │                                                                         │
+  │   [3] AI SERVICE (Python/Flask)  → Runs on Port 5000                   │
+  │       What it does: The brain — reads resumes, matches jobs, gives AI   │
+  │                     career recommendations using ML models               │
+  │       Folder: /ai                                                       │
+  │                                                                         │
+  └─────────────────────────────────────────────────────────────────────────┘
+
+  How they connect:
+    Frontend  ──talks to──►  Backend  ──talks to──►  AI Service
+                                │
+                                └──────────────────►  MongoDB (Database)
+
+================================================================================
+  SECTION 3 — SOFTWARE REQUIREMENTS (WHAT TO INSTALL ON YOUR COMPUTER)
+================================================================================
+
+  Before running this project, make sure you have these installed:
+
+  ┌─────┬──────────────────────┬───────────────┬────────────────────────────┐
+  │ No. │ Software             │ Version       │ Purpose                    │
+  ├─────┼──────────────────────┼───────────────┼────────────────────────────┤
+  │  1  │ Node.js              │ v18 or above  │ Runs the backend server     │
+  │  2  │ npm                  │ v9 or above   │ Installs JS packages        │
+  │  3  │ Python               │ 3.9 or above  │ Runs the AI service         │
+  │  4  │ pip                  │ Latest        │ Installs Python packages    │
+  │  5  │ MongoDB Atlas        │ Cloud (free)  │ Stores all data online      │
+  │  6  │ Git                  │ Latest        │ Version control             │
+  │  7  │ VS Code              │ Latest        │ Code editor (recommended)   │
+  └─────┴──────────────────────┴───────────────┴────────────────────────────┘
+
+  Download Links:
+    → Node.js     : https://nodejs.org
+    → Python      : https://python.org
+    → MongoDB     : https://www.mongodb.com/atlas (free cloud database)
+    → Git         : https://git-scm.com
+    → VS Code     : https://code.visualstudio.com
+
+================================================================================
+  SECTION 4A — PYTHON AI SERVICE LIBRARIES
+================================================================================
+
+  File Location: /ai/requirements.txt
+
+  These are all the Python libraries the AI part of the project uses.
+  Install them using: pip install -r requirements.txt
+
+  ┌────────────────────────────┬───────────────┬───────────────────────────────────────────────────┐
+  │ Library Name               │ Version       │ What It Does (In Simple Words)                    │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ Flask                      │ 3.0.0         │ Creates the Python web server (like Express but    │
+  │                            │               │ for Python). Handles all API routes.               │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ flask-cors                 │ 4.0.0         │ Allows the frontend and backend to talk to the     │
+  │                            │               │ Python server without security errors.             │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ sentence-transformers      │ >= 3.0.1      │ The main AI brain. Converts text (like resume      │
+  │                            │               │ content) into numbers (vectors/embeddings) so the  │
+  │                            │               │ computer can understand and compare them.          │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ torch (PyTorch)            │ >= 2.0.0      │ The AI engine that powers sentence-transformers.   │
+  │                            │               │ Used for running deep learning models.             │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ transformers               │ >= 4.40.0     │ Hugging Face library. Provides pre-trained AI      │
+  │                            │               │ language models (like BERT) for NLP tasks.         │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ numpy                      │ >= 1.24.0     │ Handles all the math. Used for calculations with   │
+  │                            │               │ vectors, matrices, and similarity scores.          │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ scikit-learn               │ >= 1.3.0      │ Machine learning tools. Used for cosine similarity │
+  │                            │               │ calculations and classification models.            │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ PyPDF2                     │ 3.0.1         │ Reads and extracts text from PDF files (resumes).  │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ python-docx                │ 1.1.0         │ Reads and extracts text from Word (.docx) files.   │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ openai                     │ >= 1.0.0      │ Connects to OpenAI's GPT models for AI-powered     │
+  │                            │               │ text generation and career advice.                 │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ google-generativeai        │ >= 0.3.0      │ Connects to Google's Gemini AI model for           │
+  │                            │               │ generating smart, conversational career advice.    │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ requests                   │ >= 2.31.0     │ Makes HTTP requests to external APIs and services. │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ python-dotenv              │ 1.0.0         │ Reads the .env file to load secret keys safely.   │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ gunicorn                   │ 21.2.0        │ Production-grade Python web server. Used when      │
+  │                            │               │ deploying the AI service on Render (cloud).        │
+  └────────────────────────────┴───────────────┴───────────────────────────────────────────────────┘
+
+  Install Command:
+    cd ai
+    pip install -r requirements.txt
+
+================================================================================
+  SECTION 4B — NODE.JS BACKEND LIBRARIES
+================================================================================
+
+  File Location: /backend/package.json
+
+  These are all the Node.js packages the backend uses.
+  Install them using: npm install
+
+  ┌────────────────────────────┬───────────────┬───────────────────────────────────────────────────┐
+  │ Package Name               │ Version       │ What It Does (In Simple Words)                    │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ express                    │ ^5.1.0        │ The core web framework. Handles all routes like    │
+  │                            │               │ /login, /upload-resume, /recommendations, etc.     │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ mongoose                   │ ^8.19.3       │ Connects to MongoDB and lets us define data        │
+  │                            │               │ models (User, Resume, Roadmap, etc.).              │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ jsonwebtoken (JWT)         │ ^9.0.3        │ Creates and verifies login tokens. When a user     │
+  │                            │               │ logs in, they get a token so they stay logged in.  │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ dotenv                     │ ^17.2.3       │ Loads secret environment variables from .env file. │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ cors                       │ ^2.8.5        │ Allows the React frontend (port 3000) to safely    │
+  │                            │               │ communicate with the backend (port 8000).          │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ multer                     │ ^2.0.2        │ Handles file uploads. Used to receive PDF/Word     │
+  │                            │               │ resume files from the user.                        │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ axios                      │ ^1.13.6       │ Makes HTTP requests. Backend uses this to call     │
+  │                            │               │ the Python AI service internally.                  │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ openai                     │ ^6.22.0       │ Allows the backend to talk to OpenAI's GPT models. │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ @google/generative-ai      │ ^0.24.1       │ Allows the backend to use Google Gemini AI for     │
+  │                            │               │ generating career advice and chat responses.        │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ pdf-parse                  │ ^2.4.5        │ Extracts plain text from uploaded PDF resumes.     │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ mammoth                    │ ^1.11.0       │ Extracts plain text from uploaded Word (.docx)     │
+  │                            │               │ resumes.                                           │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ cookie-parser              │ ^1.4.7        │ Reads cookies from the browser to keep users       │
+  │                            │               │ authenticated.                                     │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ node-cron                  │ ^4.2.1        │ Runs scheduled tasks automatically (like clearing  │
+  │                            │               │ old data or refreshing job listings on a timer).   │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ crypto                     │ ^1.0.1        │ Provides encryption tools. Used for password       │
+  │                            │               │ hashing and security.                              │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ form-data                  │ ^4.0.5        │ Sends file data to other services (like sending    │
+  │                            │               │ resume to the Python AI service).                  │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ path                       │ ^0.12.7       │ Handles file paths in the system properly.         │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ nodemon                    │ ^3.1.10       │ Dev tool. Automatically restarts the server every  │
+  │                            │               │ time you save a file (saves time during dev).      │
+  └────────────────────────────┴───────────────┴───────────────────────────────────────────────────┘
+
+  Install Command:
+    cd backend
+    npm install
+
+================================================================================
+  SECTION 4C — REACT FRONTEND LIBRARIES
+================================================================================
+
+  File Location: /front/package.json
+
+  These are all the packages the React frontend uses.
+  Install them using: npm install
+
+  ┌────────────────────────────┬───────────────┬───────────────────────────────────────────────────┐
+  │ Package Name               │ Version       │ What It Does (In Simple Words)                    │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ react                      │ ^19.2.0       │ The core UI library. Everything visible on screen  │
+  │                            │               │ is built with React components.                    │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ react-dom                  │ ^19.2.0       │ Connects React components to the actual browser    │
+  │                            │               │ web page (DOM).                                    │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ react-router-dom           │ ^7.9.6        │ Handles navigation between pages without           │
+  │                            │               │ reloading. E.g., Home → Dashboard → Profile.       │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ axios                      │ ^1.13.2       │ Sends HTTP requests from the frontend to the       │
+  │                            │               │ backend (e.g., submit resume, fetch results).      │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ react-hot-toast            │ ^2.6.0        │ Shows beautiful notification pop-ups for success   │
+  │                            │               │ and error messages (e.g., "Login Successful!").    │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ react-scripts              │ 5.0.1         │ The behind-the-scenes tool that builds, runs, and  │
+  │                            │               │ bundles the React app.                             │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ web-vitals                 │ ^2.1.4        │ Measures website performance (speed, load time).   │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ @testing-library/react     │ ^16.3.0       │ Used for writing and running frontend tests.       │
+  ├────────────────────────────┼───────────────┼───────────────────────────────────────────────────┤
+  │ @testing-library/jest-dom  │ ^6.9.1        │ Adds extra test matchers for DOM elements.         │
+  └────────────────────────────┴───────────────┴───────────────────────────────────────────────────┘
+
+  Install Command:
+    cd front
+    npm install
+
+================================================================================
+  SECTION 5 — ENVIRONMENT & CONFIGURATION FILES
+================================================================================
+
+  These files store all the secret keys and settings. NEVER upload these to
+  GitHub. They are listed in .gitignore for security.
+
+  ── /ai/.env ──────────────────────────────────────────────────────────────────
+
+    GEMINI_API_KEY=your_google_gemini_api_key
+    OPENAI_API_KEY=your_openai_api_key
+    MONGO_URI=your_mongodb_connection_string
+    PORT=5000
+
+  ── /backend/.env ─────────────────────────────────────────────────────────────
+
+    MONGO_URI=your_mongodb_connection_string
+    JWT_SECRET=your_jwt_secret_key
+    AI_SERVICE_URL=http://localhost:5000
+    PORT=8000
+    GEMINI_API_KEY=your_google_gemini_api_key
+
+  ── /front (no .env needed locally) ──────────────────────────────────────────
+
+    The frontend uses a proxy setting in package.json that automatically
+    points API calls to http://localhost:8000 (the backend).
+
+  HOW TO GET API KEYS:
+    → Google Gemini API  : https://aistudio.google.com/app/apikey  (Free)
+    → OpenAI API         : https://platform.openai.com/api-keys    (Paid)
+    → MongoDB Atlas      : https://cloud.mongodb.com               (Free tier)
+
+================================================================================
+  SECTION 6 — IMPORTANT PROJECT FILES (WITH THEIR PURPOSE)
+================================================================================
+
+  ROOT LEVEL FILES:
+  ─────────────────
+  render.yaml              → Deployment configuration for Render (cloud hosting)
+  start_all.bat            → One-click script to start ALL 3 services at once (Windows)
+  README.md                → Full project documentation and setup guide
+  Instructions to Run.md   → Simple step-by-step guide to run the project
+  system_architecture.md   → Detailed explanation of the system design
+
+  AI SERVICE FILES (/ai):
+  ───────────────────────
+  app.py                   → Main Python Flask server. All AI routes are here
+  requirements.txt         → List of all Python libraries to install
+  .env                     → Secret keys for AI service
+  .env.example             → Template showing what keys are needed (safe to share)
+
+  AI SERVICES FOLDER (/ai/services):
+  ───────────────────────────────────
+  embedding_service.py     → Converts resume text into AI vectors (embeddings)
+  classifier_service.py    → Classifies what job role the user fits best
+  skill_gap_analyzer.py    → Finds missing skills compared to job requirements
+  explainability.py        → Explains WHY a particular job was recommended
+  readiness_calculator.py  → Calculates a score: how ready the user is for a role
+
+  BACKEND FILES (/backend):
+  ─────────────────────────
+  server.js                → Main Node.js server. Entry point for the backend
+  package.json             → Lists all backend dependencies
+  .env                     → Secret keys for backend
+  auth.js                  → Handles JWT token verification
+
+  BACKEND MODELS (/backend/models):
+  ──────────────────────────────────
+  user.js                  → Defines how a User is stored in MongoDB
+  trainingRoadmap.js        → Defines structure of a learning roadmap
+
+  BACKEND ROUTES (/backend/routes):
+  ──────────────────────────────────
+  roadmapRoute.js          → API endpoints for generating learning roadmaps
+
+  FRONTEND FILES (/front):
+  ────────────────────────
+  package.json             → Lists all frontend dependencies
+  src/App.js               → Main React app. Defines all page routes
+
+  FRONTEND PAGES (/front/src/pages):
+  ────────────────────────────────────
+  Home.jsx                 → Landing page users see when they first visit
+  ProfileIntelligence.jsx  → Shows AI analysis of the user's profile
+  TechJobMatch.jsx         → Displays matching job roles for the user
+  Test.jsx                 → Test/debug page used during development
+
+================================================================================
+  SECTION 7 — EXTERNAL APIs & SERVICES USED
+================================================================================
+
+  ┌──────────────────────────┬───────────────────────────────────────────────┐
+  │ Service / API            │ What We Use It For                            │
+  ├──────────────────────────┼───────────────────────────────────────────────┤
+  │ Google Gemini AI         │ Generates career advice, answers career        │
+  │                          │ questions, and creates learning roadmaps       │
+  ├──────────────────────────┼───────────────────────────────────────────────┤
+  │ OpenAI GPT               │ Alternative LLM for text generation and        │
+  │                          │ career recommendation explanations             │
+  ├──────────────────────────┼───────────────────────────────────────────────┤
+  │ Hugging Face Models      │ Pre-trained NLP models used by                 │
+  │ (via sentence-           │ sentence-transformers for embedding resumes    │
+  │ transformers)            │ and matching to job descriptions               │
+  ├──────────────────────────┼───────────────────────────────────────────────┤
+  │ MongoDB Atlas            │ Cloud database that stores all user data,      │
+  │                          │ resumes, recommendations, and roadmaps         │
+  ├──────────────────────────┼───────────────────────────────────────────────┤
+  │ Render.com               │ Cloud platform where all 3 services are        │
+  │                          │ deployed and hosted publicly                   │
+  └──────────────────────────┴───────────────────────────────────────────────┘
+
+================================================================================
+  SECTION 8 — HOW TO RUN THE PROJECT (STEP BY STEP)
+================================================================================
+
+  OPTION A: Run All at Once (Windows Only — Easiest Way)
+  ──────────────────────────────────────────────────────
+    Just double-click the file: start_all.bat
+    This starts all 3 services automatically.
+
+  OPTION B: Run Each Service Manually
+  ─────────────────────────────────────
+
+  STEP 1 — Start the AI Service (Python)
+  ----------------------------------------
+    Open Terminal 1:
+      cd ai
+      pip install -r requirements.txt     ← (only first time)
+      python app.py
+
+    ✅ AI Service is now running at: http://localhost:5000
+
+  STEP 2 — Start the Backend (Node.js)
+  --------------------------------------
+    Open Terminal 2:
+      cd backend
+      npm install                          ← (only first time)
+      npm run dev
+
+    ✅ Backend is now running at: http://localhost:8000
+
+  STEP 3 — Start the Frontend (React)
+  -------------------------------------
+    Open Terminal 3:
+      cd front
+      npm install                          ← (only first time)
+      npm start
+
+    ✅ Frontend is now running at: http://localhost:3000
+
+  Open your browser and go to: http://localhost:3000
+
+
+================================================================================
+  SECTION 9 — HELPFUL LINKS & REFERENCES
+================================================================================
+
+  Official Documentation:
+  ──────────────────────
+  React                → https://react.dev
+  Node.js / Express    → https://expressjs.com
+  Flask (Python)       → https://flask.palletsprojects.com
+  MongoDB / Mongoose   → https://mongoosejs.com
+  Sentence Transformers→ https://www.sbert.net
+  Google Gemini AI     → https://ai.google.dev
+  OpenAI API           → https://platform.openai.com/docs
+  Hugging Face         → https://huggingface.co/docs
+  PyTorch              → https://pytorch.org/docs
+  scikit-learn         → https://scikit-learn.org/stable
+  JWT (jsonwebtoken)   → https://jwt.io
+  Multer (file upload) → https://github.com/expressjs/multer
+  Render Deployment    → https://render.com/docs
+
+  Free API Key Sources:
+  ─────────────────────
+  Google Gemini API    → https://aistudio.google.com/app/apikey
+  MongoDB Atlas (Free) → https://www.mongodb.com/cloud/atlas/register
+
+================================================================================
+  SECTION 10 — HARDWARE REQUIREMENTS
+================================================================================
+
+  Minimum Requirements (to run the project locally):
+  ────────────────────────────────────────────────────
+
+  ┌──────────────────────┬───────────────────────────────────────────────────┐
+  │ Component            │ Minimum Requirement                               │
+  ├──────────────────────┼───────────────────────────────────────────────────┤
+  │ RAM                  │ 8 GB (16 GB recommended for AI model loading)      │
+  ├──────────────────────┼───────────────────────────────────────────────────┤
+  │ Processor (CPU)      │ Intel Core i5 / AMD Ryzen 5 or above              │
+  ├──────────────────────┼───────────────────────────────────────────────────┤
+  │ Storage (Disk Space) │ At least 5 GB free (AI model files are large)     │
+  ├──────────────────────┼───────────────────────────────────────────────────┤
+  │ Internet Connection  │ Required (for AI APIs and MongoDB Atlas)           │
+  ├──────────────────────┼───────────────────────────────────────────────────┤
+  │ Operating System     │ Windows 10/11, macOS, or Ubuntu Linux             │
+  ├──────────────────────┼───────────────────────────────────────────────────┤
+  │ GPU (Optional)       │ Not required. The AI runs on CPU mode by default.  │
+  │                      │ A GPU would speed up model inference if available. │
+  └──────────────────────┴───────────────────────────────────────────────────┘
+
+  Note on AI Model Size:
+    The sentence-transformers library automatically downloads the AI model
+    (approx. 400 MB - 1 GB) the first time it runs. This requires internet.
+    After the first download, it works offline.
+
+================================================================================
+  SECTION 11 — MANUALS, HELP FILES & DOCUMENTATION
+================================================================================
+
+  All the documentation files included in this project:
+
+  ┌────────────────────────────────┬──────────────────────────────────────────┐
+  │ File Name                      │ What It Covers                           │
+  ├────────────────────────────────┼──────────────────────────────────────────┤
+  │ README.md                      │ The main project guide. Covers project   │
+  │ (root folder)                  │ overview, features, tech stack, setup,   │
+  │                                │ and environment variable instructions.   │
+  ├────────────────────────────────┼──────────────────────────────────────────┤
+  │ Instructions to Run.md         │ Simple, step-by-step guide to start all  │
+  │ (root folder)                  │ 3 services and open the app locally.     │
+  ├────────────────────────────────┼──────────────────────────────────────────┤
+  │ system_architecture.md         │ Deep technical documentation of how the  │
+  │ (root folder)                  │ entire system is designed — data flow,   │
+  │                                │ API communication, AI pipeline, and DB   │
+  │                                │ schema.                                  │
+  ├────────────────────────────────┼──────────────────────────────────────────┤
+  │ Supporting_Files_and_          │ This file. Lists all libraries, software,│
+  │ Software.txt                   │ files, APIs, and setup instructions for  │
+  │ (root folder)                  │ the final project submission.            │
+  ├────────────────────────────────┼──────────────────────────────────────────┤
+  │ ai/README.md                   │ Specific documentation for the Python    │
+  │                                │ AI service — its endpoints, models used, │
+  │                                │ and how the recommendation pipeline      │
+  │                                │ works.                                   │
+  ├────────────────────────────────┼──────────────────────────────────────────┤
+  │ front/README.md                │ Documentation for the React frontend —   │
+  │                                │ how to start, build, and configure it.   │
+  ├────────────────────────────────┼──────────────────────────────────────────┤
+  │ ai/.env.example                │ Template file showing what environment   │
+  │                                │ variables the AI service needs.          │
+  ├────────────────────────────────┼──────────────────────────────────────────┤
+  │ backend/.env.example           │ Template file showing what environment   │
+  │                                │ variables the backend needs.             │
+  ├────────────────────────────────┼──────────────────────────────────────────┤
+  │ render.yaml                    │ Deployment configuration file for Render │
+  │                                │ (cloud). Defines how each service is     │
+  │                                │ built and started in production.         │
+  ├────────────────────────────────┼──────────────────────────────────────────┤
+  │ start_all.bat                  │ Windows batch script. Run this file to   │
+  │                                │ start all 3 services with one click.     │
+  ├────────────────────────────────┼──────────────────────────────────────────┤
+  │ TODO.md                        │ Internal task tracking file used during  │
+  │ (root & ai folders)            │ development. Not required for submission. │
+  └────────────────────────────────┴──────────────────────────────────────────┘
+
+  Where to find official library manuals:
+  ──────────────────────────────────────────
+    Sentence Transformers  → https://www.sbert.net/docs
+    Flask                  → https://flask.palletsprojects.com/en/latest
+    React                  → https://react.dev/learn
+    Express.js             → https://expressjs.com/en/guide/routing.html
+    Mongoose               → https://mongoosejs.com/docs/guide.html
+    PyTorch                → https://pytorch.org/docs/stable/index.html
+    Scikit-learn           → https://scikit-learn.org/stable/user_guide.html
+    Hugging Face           → https://huggingface.co/docs/transformers
+    Google Gemini API      → https://ai.google.dev/gemini-api/docs
+    OpenAI API             → https://platform.openai.com/docs/introduction
+    JWT Guide              → https://jwt.io/introduction
+    MongoDB Manual         → https://www.mongodb.com/docs/manual
+
+================================================================================
+  SECTION 12 — SECURITY PRACTICES USED IN THIS PROJECT
+================================================================================
+
+  This project follows industry-standard security practices to protect user
+  data and credentials. Below is a clear list of every security measure used.
+
+  1. SECRET KEYS IN .env FILES (Never Hardcoded)
+  ─────────────────────────────────────────────────
+  All sensitive information (API keys, database passwords, JWT secrets) are
+  stored in .env files. They are never written directly inside the code.
+  If someone reads the source code, they will not find any real keys.
+
+  2. .gitignore — BLOCKS SECRETS FROM GITHUB
+  ─────────────────────────────────────────────
+  The .gitignore file is configured to block all .env files from being
+  accidentally pushed to GitHub. Only .env.example files (with placeholder
+  values) are shared — never real credentials.
+
+  3. JWT (JSON Web Tokens) — SECURE LOGIN
+  ──────────────────────────────────────────
+  When a user logs in, the system gives them a JWT token (a digitally signed
+  code). Every protected page/API requires this token. Tokens expire
+  automatically, reducing the risk of misuse.
+
+  4. PASSWORDS NEVER STORED AS PLAIN TEXT
+  ──────────────────────────────────────────
+  User passwords are hashed (scrambled using a one-way algorithm) before
+  being stored in the database. Even if someone accessed the database,
+  they cannot read the actual passwords.
+
+  5. CORS — CONTROLS WHO CAN ACCESS THE BACKEND
+  ─────────────────────────────────────────────────
+  CORS (Cross-Origin Resource Sharing) is configured so that only the
+  frontend (trusted origin) can make requests to the backend. Requests
+  from unknown or untrusted websites are automatically blocked.
+
+  6. MULTER — FILE UPLOAD VALIDATION
+  ─────────────────────────────────────
+  The file upload system (Multer) only accepts PDF and Word (.docx) files.
+  Any other file type is rejected before it reaches the server.
+
+  7. ENVIRONMENT SEPARATION
+  ──────────────────────────
+  The project has separate configurations for development (local) and
+  production (deployed). Production keys are stored in the cloud
+  deployment dashboard — never in the code repository.
+
+  Files that are SAFE to share (no real secrets inside):
+    ✓  /ai/.env.example
+    ✓  /backend/.env.example
+    ✓  All source code files (.js, .py, .jsx)
+    ✓  This document
+
+  Files that are NEVER shared:
+    ✗  /ai/.env
+    ✗  /backend/.env
+
+================================================================================
+  SECTION 13 — COMMON TROUBLESHOOTING
+================================================================================
+
+  Problem → Solution (Quick Reference)
+
+  ┌─────────────────────────────────────┬────────────────────────────────────┐
+  │ Problem                             │ Solution                           │
+  ├─────────────────────────────────────┼────────────────────────────────────┤
+  │ Python AI service won't start       │ Make sure you ran:                 │
+  │                                     │ pip install -r requirements.txt    │
+  │                                     │ Check that Python 3.9+ is installed│
+  ├─────────────────────────────────────┼────────────────────────────────────┤
+  │ Backend gives "Cannot connect to    │ Check your MONGO_URI in .env file  │
+  │ MongoDB" error                      │ Make sure MongoDB Atlas IP access  │
+  │                                     │ is set to 0.0.0.0/0               │
+  ├─────────────────────────────────────┼────────────────────────────────────┤
+  │ Frontend gives CORS error           │ Make sure backend is running on    │
+  │                                     │ port 8000 and AI on port 5000      │
+  ├─────────────────────────────────────┼────────────────────────────────────┤
+  │ AI model takes very long to load    │ Normal on first run — it downloads │
+  │ first time                          │ the model (~400 MB). Wait for it.  │
+  ├─────────────────────────────────────┼────────────────────────────────────┤
+  │ "Module not found" error in Node.js │ Run: npm install (in backend or    │
+  │                                     │ front folder)                      │
+  ├─────────────────────────────────────┼────────────────────────────────────┤
+  │ Resume upload not working           │ Check that /backend/uploads folder │
+  │                                     │ exists. Multer needs it.           │
+  ├─────────────────────────────────────┼────────────────────────────────────┤
+  │ Gemini AI not responding            │ Check GEMINI_API_KEY in .env and   │
+  │                                     │ make sure internet is connected    │
+  ├─────────────────────────────────────┼────────────────────────────────────┤
+  │ Port already in use error           │ Kill old process:                  │
+  │                                     │ Windows: netstat -ano | findstr    │
+  │                                     │ :8000 → taskkill /PID <id> /F     │
+  └─────────────────────────────────────┴────────────────────────────────────┘
+
+================================================================================
+                         END OF DOCUMENT
+================================================================================
+
+  DOCUMENT SUMMARY:
+  ─────────────────
+  This document covers everything needed to understand, set up, and run the
+  AI-Based Career Advisor final year project. It includes:
+
+    ✓  All Python, Node.js, and React libraries with clear explanations
+    ✓  All software tools required to run the project
+    ✓  All environment variables needed (with placeholders — no real keys)
+    ✓  Hardware requirements for running locally
+    ✓  Complete list of all documentation and help files in the project
+    ✓  Deployment information for cloud hosting (Render)
+    ✓  Troubleshooting guide for common issues
+    ✓  Links to all official library documentation / manuals
+
+  Prepared for   :  Final Year Project Submission
+  Project        :  AI-Based Career Advisor
+  Total Sections :  13
+  Document Type  :  Supporting Files & Software Reference
+
+  All libraries and tools used in this project are either open-source (free
+  to use) or have free-tier API access available for academic purposes.
+
+  For any further queries, refer to the README.md in the root folder.
+
+================================================================================

@@ -69,6 +69,7 @@ router.post("/generate", checkForAuthenticationCookie("token"), async (req, res)
 // Get Latest Test Result for Dashboard
 router.get("/latest", checkForAuthenticationCookie("token"), async (req, res) => {
     try {
+        if (!req.user) return res.status(401).json({ ok: false, error: "Session expired. Please log in again." });
         const latestResult = await Result.findOne({ user_id: req.user._id })
             .sort({ createdAt: -1 })
             .populate('test_id', 'domain');

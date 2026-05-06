@@ -26,7 +26,12 @@ import traceback
 from typing import Dict, Any, List
 import uuid
 import json
+import json
 from dotenv import load_dotenv
+
+# Optimization for gthread/multiprocessing
+os.environ['TOKENIZERS_PARALLELISM'] = 'false'
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
@@ -484,6 +489,43 @@ def classify_profile():
     except Exception as e:
         logger.error(f"❌ [{request_id}] Classification error: {e}")
         traceback.print_exc()
+        return create_error_response(str(e), 500, request_id)
+
+
+@app.route('/api/generate-embeddings', methods=['POST'])
+def generate_job_embeddings():
+    """
+    Trigger embedding generation for jobs.
+    Called by backend after fetching new jobs.
+    """
+    request_id = str(uuid.uuid4())[:8]
+    initialize_services()
+    
+    try:
+        data = request.json or {}
+        jobs = data.get('jobs', [])
+        
+        if not jobs:
+            # If no jobs provided, we just signal success (warm-up)
+            return jsonify({
+                "ok": True, 
+                "message": "AI Service is warmed up. Send jobs in 'jobs' field for pre-computation.",
+                "request_id": request_id
+            }), 200
+            
+        logger.info(f"⚡ [{request_id}] Pre-computing embeddings for {len(jobs)} jobs")
+        
+        # This will populate RecommenderEngine's internal cache
+        recommender._prepare_job_embeddings(jobs)
+        
+        return jsonify({
+            "ok": True,
+            "count": len(jobs),
+            "request_id": request_id
+        }), 200
+        
+    except Exception as e:
+        logger.error(f"❌ [{request_id}] Embedding generation error: {e}")
         return create_error_response(str(e), 500, request_id)
 
 

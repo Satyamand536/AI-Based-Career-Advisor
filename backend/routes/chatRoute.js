@@ -39,6 +39,7 @@ router.post("/send", checkForAuthenticationCookie("token"), async (req, res) => 
         const { message } = req.body;
         if (!message) return res.status(400).json({ error: "Message is required" });
 
+        if (!req.user) return res.status(401).json({ ok: false, error: "Session expired. Please log in again." });
         const userId = req.user._id.toString();
 
         // ── Off-topic enforcement ──

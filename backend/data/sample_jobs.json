@@ -1,0 +1,47 @@
+[
+  {
+    "title": "Full Stack Developer (MERN)",
+    "company": "TechVision AI",
+    "description": "We are looking for a MERN stack developer to build scalable web applications. Experience with React, Node.js, and MongoDB is required.",
+    "location": "Remote",
+    "type": "Full-time",
+    "source_link": "https://example.com/job1",
+    "source": "fallback"
+  },
+  {
+    "title": "Machine Learning Engineer",
+    "company": "DataMind Systems",
+    "description": "Join our AI team to build recommendation engines. Experience with Python, TensorFlow, and Pandas is essential.",
+    "location": "Bangalore, India",
+    "type": "Full-time",
+    "source_link": "https://example.com/job2",
+    "source": "fallback"
+  },
+  {
+    "title": "Frontend Engineer (React)",
+    "company": "PixelPerfect UI",
+    "description": "Build stunning user interfaces using React and Tailwind CSS. Strong JS fundamentals required.",
+    "location": "Remote",
+    "type": "Contract",
+    "source_link": "https://example.com/job3",
+    "source": "fallback"
+  },
+  {
+    "title": "Backend Architect",
+    "company": "ScaleUp Networks",
+    "description": "Design high-performance microservices using Node.js and Redis. Understanding of system design is a plus.",
+    "location": "San Francisco, CA",
+    "type": "Full-time",
+    "source_link": "https://example.com/job4",
+    "source": "fallback"
+  },
+  {
+    "title": "DevOps Engineer",
+    "company": "CloudNative Solutions",
+    "description": "Manage Kubernetes clusters and CI/CD pipelines. Proficiency in Docker and AWS is required.",
+    "location": "Remote",
+    "type": "Full-time",
+    "source_link": "https://example.com/job5",
+    "source": "fallback"
+  }
+]

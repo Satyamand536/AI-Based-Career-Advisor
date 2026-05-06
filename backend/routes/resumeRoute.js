@@ -66,7 +66,7 @@ router.post("/upload", checkForAuthenticationCookie("token"), upload.single("res
     try {
       const response = await axios.post(`${AI_SERVICE_URL}/parse-resume`, {
         filePath: filePath
-      }, { timeout: 35000 }); // Slightly longer than AI default
+      }, { timeout: 60000 }); // Increased to 60s for cold-start model loads
       
       if (response.data.ok) {
         parsedData = response.data.profile;
@@ -96,7 +96,7 @@ router.post("/upload", checkForAuthenticationCookie("token"), upload.single("res
                     skills: parsedData.skills || [],
                     experience_years: parsedData.experience_years || 0
                 }
-            }, { timeout: 10000 });
+            }, { timeout: 15000 });
             if (stageRes.data.ok) userStage = stageRes.data.stage;
         } catch (stageErr) {
             console.warn("[ResumeUpload] Stage Classification Failed:", stageErr.message);
