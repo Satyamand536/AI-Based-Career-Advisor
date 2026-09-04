@@ -153,7 +153,7 @@ export function MobileNav() {
 const styles = {
   sidebar: {
     position: "fixed", top: 0, left: 0, bottom: 0,
-    background: "#0f172a",
+    background: "#070a12",
     display: "flex", flexDirection: "column",
     transition: "width 0.25s ease",
     zIndex: 100,
@@ -168,14 +168,14 @@ const styles = {
   logoIcon: { fontSize: 28, flexShrink: 0 },
   logoText: {
     fontSize: 22, fontWeight: 800, color: "#fff",
-    background: "linear-gradient(135deg, #818cf8, #38bdf8)",
+    background: "linear-gradient(135deg, #8b5cf6, #2dd4bf)",
     WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
     whiteSpace: "nowrap",
   },
   collapseBtn: {
     margin: "0 8px 8px", padding: "6px",
     background: "rgba(255,255,255,0.06)", border: "none",
-    borderRadius: 6, color: "#94a3b8", cursor: "pointer",
+    borderRadius: 6, color: "#b6c2d6", cursor: "pointer",
     fontSize: 12, transition: "all 0.2s",
   },
   nav: { flex: 1, padding: "8px 8px", display: "flex", flexDirection: "column", gap: 4, overflowY: "auto" },
@@ -183,23 +183,23 @@ const styles = {
     display: "flex", alignItems: "center", gap: 12,
     padding: "11px 12px", borderRadius: 10,
     border: "none", background: "transparent",
-    color: "#94a3b8", cursor: "pointer",
+    color: "#b6c2d6", cursor: "pointer",
     fontSize: 14, fontWeight: 500,
     width: "100%", textAlign: "left",
     transition: "all 0.15s",
     position: "relative",
   },
   navItemActive: {
-    background: "linear-gradient(135deg, rgba(129,140,248,0.15), rgba(56,189,248,0.15))",
-    color: "#e2e8f0",
-    borderLeft: "3px solid #818cf8",
+    background: "linear-gradient(135deg, rgba(139,92,246,0.15), rgba(45,212,191,0.15))",
+    color: "#e8edf5",
+    borderLeft: "3px solid #8b5cf6",
   },
   navIcon: { fontSize: 20, flexShrink: 0 },
   navLabel: { whiteSpace: "nowrap", overflow: "hidden" },
   activeIndicator: {
     position: "absolute", right: 12,
     width: 6, height: 6, borderRadius: "50%",
-    background: "#818cf8",
+    background: "#8b5cf6",
   },
   userSection: { padding: "8px", borderTop: "1px solid rgba(255,255,255,0.08)" },
   userCard: {
@@ -208,12 +208,12 @@ const styles = {
   },
   avatar: {
     width: 36, height: 36, borderRadius: "50%",
-    background: "linear-gradient(135deg, #818cf8, #38bdf8)",
+    background: "linear-gradient(135deg, #8b5cf6, #2dd4bf)",
     display: "flex", alignItems: "center", justifyContent: "center",
     fontSize: 13, fontWeight: 700, color: "#fff", flexShrink: 0,
   },
-  userName: { fontSize: 13, fontWeight: 600, color: "#e2e8f0", whiteSpace: "nowrap", overflow: "hidden" },
-  userEmail: { fontSize: 11, color: "#64748b", whiteSpace: "nowrap", overflow: "hidden" },
+  userName: { fontSize: 13, fontWeight: 600, color: "#e8edf5", whiteSpace: "nowrap", overflow: "hidden" },
+  userEmail: { fontSize: 11, color: "#9aa7c2", whiteSpace: "nowrap", overflow: "hidden" },
   logoutBtn: {
     display: "flex", alignItems: "center", gap: 10,
     padding: "10px 12px", borderRadius: 8,
@@ -224,7 +224,7 @@ const styles = {
   },
   mobileNav: {
     position: "fixed", bottom: 0, left: 0, right: 0,
-    background: "#0f172a",
+    background: "#070a12",
     display: "none",
     justifyContent: "space-around",
     padding: "8px 0 max(8px, env(safe-area-inset-bottom))",
@@ -235,9 +235,9 @@ const styles = {
   mobileNavItem: {
     display: "flex", flexDirection: "column", alignItems: "center",
     padding: "6px 12px", border: "none", background: "transparent",
-    color: "#64748b", cursor: "pointer", borderRadius: 8,
+    color: "#9aa7c2", cursor: "pointer", borderRadius: 8,
   },
-  mobileNavItemActive: { color: "#818cf8" },
+  mobileNavItemActive: { color: "#8b5cf6" },
   modalOverlay: {
     position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
     backgroundColor: "rgba(15, 23, 42, 0.75)",
@@ -259,17 +259,17 @@ const styles = {
     display: "flex", alignItems: "center", justifyContent: "center",
   },
   modalTitle: {
-    margin: "0 0 12px", fontSize: 24, fontWeight: 700, color: "#f8fafc",
+    margin: "0 0 12px", fontSize: 24, fontWeight: 700, color: "#eef2f8",
   },
   modalText: {
-    margin: "0 0 24px", fontSize: 15, color: "#94a3b8", textAlign: "center", lineHeight: 1.5,
+    margin: "0 0 24px", fontSize: 15, color: "#b6c2d6", textAlign: "center", lineHeight: 1.5,
   },
   modalActions: {
     display: "flex", gap: 12, width: "100%", justifyContent: "center",
   },
   modalBtnCancel: {
     flex: 1, padding: "12px 16px", borderRadius: 12, fontSize: 14, fontWeight: 600,
-    background: "rgba(255,255,255,0.05)", color: "#cbd5e1", border: "1px solid rgba(255,255,255,0.1)",
+    background: "rgba(255,255,255,0.05)", color: "#d7e0ec", border: "1px solid rgba(255,255,255,0.1)",
     cursor: "pointer", transition: "all 0.2s",
   },
   modalBtnConfirm: {

@@ -5,14 +5,14 @@ import toast from "react-hot-toast";
 import Sidebar from "../components/Sidebar";
 
 const DOMAINS = [
-  { id: "React.js",        icon: "⚛️",  color: "#38bdf8" },
+  { id: "React.js",        icon: "⚛️",  color: "#2dd4bf" },
   { id: "Node.js",         icon: "🟢",  color: "#22c55e" },
   { id: "Python",          icon: "🐍",  color: "#f59e0b" },
-  { id: "System Design",   icon: "🏗️",  color: "#818cf8" },
+  { id: "System Design",   icon: "🏗️",  color: "#8b5cf6" },
   { id: "DSA",             icon: "📐",  color: "#f472b6" },
   { id: "Docker & DevOps", icon: "🐳",  color: "#06b6d4" },
   { id: "SQL & Databases", icon: "🗄️",  color: "#a78bfa" },
-  { id: "TypeScript",      icon: "🔷",  color: "#60a5fa" },
+  { id: "TypeScript",      icon: "🔷",  color: "#5eead4" },
   { id: "Machine Learning",icon: "🤖",  color: "#fb923c" },
   { id: "AWS & Cloud",     icon: "☁️",  color: "#fbbf24" },
 ];
@@ -169,24 +169,24 @@ export default function SkillGapTests() {
               {skillGaps.length > 0 && (
                 <div style={{ ...styles.card, position: "sticky", top: 20 }}>
                   <h3 style={styles.cardTitle}>⚡ Detected Skill Gaps</h3>
-                  <p style={{ color: "#64748b", fontSize: 13, marginBottom: 16 }}>
+                  <p style={{ color: "#9aa7c2", fontSize: 13, marginBottom: 16 }}>
                     These skills appear in jobs you matched but are missing from your profile:
                   </p>
                   <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                     {skillGaps.map((gap, i) => (
-                      <div key={i} style={{ ...styles.gapChip, borderColor: gap.priority === "high" ? "#ef4444" : gap.priority === "medium" ? "#f59e0b" : "#64748b" }}>
+                      <div key={i} style={{ ...styles.gapChip, borderColor: gap.priority === "high" ? "#ef4444" : gap.priority === "medium" ? "#f59e0b" : "#9aa7c2" }}>
                         <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
-                            <span style={{ fontSize: 13, fontWeight: 700, color: gap.priority === "high" ? "#f87171" : gap.priority === "medium" ? "#fbbf24" : "#94a3b8" }}>
+                            <span style={{ fontSize: 13, fontWeight: 700, color: gap.priority === "high" ? "#f87171" : gap.priority === "medium" ? "#fbbf24" : "#b6c2d6" }}>
                               {gap.skill}
                             </span>
-                            <span style={{ fontSize: 11, color: "#64748b" }}>
+                            <span style={{ fontSize: 11, color: "#9aa7c2" }}>
                               {gap.priority === "high" ? "🔴" : gap.priority === "medium" ? "🟡" : "⚪"} {gap.occurrences} jobs
                             </span>
                         </div>
                       </div>
                     ))}
                   </div>
-                  <div style={{ marginTop: 16, fontSize: 12, color: "#64748b", background: "rgba(255,255,255,0.03)", padding: 12, borderRadius: 8 }}>
+                  <div style={{ marginTop: 16, fontSize: 12, color: "#9aa7c2", background: "rgba(255,255,255,0.03)", padding: 12, borderRadius: 8 }}>
                     💡 Select a domain on the right that aligns with your skill gaps to take a targeted test. Passing tests increases your readiness score.
                   </div>
                 </div>
@@ -203,11 +203,11 @@ export default function SkillGapTests() {
                     style={{
                       ...styles.domainBtn,
                       borderColor: selectedDomain === domain.id ? domain.color : "rgba(255,255,255,0.08)",
-                      background: selectedDomain === domain.id ? domain.color + "18" : "#0f172a",
+                      background: selectedDomain === domain.id ? domain.color + "18" : "#070a12",
                     }}
                   >
                     <span style={{ fontSize: 26 }}>{domain.icon}</span>
-                    <span style={{ fontSize: 12, color: selectedDomain === domain.id ? domain.color : "#94a3b8", fontWeight: 600 }}>
+                    <span style={{ fontSize: 12, color: selectedDomain === domain.id ? domain.color : "#b6c2d6", fontWeight: 600 }}>
                       {domain.id}
                     </span>
                   </button>
@@ -224,9 +224,9 @@ export default function SkillGapTests() {
                       onClick={() => setSelectedDifficulty(d)}
                       style={{
                         ...styles.diffBtn,
-                        background: selectedDifficulty === d ? (d === "Hard" ? "#ef4444" : d === "Medium" ? "#f59e0b" : "#22c55e") + "20" : "#0f172a",
-                        borderColor: selectedDifficulty === d ? (d === "Hard" ? "#ef4444" : d === "Medium" ? "#f59e0b" : "#22c55e") : "#334155",
-                        color: selectedDifficulty === d ? "#e2e8f0" : "#64748b",
+                        background: selectedDifficulty === d ? (d === "Hard" ? "#ef4444" : d === "Medium" ? "#f59e0b" : "#22c55e") + "20" : "#070a12",
+                        borderColor: selectedDifficulty === d ? (d === "Hard" ? "#ef4444" : d === "Medium" ? "#f59e0b" : "#22c55e") : "#1b2740",
+                        color: selectedDifficulty === d ? "#e8edf5" : "#9aa7c2",
                       }}
                     >
                       {d === "Easy" ? "🟢" : d === "Medium" ? "🟡" : "🔴"} {d}
@@ -254,7 +254,7 @@ export default function SkillGapTests() {
             <div style={styles.testHeader}>
               <div>
                 <h2 style={{ ...styles.h1, fontSize: 22 }}>{test.domain} — {test.difficulty}</h2>
-                <div style={{ color: "#64748b", fontSize: 13 }}>
+                <div style={{ color: "#9aa7c2", fontSize: 13 }}>
                   Question {currentQ + 1} of {test.questions.length}
                 </div>
               </div>
@@ -267,8 +267,8 @@ export default function SkillGapTests() {
             </div>
 
             {/* Progress bar */}
-            <div style={{ height: 4, background: "#1e293b", borderRadius: 2, marginBottom: 24 }}>
-              <div style={{ height: "100%", width: `${progress * 100}%`, background: "linear-gradient(90deg, #818cf8, #38bdf8)", borderRadius: 2, transition: "width 0.3s" }} />
+            <div style={{ height: 4, background: "#101728", borderRadius: 2, marginBottom: 24 }}>
+              <div style={{ height: "100%", width: `${progress * 100}%`, background: "linear-gradient(90deg, #8b5cf6, #2dd4bf)", borderRadius: 2, transition: "width 0.3s" }} />
             </div>
 
             {/* Question navigator */}
@@ -279,9 +279,9 @@ export default function SkillGapTests() {
                   onClick={() => setCurrentQ(i)}
                   style={{
                     width: 34, height: 34, borderRadius: 8, border: "1px solid",
-                    background: answers[q._id] !== undefined ? "rgba(129,140,248,0.2)" : "#0f172a",
-                    borderColor: i === currentQ ? "#818cf8" : answers[q._id] !== undefined ? "rgba(129,140,248,0.4)" : "#334155",
-                    color: i === currentQ ? "#818cf8" : answers[q._id] !== undefined ? "#a5b4fc" : "#64748b",
+                    background: answers[q._id] !== undefined ? "rgba(139,92,246,0.2)" : "#070a12",
+                    borderColor: i === currentQ ? "#8b5cf6" : answers[q._id] !== undefined ? "rgba(139,92,246,0.4)" : "#1b2740",
+                    color: i === currentQ ? "#8b5cf6" : answers[q._id] !== undefined ? "#a5b4fc" : "#9aa7c2",
                     cursor: "pointer", fontSize: 13, fontWeight: 700,
                   }}
                 >
@@ -295,7 +295,7 @@ export default function SkillGapTests() {
               const q = test.questions[currentQ];
               return (
                 <div style={styles.questionCard}>
-                  <h3 style={{ color: "#f1f5f9", fontSize: 18, lineHeight: 1.6, marginBottom: 24 }}>
+                  <h3 style={{ color: "#eef2f8", fontSize: 18, lineHeight: 1.6, marginBottom: 24 }}>
                     Q{currentQ + 1}. {q.text}
                   </h3>
                   <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -310,12 +310,12 @@ export default function SkillGapTests() {
                         }}
                         style={{
                           ...styles.optionBtn,
-                          background: answers[q._id] === oi ? "rgba(129,140,248,0.15)" : "rgba(255,255,255,0.03)",
-                          borderColor: answers[q._id] === oi ? "#818cf8" : "#334155",
-                          color: answers[q._id] === oi ? "#e2e8f0" : "#94a3b8",
+                          background: answers[q._id] === oi ? "rgba(139,92,246,0.15)" : "rgba(255,255,255,0.03)",
+                          borderColor: answers[q._id] === oi ? "#8b5cf6" : "#1b2740",
+                          color: answers[q._id] === oi ? "#e8edf5" : "#b6c2d6",
                         }}
                       >
-                        <span style={{ ...styles.optionLetter, background: answers[q._id] === oi ? "#818cf8" : "#1e293b" }}>
+                        <span style={{ ...styles.optionLetter, background: answers[q._id] === oi ? "#8b5cf6" : "#101728" }}>
                           {["A","B","C","D"][oi]}
                         </span>
                         {option}
@@ -343,7 +343,7 @@ export default function SkillGapTests() {
             <div style={styles.scoreCard}>
               <div style={{ textAlign: "center" }}>
                 <svg width={120} height={120} viewBox="0 0 120 120">
-                  <circle cx="60" cy="60" r="50" fill="none" stroke="#1e293b" strokeWidth="12" />
+                  <circle cx="60" cy="60" r="50" fill="none" stroke="#101728" strokeWidth="12" />
                   <circle
                     cx="60" cy="60" r="50"
                     fill="none"
@@ -353,20 +353,20 @@ export default function SkillGapTests() {
                     strokeLinecap="round"
                     transform="rotate(-90 60 60)"
                   />
-                  <text x="60" y="55" textAnchor="middle" fill="#f1f5f9" fontSize="26" fontWeight="bold">{result.score}</text>
-                  <text x="60" y="76" textAnchor="middle" fill="#64748b" fontSize="13">out of 100</text>
+                  <text x="60" y="55" textAnchor="middle" fill="#eef2f8" fontSize="26" fontWeight="bold">{result.score}</text>
+                  <text x="60" y="76" textAnchor="middle" fill="#9aa7c2" fontSize="13">out of 100</text>
                 </svg>
                 <div style={{ marginTop: 10, fontWeight: 700, color: result.score >= 70 ? "#22c55e" : result.score >= 50 ? "#f59e0b" : "#ef4444", fontSize: 18 }}>
                   {result.score >= 70 ? "Excellent! 🎉" : result.score >= 50 ? "Good job! 📈" : "Keep practicing 💪"}
                 </div>
-                <div style={{ color: "#64748b", marginTop: 6, fontSize: 14 }}>
+                <div style={{ color: "#9aa7c2", marginTop: 6, fontSize: 14 }}>
                   {result.correct} / {result.total} correct
                 </div>
               </div>
 
               {/* Skill Gaps from this test */}
               {result.skill_gaps?.length > 0 && (
-                <div style={{ marginTop: 24, padding: 16, background: "#0f172a", borderRadius: 12, border: "1px solid rgba(239,68,68,0.2)" }}>
+                <div style={{ marginTop: 24, padding: 16, background: "#070a12", borderRadius: 12, border: "1px solid rgba(239,68,68,0.2)" }}>
                   <div style={{ fontSize: 13, fontWeight: 700, color: "#f87171", marginBottom: 10 }}>
                     🔴 Skill Gaps Detected
                   </div>
@@ -388,9 +388,9 @@ export default function SkillGapTests() {
                   <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
                     <span style={{ fontSize: 18, flexShrink: 0 }}>{d.is_correct ? "✅" : "❌"}</span>
                     <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: 14, color: "#e2e8f0", fontWeight: 500, marginBottom: 8 }}>Q{i + 1}. {d.text}</div>
+                      <div style={{ fontSize: 14, color: "#e8edf5", fontWeight: 500, marginBottom: 8 }}>Q{i + 1}. {d.text}</div>
                       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 10 }}>
-                        <div style={{ fontSize: 12, padding: "6px 10px", background: "rgba(129,140,248,0.1)", borderRadius: 6, color: "#a5b4fc" }}>
+                        <div style={{ fontSize: 12, padding: "6px 10px", background: "rgba(139,92,246,0.1)", borderRadius: 6, color: "#a5b4fc" }}>
                           <strong>Your answer:</strong> {d.user_answer_text || "Skipped"}
                         </div>
                         <div style={{ fontSize: 12, padding: "6px 10px", background: "rgba(34,197,94,0.1)", borderRadius: 6, color: "#4ade80" }}>
@@ -398,7 +398,7 @@ export default function SkillGapTests() {
                         </div>
                       </div>
                       {d.explanation && (
-                        <div style={{ fontSize: 12, color: "#64748b", padding: "8px 12px", background: "#0f172a", borderRadius: 6, lineHeight: 1.6 }}>
+                        <div style={{ fontSize: 12, color: "#9aa7c2", padding: "8px 12px", background: "#070a12", borderRadius: 6, lineHeight: 1.6 }}>
                           {d.explanation}
                         </div>
                       )}
@@ -424,27 +424,27 @@ export default function SkillGapTests() {
 }
 
 const layout = {
-  page: { display: "flex", minHeight: "100vh", background: "#0f172a" },
+  page: { display: "flex", minHeight: "100vh", background: "#070a12" },
   main: { flex: 1, marginLeft: 240, padding: "36px 40px", overflowY: "auto" },
 };
 
 const styles = {
   header: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24, flexWrap: "wrap", gap: 16 },
-  h1: { margin: 0, fontSize: 28, color: "#f1f5f9", fontWeight: 800 },
-  subtitle: { margin: "6px 0 0", color: "#64748b", fontSize: 13 },
-  card: { background: "#1e293b", borderRadius: 14, padding: "20px", border: "1px solid rgba(255,255,255,0.06)" },
-  cardTitle: { margin: "0 0 14px", fontSize: 15, fontWeight: 700, color: "#e2e8f0" },
-  gapChip: { padding: "6px 12px", background: "#0f172a", borderRadius: 8, border: "1px solid", display: "flex", gap: 4, alignItems: "center" },
+  h1: { margin: 0, fontSize: 28, color: "#eef2f8", fontWeight: 800 },
+  subtitle: { margin: "6px 0 0", color: "#9aa7c2", fontSize: 13 },
+  card: { background: "#101728", borderRadius: 14, padding: "20px", border: "1px solid rgba(255,255,255,0.06)" },
+  cardTitle: { margin: "0 0 14px", fontSize: 15, fontWeight: 700, color: "#e8edf5" },
+  gapChip: { padding: "6px 12px", background: "#070a12", borderRadius: 8, border: "1px solid", display: "flex", gap: 4, alignItems: "center" },
   domainGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))", gap: 10 },
   domainBtn: { padding: "16px 12px", borderRadius: 12, border: "2px solid", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", gap: 8, transition: "all 0.2s" },
   diffBtn: { padding: "10px 20px", borderRadius: 8, border: "1px solid", cursor: "pointer", fontSize: 14, fontWeight: 600, transition: "all 0.2s" },
-  generateBtn: { marginTop: 20, padding: "14px 28px", background: "linear-gradient(135deg, #818cf8, #38bdf8)", border: "none", borderRadius: 10, color: "#fff", fontWeight: 700, fontSize: 15, cursor: "pointer", display: "block", width: "100%" },
+  generateBtn: { marginTop: 20, padding: "14px 28px", background: "linear-gradient(135deg, #8b5cf6, #2dd4bf)", border: "none", borderRadius: 10, color: "#fff", fontWeight: 700, fontSize: 15, cursor: "pointer", display: "block", width: "100%" },
   testHeader: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, flexWrap: "wrap", gap: 16 },
   timer: { padding: "10px 18px", background: "rgba(255,255,255,0.05)", borderRadius: 10, border: "1px solid", fontSize: 18, fontWeight: 700, fontFamily: "monospace" },
   submitBtn: { padding: "10px 20px", background: "linear-gradient(135deg, #22c55e, #16a34a)", border: "none", borderRadius: 8, color: "#fff", fontWeight: 700, cursor: "pointer" },
-  questionCard: { background: "#1e293b", borderRadius: 16, padding: "28px" },
+  questionCard: { background: "#101728", borderRadius: 16, padding: "28px" },
   optionBtn: { display: "flex", alignItems: "center", gap: 14, padding: "14px 18px", borderRadius: 10, border: "2px solid", cursor: "pointer", textAlign: "left", fontSize: 14, transition: "all 0.15s" },
   optionLetter: { width: 30, height: 30, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, flexShrink: 0, color: "#fff", fontSize: 13, transition: "background 0.2s" },
-  navBtn: { padding: "8px 18px", background: "#0f172a", border: "1px solid #334155", borderRadius: 8, color: "#64748b", cursor: "pointer" },
-  scoreCard: { background: "#1e293b", borderRadius: 16, padding: "32px", border: "1px solid rgba(255,255,255,0.06)", maxWidth: 500 },
+  navBtn: { padding: "8px 18px", background: "#070a12", border: "1px solid #1b2740", borderRadius: 8, color: "#9aa7c2", cursor: "pointer" },
+  scoreCard: { background: "#101728", borderRadius: 16, padding: "32px", border: "1px solid rgba(255,255,255,0.06)", maxWidth: 500 },
 };

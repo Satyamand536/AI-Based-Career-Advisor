@@ -1,13 +1,102 @@
-body {
+/* ============================================================
+   CareerAI — Global Design System
+   Premium dark UI · Emerald + Violet + Slate (no stock-blue)
+   ============================================================ */
+
+:root {
+  /* Surfaces */
+  --bg: #070a12;
+  --bg-soft: #0b1020;
+  --surface: #0f1626;
+  --surface-2: #151e32;
+  --surface-3: #1b2740;
+  --border: rgba(148, 163, 184, 0.14);
+  --border-strong: rgba(148, 163, 184, 0.28);
+
+  /* Brand accents — emerald primary, violet secondary, amber tertiary */
+  --brand: #22d3a5;        /* emerald */
+  --brand-strong: #10b981;
+  --brand-soft: rgba(34, 211, 165, 0.12);
+  --violet: #8b5cf6;       /* violet */
+  --violet-soft: rgba(139, 92, 246, 0.14);
+  --amber: #fbbf24;        /* amber */
+  --amber-soft: rgba(251, 191, 36, 0.13);
+
+  /* Text */
+  --text: #e6edf7;
+  --text-2: #b6c2d6;
+  --muted: #7c8bab;
+  --muted-2: #56647f;
+
+  /* Status */
+  --success: #22c55e;
+  --danger: #f43f5e;
+  --warning: #f59e0b;
+
+  /* Effects */
+  --radius: 16px;
+  --radius-sm: 10px;
+  --shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.65);
+  --glow: 0 8px 30px -8px rgba(34, 211, 165, 0.45);
+  --grad: linear-gradient(135deg, #22d3a5 0%, #8b5cf6 100%);
+  --grad-text: linear-gradient(120deg, #5eead4 0%, #a78bfa 60%, #fbbf24 110%);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+h1, h2, h3, h4 {
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  color: var(--text);
+}
+
+a { color: var(--brand); text-decoration: none; }
+
+button { font-family: inherit; }
+
+/* Scrollbars */
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track { background: var(--bg-soft); }
+*::-webkit-scrollbar-thumb {
+  background: var(--surface-3);
+  border-radius: 6px;
+  border: 2px solid var(--bg-soft);
+}
+*::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+/* Reusable inline markup used across page-level styles.
+   Many pages apply inline `styles` objects; these helpers give the shell a
+   consistent premium base so inline tweaks don't fight the theme. */
+.grad-text {
+  background: var(--grad-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes ca-fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.ca-enter { animation: ca-fade-up 0.5s ease both; }

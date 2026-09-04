@@ -5,8 +5,8 @@ import toast from "react-hot-toast";
 import Sidebar from "../components/Sidebar";
 
 const SKILL_CATEGORIES = {
-  "Frontend":  { color: "#38bdf8", skills: ["React","Vue","Angular","HTML","CSS","TypeScript","Next.js","Redux"] },
-  "Backend":   { color: "#818cf8", skills: ["Node.js","Express","Python","Django","Flask","Java","Spring","FastAPI"] },
+  "Frontend":  { color: "#2dd4bf", skills: ["React","Vue","Angular","HTML","CSS","TypeScript","Next.js","Redux"] },
+  "Backend":   { color: "#8b5cf6", skills: ["Node.js","Express","Python","Django","Flask","Java","Spring","FastAPI"] },
   "Database":  { color: "#34d399", skills: ["MongoDB","PostgreSQL","MySQL","Redis","Firebase","DynamoDB"] },
   "DevOps":    { color: "#fb923c", skills: ["Docker","Kubernetes","AWS","GCP","Azure","CI/CD","Terraform","Linux"] },
   "AI / ML":   { color: "#f472b6", skills: ["Python","TensorFlow","PyTorch","scikit-learn","pandas","OpenAI API","LangChain"] },
@@ -154,7 +154,7 @@ export default function ProfileIntelligence() {
           <div style={styles.card}>
             <h3 style={styles.cardTitle}>📄 Resume Upload</h3>
             <div
-              style={{ ...styles.dropZone, borderColor: dragOver ? "#818cf8" : "#334155", background: dragOver ? "rgba(129,140,248,0.05)" : "transparent" }}
+              style={{ ...styles.dropZone, borderColor: dragOver ? "#8b5cf6" : "#1b2740", background: dragOver ? "rgba(139,92,246,0.05)" : "transparent" }}
               onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
               onDragLeave={() => setDragOver(false)}
               onDrop={handleDrop}
@@ -164,16 +164,16 @@ export default function ProfileIntelligence() {
               {uploading ? (
                 <div style={{ textAlign: "center" }}>
                   <div style={{ fontSize: 32, marginBottom: 8 }}>🔄</div>
-                  <div style={{ color: "#818cf8", fontWeight: 600 }}>AI is parsing your resume...</div>
-                  <div style={{ color: "#64748b", fontSize: 12, marginTop: 4 }}>Extracting skills, experience, education</div>
+                  <div style={{ color: "#8b5cf6", fontWeight: 600 }}>AI is parsing your resume...</div>
+                  <div style={{ color: "#9aa7c2", fontSize: 12, marginTop: 4 }}>Extracting skills, experience, education</div>
                 </div>
               ) : (
                 <div style={{ textAlign: "center" }}>
                   <div style={{ fontSize: 36, marginBottom: 10 }}>{profile?.resume_url ? "✅" : "📁"}</div>
-                  <div style={{ color: "#e2e8f0", fontWeight: 600, marginBottom: 6 }}>
+                  <div style={{ color: "#e8edf5", fontWeight: 600, marginBottom: 6 }}>
                     {profile?.resume_url ? "Resume Uploaded — Drop new to replace" : "Drop resume here or click to browse"}
                   </div>
-                  <div style={{ color: "#64748b", fontSize: 12 }}>PDF, DOC, DOCX · Max 5MB</div>
+                  <div style={{ color: "#9aa7c2", fontSize: 12 }}>PDF, DOC, DOCX · Max 5MB</div>
                 </div>
               )}
             </div>
@@ -182,7 +182,7 @@ export default function ProfileIntelligence() {
             {profile?.resume_url && (
               <div style={styles.resumeInfo}>
                 <span>📋</span>
-                <span style={{ color: "#94a3b8", fontSize: 13 }}>Resume active · AI-parsed ✓</span>
+                <span style={{ color: "#b6c2d6", fontSize: 13 }}>Resume active · AI-parsed ✓</span>
                 <span style={{ marginLeft: "auto", fontSize: 12, color: "#22c55e" }}>● Live</span>
               </div>
             )}
@@ -191,8 +191,8 @@ export default function ProfileIntelligence() {
             <div style={styles.pipelineHint}>
               {["Upload Resume", "Extract Text", "AI Skill Extraction", "Generate Embeddings", "Job Matching"].map((step, i, arr) => (
                 <React.Fragment key={i}>
-                  <span style={{ fontSize: 11, color: "#64748b" }}>{step}</span>
-                  {i < arr.length - 1 && <span style={{ color: "#334155" }}>→</span>}
+                  <span style={{ fontSize: 11, color: "#9aa7c2" }}>{step}</span>
+                  {i < arr.length - 1 && <span style={{ color: "#1b2740" }}>→</span>}
                 </React.Fragment>
               ))}
             </div>
@@ -203,13 +203,13 @@ export default function ProfileIntelligence() {
             <h3 style={styles.cardTitle}>🏆 Candidate Scorecard</h3>
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               {[
-                { label: "Skill Depth", value: scores.skillDepth, color: "#38bdf8", desc: `${skills.length} skills extracted` },
-                { label: "Experience",  value: scores.experience,  color: "#818cf8", desc: `${experienceYears}+ years estimated` },
+                { label: "Skill Depth", value: scores.skillDepth, color: "#2dd4bf", desc: `${skills.length} skills extracted` },
+                { label: "Experience",  value: scores.experience,  color: "#8b5cf6", desc: `${experienceYears}+ years estimated` },
                 { label: "Readiness",   value: scores.readiness,   color: "#22c55e", desc: "AI career readiness score" },
               ].map(item => (
                 <div key={item.label}>
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-                    <span style={{ fontSize: 13, color: "#94a3b8" }}>{item.label}</span>
+                    <span style={{ fontSize: 13, color: "#b6c2d6" }}>{item.label}</span>
                     <span style={{ fontSize: 13, fontWeight: 700, color: item.color }}>{item.value}/100</span>
                   </div>
                   <div style={styles.progressTrack}>
@@ -219,8 +219,8 @@ export default function ProfileIntelligence() {
                 </div>
               ))}
               <div style={styles.overallScore}>
-                <span style={{ fontSize: 13, color: "#94a3b8" }}>Overall Score</span>
-                <span style={{ fontSize: 22, fontWeight: 800, color: "#f1f5f9" }}>{scores.overall}/100</span>
+                <span style={{ fontSize: 13, color: "#b6c2d6" }}>Overall Score</span>
+                <span style={{ fontSize: 22, fontWeight: 800, color: "#eef2f8" }}>{scores.overall}/100</span>
               </div>
             </div>
           </div>
@@ -235,7 +235,7 @@ export default function ProfileIntelligence() {
                 <span key={i} style={styles.skillChip}>{skill}</span>
               ))}
               {skills.length > 30 && (
-                <span style={{ ...styles.skillChip, background: "rgba(255,255,255,0.05)", color: "#64748b" }}>
+                <span style={{ ...styles.skillChip, background: "rgba(255,255,255,0.05)", color: "#9aa7c2" }}>
                   +{skills.length - 30} more
                 </span>
               )}
@@ -245,7 +245,7 @@ export default function ProfileIntelligence() {
                 {Object.entries(skillGraph).map(([cat, { skills: catSkills, color, total }]) => (
                   <div key={cat} style={{ ...styles.graphNode, borderColor: color + "40" }}>
                     <div style={{ fontSize: 12, fontWeight: 700, color, marginBottom: 6 }}>{cat}</div>
-                    <div style={{ fontSize: 11, color: "#64748b", marginBottom: 8 }}>{catSkills.length}/{total} skills detected</div>
+                    <div style={{ fontSize: 11, color: "#9aa7c2", marginBottom: 8 }}>{catSkills.length}/{total} skills detected</div>
                     <div style={styles.progressTrack}>
                       <div style={{ ...styles.progressBar, width: `${(catSkills.length / total) * 100}%`, background: color }} />
                     </div>
@@ -265,8 +265,8 @@ export default function ProfileIntelligence() {
         {!profile?.resume_url && !uploading && (
           <div style={styles.emptyCard}>
             <div style={{ fontSize: 48, marginBottom: 16 }}>🧠</div>
-            <h3 style={{ color: "#e2e8f0", marginBottom: 8 }}>Start your Career Intelligence profile</h3>
-            <p style={{ color: "#64748b", maxWidth: 480, lineHeight: 1.6 }}>
+            <h3 style={{ color: "#e8edf5", marginBottom: 8 }}>Start your Career Intelligence profile</h3>
+            <p style={{ color: "#9aa7c2", maxWidth: 480, lineHeight: 1.6 }}>
               Upload your resume above. Our AI will extract your skills, build your intelligence graph,
               and generate MPNet embeddings for precise job matching using cosine similarity.
             </p>
@@ -278,32 +278,32 @@ export default function ProfileIntelligence() {
 }
 
 const layout = {
-  page: { display: "flex", minHeight: "100vh", background: "#0f172a" },
+  page: { display: "flex", minHeight: "100vh", background: "#070a12" },
   main: { flex: 1, marginLeft: 240, padding: "36px 40px", overflowY: "auto" },
 };
 
 const styles = {
   header: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 32, flexWrap: "wrap", gap: 16 },
-  h1: { margin: 0, fontSize: 28, color: "#f1f5f9", fontWeight: 800 },
-  subtitle: { margin: "6px 0 0", color: "#64748b", fontSize: 14 },
+  h1: { margin: 0, fontSize: 28, color: "#eef2f8", fontWeight: 800 },
+  subtitle: { margin: "6px 0 0", color: "#9aa7c2", fontSize: 14 },
   ctaBtn: {
-    padding: "12px 22px", background: "linear-gradient(135deg, #818cf8, #38bdf8)",
+    padding: "12px 22px", background: "linear-gradient(135deg, #8b5cf6, #2dd4bf)",
     border: "none", borderRadius: 10, color: "#fff", fontWeight: 700, fontSize: 14, cursor: "pointer",
   },
   grid: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 20 },
-  card: { background: "#1e293b", borderRadius: 16, padding: "24px", border: "1px solid rgba(255,255,255,0.06)" },
-  cardTitle: { margin: "0 0 18px", fontSize: 16, fontWeight: 700, color: "#e2e8f0" },
+  card: { background: "#101728", borderRadius: 16, padding: "24px", border: "1px solid rgba(255,255,255,0.06)" },
+  cardTitle: { margin: "0 0 18px", fontSize: 16, fontWeight: 700, color: "#e8edf5" },
   dropZone: {
     border: "2px dashed", borderRadius: 12, padding: "36px 20px",
     cursor: "pointer", transition: "all 0.2s", marginBottom: 14,
   },
   resumeInfo: { display: "flex", alignItems: "center", gap: 8, padding: "10px 14px", background: "rgba(34,197,94,0.08)", borderRadius: 8, border: "1px solid rgba(34,197,94,0.2)", marginBottom: 12 },
   pipelineHint: { display: "flex", gap: 6, flexWrap: "wrap", padding: "10px 0", borderTop: "1px solid rgba(255,255,255,0.06)" },
-  progressTrack: { height: 6, background: "#0f172a", borderRadius: 3, overflow: "hidden" },
+  progressTrack: { height: 6, background: "#070a12", borderRadius: 3, overflow: "hidden" },
   progressBar: { height: "100%", borderRadius: 3, transition: "width 0.8s ease" },
   overallScore: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "14px 0 0", borderTop: "1px solid rgba(255,255,255,0.06)", marginTop: 4 },
   allSkills: { display: "flex", flexWrap: "wrap", gap: 8 },
-  skillChip: { padding: "5px 12px", background: "rgba(129,140,248,0.12)", border: "1px solid rgba(129,140,248,0.25)", borderRadius: 20, fontSize: 12, color: "#a5b4fc", fontWeight: 500 },
-  graphNode: { padding: 14, background: "#0f172a", borderRadius: 10, border: "1px solid" },
-  emptyCard: { marginTop: 32, padding: 48, textAlign: "center", background: "#1e293b", borderRadius: 16, border: "2px dashed #334155" },
+  skillChip: { padding: "5px 12px", background: "rgba(139,92,246,0.12)", border: "1px solid rgba(139,92,246,0.25)", borderRadius: 20, fontSize: 12, color: "#a5b4fc", fontWeight: 500 },
+  graphNode: { padding: 14, background: "#070a12", borderRadius: 10, border: "1px solid" },
+  emptyCard: { marginTop: 32, padding: 48, textAlign: "center", background: "#101728", borderRadius: 16, border: "2px dashed #1b2740" },
 };
