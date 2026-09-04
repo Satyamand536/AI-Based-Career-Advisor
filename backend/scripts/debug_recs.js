@@ -24,7 +24,7 @@ async function diagnose() {
       console.error('❌ CRITICAL: No jobs found! You need to run "node scripts/seedJobs.js"');
     } else {
       const sampleJob = await Job.findOne();
-      console.log('   Sample Job Skills:', sampleJob.requiredSkills);
+      console.log('   Sample Job Skills:', sampleJob.required_skills);
     }
 
     // 2. Check User Profiles
@@ -50,7 +50,7 @@ async function diagnose() {
       
       const scored = jobs.map(job => {
         const pSkills = (p.skills || []).map(s => s.toLowerCase());
-        const rSkills = (job.requiredSkills || []).map(s => s.toLowerCase());
+        const rSkills = (job.required_skills || []).map(s => s.toLowerCase());
         
         // Exact match overlap
         const matches = rSkills.filter(s => pSkills.includes(s));

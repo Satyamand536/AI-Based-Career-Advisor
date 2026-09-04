@@ -15,7 +15,7 @@ async function testAPIs() {
   // Test 1: Signup
   console.log('\n📝 Test 1: User Signup');
   try {
-    const signupRes = await axios.post(`${BASE_URL}/user/signup`, {
+    const signupRes = await axios.post(`${BASE_URL}/api/user/signup`, {
       fullName: 'John Doe',
       email: 'john.doe@test.com',
       password: 'Test@1234'
@@ -32,7 +32,7 @@ async function testAPIs() {
   // Test 2: Signin  
   console.log('\n🔐 Test 2: User Signin');
   try {
-    const signinRes = await axios.post(`${BASE_URL}/user/signin`, {
+    const signinRes = await axios.post(`${BASE_URL}/api/user/signin`, {
       email: 'john.doe@test.com',
       password: 'Test@1234'
     });
@@ -52,12 +52,12 @@ async function testAPIs() {
   // Test 3: Get Jobs
   console.log('\n📋 Test 3: Get Jobs');
   try {
-    const jobsRes = await axios.get(`${BASE_URL}/jobs/jobs`);
+    const jobsRes = await axios.get(`${BASE_URL}/api/jobs`);
     console.log(`✅ Found ${jobsRes.data.jobs.length} jobs`);
     console.log('Sample jobs:', jobsRes.data.jobs.slice(0, 3).map(j => ({
       title: j.title,
       company: j.company,
-      skills: j.requiredSkills
+      skills: j.required_skills
     })));
   } catch (error) {
     console.error('❌ Get jobs failed:', error.response?.data || error.message);
@@ -71,7 +71,7 @@ async function testAPIs() {
     form.append('resume', fs.createReadStream(resumePath));
     
     const uploadRes = await axios.post(
-      `${BASE_URL}/jobs/upload-resume`,
+      `${BASE_URL}/api/resume/upload`,
       form,
       {
         headers: {
@@ -82,12 +82,8 @@ async function testAPIs() {
     );
     
     console.log('✅ Resume uploaded successfully');
-    console.log('Profile created:', {
-      id: uploadRes.data.profileId,
-      email: uploadRes.data.profile.email,
-      skills: uploadRes.data.profile.skills,
-      experience: uploadRes.data.profile.experience_years
-    });
+    console.log('ok:', uploadRes.data.ok);
+    console.log('parsedProfile:', uploadRes.data.data?.parsedProfile);
   } catch (error) {
     console.error('❌ Upload failed:', error.response?.data || error.message);
   }
@@ -96,7 +92,7 @@ async function testAPIs() {
   console.log('\n🎯 Test 5: Get Recommendations');
   try {
     const recsRes = await axios.get(
-      `${BASE_URL}/jobs/recommendations?top_k=5`,
+      `${BASE_URL}/api/jobs/recommendations?top_k=5`,
       {
         headers: {
           'Cookie': authCookie
@@ -104,12 +100,14 @@ async function testAPIs() {
       }
     );
     
-    console.log(`✅ Got ${recsRes.data.recommendations.length} recommendations`);
+    const recs = recsRes.data.data?.recommendations || [];
+    console.log(`✅ Got ${recs.length} recommendations`);
     console.log('\nTop Recommendations:');
-    recsRes.data.recommendations.slice(0, 5).forEach((rec, idx) => {
-      console.log(`\n${idx + 1}. ${rec.job.title} at ${rec.job.company}`);
+    recs.slice(0, 5).forEach((rec, idx) => {
+      console.log(`\n${idx + 1}. ${rec.title} at ${rec.company}`);
       console.log(`   Match Score: ${rec.matchScore}%`);
-      console.log(`   Reason: ${rec.reason}`);
+      console.log(`   Matched: ${(rec.matched_skills || []).join(', ')}`);
+      console.log(`   Missing: ${(rec.missing_skills || []).join(', ')}`);
     });
   } catch (error) {
     console.error('❌ Get recommendations failed:', error.response?.data || error.message);

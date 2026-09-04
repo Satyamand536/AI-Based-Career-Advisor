@@ -11,6 +11,10 @@ const resumeSchema = new mongoose.Schema({
   
   // AI Parsed Data (JSON Storage for flexibility)
   parsed_data: {
+    name: { type: String },
+    email: { type: String },
+    phone: { type: String },
+    experience_years: { type: Number, default: 0 },
     skills: [String],
     education: [
         {

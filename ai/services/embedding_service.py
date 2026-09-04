@@ -164,8 +164,8 @@ def build_profile_text(profile: Dict) -> str:
     return ". ".join(parts)
 
 def build_job_text(job: Dict) -> str:
-    # Handle skills list or string (check both camelCase and snake_case)
-    req_skills = job.get('requiredSkills') or job.get('required_skills', '')
+    # Job schema stores required_skills (snake_case); keep legacy camelCase as fallback.
+    req_skills = job.get('required_skills') or job.get('requiredSkills', '')
     if isinstance(req_skills, list):
         req_skills = ", ".join(req_skills)
         

@@ -1,6 +1,14 @@
 const JWT = require("jsonwebtoken");
 
-const secret = process.env.JWT_SECRET || "$perumanu@123";
+// Single source of truth for the JWT secret. No hardcoded fallback: a secret
+// shipped in source is a forgery key, so the app fails closed when unset.
+function getJWTSecret() {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error("JWT_SECRET is not set");
+  }
+  return secret;
+}
 
 function createTokenForUser(user) {
   const payload = {
@@ -10,14 +18,14 @@ function createTokenForUser(user) {
     profileImageURL: user.profileImageURL,
     role: user.role,
   };
-  
-  const token = JWT.sign(payload, secret );
+
+  const token = JWT.sign(payload, getJWTSecret());
   return token;
 }
 
 function validateToken(token) {
   // Validate safely, throw if invalid
-  const payload = JWT.verify(token, secret);
+  const payload = JWT.verify(token, getJWTSecret());
   return payload;
 }
 

@@ -88,7 +88,7 @@ def infer_job_domain(job: Dict) -> str:
         job.get("title", ""),
         job.get("category", ""),
         job.get("description", ""),
-        " ".join(job.get("requiredSkills", [])),
+        " ".join(job.get("required_skills", [])),
         " ".join(job.get("skills", []))
     ]).lower()
 
@@ -427,8 +427,8 @@ def compute_batch_similarities(
 
         skill_result = compute_skill_overlap(
             profile_skills,
-            job.get("requiredSkills", []),
-            job.get("niceToHaveSkills", [])
+            job.get("required_skills", []),
+            job.get("nice_to_have_skills") or []
         )
 
         # v2: Use domain_match instead of category_prob (root cause fix)
