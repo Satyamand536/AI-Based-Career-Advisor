@@ -2,33 +2,33 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const Job = require('../models/job');
 
-// Sample jobs data
+// Sample jobs data using the Job schema field names.
 const sampleJobs = [
   {
-    jobTitle: "Senior Full Stack Developer",
+    title: "Senior Full Stack Developer",
     company: "Tech Corp India",
     description: "We are looking for experienced full stack developers...",
     location: "Bangalore",
-    salary: { min: 800000, max: 1500000 },
-    jobType: "Full-Time",
-    requiredSkills: ["React", "Node.js", "MongoDB", "AWS"],
-    experience: 5,
-    qualifications: ["B.Tech", "BCA"],
+    type: "Full-time",
+    required_skills: ["React", "Node.js", "MongoDB", "AWS"],
+    experience_required: 5,
+    salary_min: 800000,
+    salary_max: 1500000,
     category: "IT",
-    source: "LinkedIn",
+    source: "seed",
   },
   {
-    jobTitle: "Data Scientist",
+    title: "Data Scientist",
     company: "AI Solutions",
     description: "Join our data science team...",
     location: "Mumbai",
-    salary: { min: 600000, max: 1200000 },
-    jobType: "Full-Time",
-    requiredSkills: ["Python", "Machine Learning", "TensorFlow", "SQL"],
-    experience: 3,
-    qualifications: ["B.Tech", "MSc"],
+    type: "Full-time",
+    required_skills: ["Python", "Machine Learning", "TensorFlow", "SQL"],
+    experience_required: 3,
+    salary_min: 600000,
+    salary_max: 1200000,
     category: "Data Science",
-    source: "Naukri",
+    source: "seed",
   },
   // Add more jobs...
 ];

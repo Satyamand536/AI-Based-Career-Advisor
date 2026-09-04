@@ -1,5 +1,5 @@
 // backend/middlewares/auth.js
-const jwt = require('jsonwebtoken');
+const { validateToken } = require('./services/authentication');
 const User = require('./models/user');
 
 function checkForAuthenticationCookie(cookieName) {
@@ -11,7 +11,7 @@ function checkForAuthenticationCookie(cookieName) {
     }
 
     try {
-      const payload = jwt.verify(tokenCookieValue, process.env.JWT_SECRET || 'default_secret');
+      const payload = validateToken(tokenCookieValue);
       const user = await User.findById(payload._id);
       if (user) {
         req.user = user;

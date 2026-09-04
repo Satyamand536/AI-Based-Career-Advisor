@@ -48,7 +48,7 @@ async function seedJobs() {
       try {
         await Job.create({
           ...job,
-          postedAt: new Date(),
+          posted_at: new Date(),
         });
         successCount++;
       } catch (error) {

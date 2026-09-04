@@ -215,8 +215,8 @@ class SkillGapAnalyzer:
         skill_job_categories = defaultdict(set)
         
         for job, scores in jobs_with_scores:
-            required_skills = job.get("requiredSkills", [])
-            nice_to_have = job.get("niceToHaveSkills", [])
+            required_skills = job.get("required_skills", [])
+            nice_to_have = job.get("nice_to_have_skills") or []
             job_category = job.get("category", "")
             final_score = scores.get("final_score", 0)
             

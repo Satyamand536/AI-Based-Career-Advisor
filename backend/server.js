@@ -104,9 +104,9 @@ app.use("/resume", require('./routes/resumeRoute'));
 app.get('/uploads/:userId/:filename', checkForAuthenticationCookie("token"), (req, res) => {
   try {
     const { userId, filename } = req.params;
-    // if req.user present, allow only owner or admin
-    if (req.user && req.user._id && req.user._id.toString() !== userId && req.user.role !== 'admin') {
-      return res.status(403).json({ ok: false, message: 'Forbidden' });
+    // require auth; if req.user present, allow only owner or admin
+    if (!req.user || (req.user._id && req.user._id.toString() !== userId && req.user.role !== 'admin')) {
+      return res.status(401).json({ ok: false, message: 'Unauthorized' });
     }
     // safe path resolve
     const filePath = path.resolve(__dirname, 'uploads', userId.toString(), filename);
@@ -132,8 +132,12 @@ try {
   // Keep them undefined — debug routes will return a clear message
 }
 
-app.get('/debug/profile/:userId', async (req, res) => {
+app.get('/debug/profile/:userId', checkForAuthenticationCookie("token"), async (req, res) => {
   try {
+    if (!req.user) return res.status(401).json({ ok: false, message: 'Unauthorized' });
+    if (req.user._id.toString() !== req.params.userId && req.user.role !== 'admin') {
+      return res.status(403).json({ ok: false, message: 'Forbidden' });
+    }
     if (!UserProfile) return res.status(500).json({ ok: false, message: 'UserProfile model missing on server' });
     const p = await UserProfile.findOne({ userId: req.params.userId }).lean();
     return res.json({ ok: true, profile: p });
@@ -143,8 +147,12 @@ app.get('/debug/profile/:userId', async (req, res) => {
   }
 });
 
-app.get('/debug/recommendations/:userId', async (req, res) => {
+app.get('/debug/recommendations/:userId', checkForAuthenticationCookie("token"), async (req, res) => {
   try {
+    if (!req.user) return res.status(401).json({ ok: false, message: 'Unauthorized' });
+    if (req.user._id.toString() !== req.params.userId && req.user.role !== 'admin') {
+      return res.status(403).json({ ok: false, message: 'Forbidden' });
+    }
     if (!UserProfile || !Job) return res.status(500).json({ ok: false, message: 'Models missing on server' });
     const profile = await UserProfile.findOne({ userId: req.params.userId }).lean();
     if (!profile) return res.status(404).json({ ok: false, message: 'Profile not found' });
@@ -153,7 +161,7 @@ app.get('/debug/recommendations/:userId', async (req, res) => {
     // Simple scoring: skill overlap + experience ratio
     const scored = jobs.map(job => {
       const pSkills = (profile.skills || []).map(s => s.toLowerCase());
-      const rSkills = (job.requiredSkills || []).map(s => s.toLowerCase());
+      const rSkills = (job.required_skills || []).map(s => s.toLowerCase());
       const skillMatch = rSkills.length ? rSkills.filter(s => pSkills.includes(s)).length / rSkills.length : 0;
       const expReq = job.experience_required || 0;
       const expScore = expReq === 0 ? 1 : Math.min(1, (profile.experience_years || 0) / expReq);
