@@ -111,7 +111,7 @@ export default function TechJobMatch() {
   };
 
   const getMatchColor = (pct) => {
-    if (pct >= 80) return "#22c55e";
+    if (pct >= 80) return "#f97316";
     if (pct >= 60) return "#f59e0b";
     return "#ef4444";
   };
@@ -168,8 +168,8 @@ export default function TechJobMatch() {
           <span style={styles.formulaLabel}>RANKING FORMULA</span>
           {["0.6 × Embedding Similarity", "0.2 × Skill Overlap", "0.1 × Experience", "0.1 × User Behavior"].map((f, i, arr) => (
             <React.Fragment key={i}>
-              <span style={{ color: "#b6c2d6", fontSize: 13 }}>{f}</span>
-              {i < arr.length - 1 && <span style={{ color: "#1b2740", fontWeight: 700 }}>+</span>}
+              <span style={{ color: "#4b5563", fontSize: 13 }}>{f}</span>
+              {i < arr.length - 1 && <span style={{ color: "#e2e6ee", fontWeight: 700 }}>+</span>}
             </React.Fragment>
           ))}
         </div>
@@ -177,7 +177,7 @@ export default function TechJobMatch() {
         {/* Loading */}
         {loading && (
           <div style={styles.loadingCard}>
-            <h3 style={{ color: "#e8edf5", marginBottom: 20 }}>🤖 AI Matching Engine Running...</h3>
+            <h3 style={{ color: "#111827", marginBottom: 20 }}>🤖 AI Matching Engine Running...</h3>
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               {PROGRESS_STEPS.map((step, i) => (
                 <div key={i} style={{
@@ -187,12 +187,12 @@ export default function TechJobMatch() {
                 }}>
                   <div style={{
                     width: 20, height: 20, borderRadius: "50%",
-                    background: i < currentStep ? "#22c55e" : i === currentStep ? "#8b5cf6" : "#1b2740",
+                    background: i < currentStep ? "#f97316" : i === currentStep ? "#f59e0b" : "#e2e6ee",
                     display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11,
                   }}>
                     {i < currentStep ? "✓" : i + 1}
                   </div>
-                  <span style={{ fontSize: 14, color: i <= currentStep ? "#e8edf5" : "#475569" }}>{step}</span>
+                  <span style={{ fontSize: 14, color: i <= currentStep ? "#111827" : "#475569" }}>{step}</span>
                 </div>
               ))}
             </div>
@@ -202,8 +202,8 @@ export default function TechJobMatch() {
         {/* Profile Summary */}
         {profileSummary && !loading && (
           <div style={styles.profileBanner}>
-            <div style={{ fontSize: 14, fontWeight: 700, color: "#8b5cf6" }}>{profileSummary.headline || "Tech Profile Analyzed"}</div>
-            <div style={{ fontSize: 13, color: "#b6c2d6", marginTop: 4 }}>{profileSummary.reason || profileSummary.description}</div>
+            <div style={{ fontSize: 14, fontWeight: 700, color: "#f59e0b" }}>{profileSummary.headline || "Tech Profile Analyzed"}</div>
+            <div style={{ fontSize: 13, color: "#4b5563", marginTop: 4 }}>{profileSummary.reason || profileSummary.description}</div>
           </div>
         )}
 
@@ -229,7 +229,7 @@ export default function TechJobMatch() {
               const isExpanded = selectedJob === idx;
 
               return (
-                <div key={idx} style={{ ...styles.jobCard, borderColor: isExpanded ? "#8b5cf6" : "rgba(255,255,255,0.06)" }}>
+                <div key={idx} style={{ ...styles.jobCard, borderColor: isExpanded ? "#f59e0b" : "rgba(17,24,39,0.06)" }}>
                   {/* Rank badge */}
                   <div style={styles.rankBadge}>#{idx + 1}</div>
 
@@ -239,14 +239,14 @@ export default function TechJobMatch() {
                       <h3 style={styles.jobTitle}>{job.title}</h3>
                       <div style={styles.jobMeta}>
                         <span>{job.company}</span>
-                        {job.location && <><span style={{ color: "#1b2740" }}>·</span><span>{job.location}</span></>}
-                        {job.type && <><span style={{ color: "#1b2740" }}>·</span><span>{job.type}</span></>}
+                        {job.location && <><span style={{ color: "#e2e6ee" }}>·</span><span>{job.location}</span></>}
+                        {job.type && <><span style={{ color: "#e2e6ee" }}>·</span><span>{job.type}</span></>}
                       </div>
                     </div>
                     {/* Match Score Circle */}
                     <div style={{ textAlign: "center" }}>
                       <svg width={64} height={64} viewBox="0 0 64 64">
-                        <circle cx="32" cy="32" r="26" fill="none" stroke="#101728" strokeWidth="6" />
+                        <circle cx="32" cy="32" r="26" fill="none" stroke="#ffffff" strokeWidth="6" />
                         <circle
                           cx="32" cy="32" r="26"
                           fill="none"
@@ -267,7 +267,7 @@ export default function TechJobMatch() {
                   {/* ─── MATCHED SKILLS (Always shown) ─── */}
                   <div style={styles.skillsSection}>
                     <div style={styles.skillsSectionLabel}>
-                      <span style={{ color: "#22c55e" }}>✓</span> Matched Skills
+                      <span style={{ color: "#f97316" }}>✓</span> Matched Skills
                     </div>
                     <div style={styles.skillsRow}>
                       {matchedSkills.length > 0 ? (
@@ -282,7 +282,7 @@ export default function TechJobMatch() {
                           .map((skill, si) => <span key={si} style={styles.matchedChip}>{skill}</span>)
                       )}
                       {matchedSkills.length === 0 && profileSkills.length === 0 && (
-                        <span style={{ fontSize: 12, color: "#9aa7c2" }}>Upload resume for skill matching</span>
+                        <span style={{ fontSize: 12, color: "#6b7280" }}>Upload resume for skill matching</span>
                       )}
                     </div>
                   </div>
@@ -308,7 +308,7 @@ export default function TechJobMatch() {
                   {isExpanded && (
                     <div style={styles.expandedDetails}>
                       {job.description && (
-                        <p style={{ fontSize: 13, color: "#b6c2d6", lineHeight: 1.7 }}>
+                        <p style={{ fontSize: 13, color: "#4b5563", lineHeight: 1.7 }}>
                           {stripHtml(job.description).slice(0, 300)}{stripHtml(job.description).length > 300 ? "..." : ""}
                         </p>
                       )}
@@ -399,8 +399,8 @@ export default function TechJobMatch() {
         {!hasResume && !loading && (
           <div style={styles.emptyCard}>
             <div style={{ fontSize: 48, marginBottom: 16 }}>🎯</div>
-            <h3 style={{ color: "#e8edf5", marginBottom: 8 }}>No profile found</h3>
-            <p style={{ color: "#9aa7c2", maxWidth: 400 }}>
+            <h3 style={{ color: "#111827", marginBottom: 8 }}>No profile found</h3>
+            <p style={{ color: "#6b7280", maxWidth: 400 }}>
               Upload your resume in Profile Intelligence to activate AI-powered job matching with real match scores.
             </p>
             <button onClick={() => navigate("/profile")} style={{ ...styles.refreshBtn, marginTop: 20 }}>
@@ -413,8 +413,8 @@ export default function TechJobMatch() {
         {hasResume && !loading && jobs.length === 0 && (
           <div style={styles.emptyCard}>
             <div style={{ fontSize: 48, marginBottom: 16 }}>📭</div>
-            <h3 style={{ color: "#e8edf5", marginBottom: 8 }}>No tech jobs in database yet</h3>
-            <p style={{ color: "#9aa7c2", maxWidth: 400 }}>
+            <h3 style={{ color: "#111827", marginBottom: 8 }}>No tech jobs in database yet</h3>
+            <p style={{ color: "#6b7280", maxWidth: 400 }}>
               The job fetcher CRON service will populate jobs. You can also manually trigger the ingestion.
             </p>
             <button onClick={() => loadJobs(true)} style={{ ...styles.refreshBtn, marginTop: 20 }}>
@@ -428,57 +428,57 @@ export default function TechJobMatch() {
 }
 
 const layout = {
-  page: { display: "flex", minHeight: "100vh", background: "#070a12" },
+  page: { display: "flex", minHeight: "100vh", background: "#f5f6f8" },
   main: { flex: 1, marginLeft: 240, padding: "36px 40px", overflowY: "auto" },
 };
 
 const styles = {
   header: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20, flexWrap: "wrap", gap: 16 },
-  h1: { margin: 0, fontSize: 28, color: "#eef2f8", fontWeight: 800 },
-  subtitle: { margin: "6px 0 0", color: "#9aa7c2", fontSize: 13 },
+  h1: { margin: 0, fontSize: 28, color: "#111827", fontWeight: 800 },
+  subtitle: { margin: "6px 0 0", color: "#6b7280", fontSize: 13 },
   refreshBtn: {
-    padding: "11px 22px", background: "linear-gradient(135deg, #8b5cf6, #2dd4bf)",
+    padding: "11px 22px", background: "linear-gradient(135deg, #f59e0b, #f59e0b)",
     border: "none", borderRadius: 10, color: "#fff", fontWeight: 700, fontSize: 14, cursor: "pointer",
     opacity: 1, flexShrink: 0,
   },
   formulaBadge: {
     display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap",
-    padding: "12px 18px", background: "#101728",
-    borderRadius: 10, marginBottom: 24, border: "1px solid #1b2740",
+    padding: "12px 18px", background: "#ffffff",
+    borderRadius: 10, marginBottom: 24, border: "1px solid #e2e6ee",
   },
-  formulaLabel: { fontSize: 10, fontWeight: 800, color: "#8b5cf6", textTransform: "uppercase", letterSpacing: "1px", marginRight: 8 },
-  loadingCard: { background: "#101728", borderRadius: 16, padding: "32px", marginBottom: 24, border: "1px solid rgba(139,92,246,0.2)" },
-  profileBanner: { padding: "14px 18px", background: "rgba(139,92,246,0.08)", borderRadius: 10, border: "1px solid rgba(139,92,246,0.2)", marginBottom: 20 },
+  formulaLabel: { fontSize: 10, fontWeight: 800, color: "#f59e0b", textTransform: "uppercase", letterSpacing: "1px", marginRight: 8 },
+  loadingCard: { background: "#ffffff", borderRadius: 16, padding: "32px", marginBottom: 24, border: "1px solid rgba(245,158,11,0.2)" },
+  profileBanner: { padding: "14px 18px", background: "rgba(245,158,11,0.08)", borderRadius: 10, border: "1px solid rgba(245,158,11,0.2)", marginBottom: 20 },
   filterRow: { display: "flex", gap: 8, marginBottom: 20 },
-  filterBtn: { padding: "8px 16px", borderRadius: 8, border: "1px solid #1b2740", background: "#101728", color: "#9aa7c2", cursor: "pointer", fontSize: 13, fontWeight: 500 },
-  filterBtnActive: { background: "rgba(139,92,246,0.15)", color: "#8b5cf6", borderColor: "#8b5cf6" },
+  filterBtn: { padding: "8px 16px", borderRadius: 8, border: "1px solid #e2e6ee", background: "#ffffff", color: "#6b7280", cursor: "pointer", fontSize: 13, fontWeight: 500 },
+  filterBtnActive: { background: "rgba(245,158,11,0.15)", color: "#f59e0b", borderColor: "#f59e0b" },
   jobsGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(480px, 1fr))", gap: 16 },
   jobCard: {
-    background: "#101728", borderRadius: 16, padding: "20px",
+    background: "#ffffff", borderRadius: 16, padding: "20px",
     border: "1px solid", position: "relative",
     transition: "border-color 0.2s, box-shadow 0.2s",
   },
   rankBadge: {
     position: "absolute", top: -1, left: 16,
-    background: "linear-gradient(135deg, #8b5cf6, #2dd4bf)",
+    background: "linear-gradient(135deg, #f59e0b, #f59e0b)",
     color: "#fff", fontSize: 11, fontWeight: 800,
     padding: "3px 10px", borderRadius: "0 0 8px 8px",
   },
   matchHeader: { display: "flex", gap: 14, alignItems: "flex-start", marginTop: 16, marginBottom: 16 },
-  jobTitle: { margin: "0 0 6px", fontSize: 17, fontWeight: 700, color: "#eef2f8" },
-  jobMeta: { display: "flex", gap: 8, color: "#9aa7c2", fontSize: 12, flexWrap: "wrap" },
+  jobTitle: { margin: "0 0 6px", fontSize: 17, fontWeight: 700, color: "#111827" },
+  jobMeta: { display: "flex", gap: 8, color: "#6b7280", fontSize: 12, flexWrap: "wrap" },
   skillsSection: { marginBottom: 12 },
-  skillsSectionLabel: { fontSize: 11, fontWeight: 700, color: "#9aa7c2", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 6, display: "flex", gap: 6, alignItems: "center" },
+  skillsSectionLabel: { fontSize: 11, fontWeight: 700, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 6, display: "flex", gap: 6, alignItems: "center" },
   skillsRow: { display: "flex", flexWrap: "wrap", gap: 6 },
-  matchedChip: { padding: "3px 10px", background: "rgba(34,197,94,0.12)", border: "1px solid rgba(34,197,94,0.3)", borderRadius: 20, fontSize: 12, color: "#4ade80", fontWeight: 500 },
+  matchedChip: { padding: "3px 10px", background: "rgba(249,115,22,0.12)", border: "1px solid rgba(249,115,22,0.3)", borderRadius: 20, fontSize: 12, color: "#fdba74", fontWeight: 500 },
   missingChip: { padding: "3px 10px", background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.25)", borderRadius: 20, fontSize: 12, color: "#f87171", fontWeight: 500 },
-  expandedDetails: { marginTop: 14, paddingTop: 14, borderTop: "1px solid rgba(255,255,255,0.06)" },
-  detailBox: { background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 10, padding: "10px 14px" },
-  detailLabel: { fontSize: 11, fontWeight: 700, color: "#b6c2d6", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 4 },
-  detailValue: { fontSize: 13, color: "#eef2f8", fontWeight: 600, textTransform: "capitalize" },
-  cardActions: { display: "flex", gap: 8, marginTop: 14, paddingTop: 14, borderTop: "1px solid rgba(255,255,255,0.06)", flexWrap: "wrap" },
-  detailsBtn: { padding: "8px 14px", background: "rgba(255,255,255,0.05)", border: "1px solid #1b2740", borderRadius: 8, color: "#b6c2d6", cursor: "pointer", fontSize: 13 },
+  expandedDetails: { marginTop: 14, paddingTop: 14, borderTop: "1px solid rgba(17,24,39,0.06)" },
+  detailBox: { background: "rgba(255,255,255,0.03)", border: "1px solid rgba(17,24,39,0.1)", borderRadius: 10, padding: "10px 14px" },
+  detailLabel: { fontSize: 11, fontWeight: 700, color: "#4b5563", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 4 },
+  detailValue: { fontSize: 13, color: "#111827", fontWeight: 600, textTransform: "capitalize" },
+  cardActions: { display: "flex", gap: 8, marginTop: 14, paddingTop: 14, borderTop: "1px solid rgba(17,24,39,0.06)", flexWrap: "wrap" },
+  detailsBtn: { padding: "8px 14px", background: "rgba(17,24,39,0.06)", border: "1px solid #e2e6ee", borderRadius: 8, color: "#4b5563", cursor: "pointer", fontSize: 13 },
   learnBtn: { padding: "8px 14px", background: "rgba(251,146,60,0.12)", border: "1px solid rgba(251,146,60,0.3)", borderRadius: 8, color: "#fb923c", cursor: "pointer", fontSize: 13, fontWeight: 600 },
-  applyBtn: { padding: "8px 16px", background: "linear-gradient(135deg, #22c55e, #16a34a)", border: "none", borderRadius: 8, color: "#fff", cursor: "pointer", fontSize: 13, fontWeight: 700, textDecoration: "none", display: "inline-block" },
-  emptyCard: { padding: 64, textAlign: "center", background: "#101728", borderRadius: 16, border: "2px dashed #1b2740" },
+  applyBtn: { padding: "8px 16px", background: "linear-gradient(135deg, #f97316, #ea580c)", border: "none", borderRadius: 8, color: "#fff", cursor: "pointer", fontSize: 13, fontWeight: 700, textDecoration: "none", display: "inline-block" },
+  emptyCard: { padding: 64, textAlign: "center", background: "#ffffff", borderRadius: 16, border: "2px dashed #e2e6ee" },
 };

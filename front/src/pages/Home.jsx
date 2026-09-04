@@ -128,7 +128,7 @@ export default function HomePage() {
             </section>
 
             {/* ── FEATURES ── */}
-            <section style={{ ...s.section, background: "#070a12" }}>
+            <section style={{ ...s.section, background: "#f5f6f8" }}>
                 <div style={s.sectionInner}>
                     <div style={s.sectionBadge}>Platform Features</div>
                     <h2 style={s.sectionTitle}>Everything you need to advance your tech career</h2>
@@ -148,7 +148,7 @@ export default function HomePage() {
             <section style={s.ctaBanner}>
                 <div style={s.sectionInner}>
                     <h2 style={{ ...s.sectionTitle, marginBottom: 12 }}>Ready to accelerate your career?</h2>
-                    <p style={{ color: "#b6c2d6", fontSize: 16, marginBottom: 32 }}>
+                    <p style={{ color: "#4b5563", fontSize: 16, marginBottom: 32 }}>
                         Join the platform built for serious tech professionals and students.
                     </p>
                     <button style={s.ctaPrimary} onClick={handleGetStarted}>
@@ -189,7 +189,7 @@ export default function HomePage() {
                 </div>
                 <div style={s.footerBottom}>
                     <div style={{ width: "100%", height: 1, background: "rgba(255,255,255,0.04)", marginBottom: 24 }} />
-                    <span style={{ color: "#1b2740", fontSize: 13 }}>© 2026 CareerAI. Built for tech professionals — not generic job seekers.</span>
+                    <span style={{ color: "#e2e6ee", fontSize: 13 }}>© 2026 CareerAI. Built for tech professionals — not generic job seekers.</span>
                 </div>
             </footer>
 
@@ -224,31 +224,31 @@ const s = {
     page: {
         minHeight: "100vh",
         background:
-            "radial-gradient(1200px 500px at 15% -10%, rgba(34,211,165,0.12), transparent 60%)," +
-            "radial-gradient(1000px 500px at 90% -10%, rgba(139,92,246,0.12), transparent 60%)," +
-            "#070a12",
-        color: "#e8edf5", fontFamily: "'Inter', sans-serif", overflowX: "hidden",
+            "radial-gradient(1200px 500px at 15% -10%, rgba(249,115,22,0.12), transparent 60%)," +
+            "radial-gradient(1000px 500px at 90% -10%, rgba(245,158,11,0.12), transparent 60%)," +
+            "#f5f6f8",
+        color: "#111827", fontFamily: "'Inter', sans-serif", overflowX: "hidden",
     },
     navbar: {
         display: "flex", justifyContent: "space-between", alignItems: "center",
         padding: "20px 60px", background: "rgba(15,22,38,0.92)", backdropFilter: "blur(16px)",
-        borderBottom: "1px solid rgba(255,255,255,0.05)", position: "sticky", top: 0, zIndex: 100,
+        borderBottom: "1px solid rgba(17,24,39,0.06)", position: "sticky", top: 0, zIndex: 100,
     },
-    logo: { fontSize: 22, fontWeight: 800, color: "#eef2f8", letterSpacing: "-0.5px" },
+    logo: { fontSize: 22, fontWeight: 800, color: "#111827", letterSpacing: "-0.5px" },
     navRight: { display: "flex", alignItems: "center", gap: 12 },
-    navUser: { fontSize: 14, color: "#b6c2d6", marginRight: 4 },
+    navUser: { fontSize: 14, color: "#4b5563", marginRight: 4 },
     navBtnPrimary: {
-        padding: "9px 20px", background: "linear-gradient(135deg, #22d3a5, #10b981)",
+        padding: "9px 20px", background: "linear-gradient(135deg, #f97316, #ea580c)",
         color: "#fff", border: "none", borderRadius: 10, fontWeight: 600, fontSize: 14,
-        cursor: "pointer", boxShadow: "0 4px 12px rgba(16,185,129,0.3)",
+        cursor: "pointer", boxShadow: "0 4px 12px rgba(234,88,12,0.3)",
     },
     navBtnOutline: {
-        padding: "9px 20px", background: "transparent", color: "#e8edf5",
-        border: "1px solid rgba(255,255,255,0.15)", borderRadius: 10, fontWeight: 600,
+        padding: "9px 20px", background: "transparent", color: "#111827",
+        border: "1px solid rgba(17,24,39,0.12)", borderRadius: 10, fontWeight: 600,
         fontSize: 14, cursor: "pointer",
     },
     navBtnGhost: {
-        padding: "9px 20px", background: "transparent", color: "#b6c2d6",
+        padding: "9px 20px", background: "transparent", color: "#4b5563",
         border: "none", borderRadius: 10, fontWeight: 500, fontSize: 14, cursor: "pointer",
     },
     hero: {
@@ -257,45 +257,45 @@ const s = {
     },
     heroBadge: {
         display: "inline-block", padding: "7px 18px",
-        background: "rgba(34,211,165,0.1)", border: "1px solid rgba(34,211,165,0.3)",
-        borderRadius: 999, fontSize: 13, color: "#5eead4", fontWeight: 600, marginBottom: 28,
+        background: "rgba(249,115,22,0.1)", border: "1px solid rgba(249,115,22,0.3)",
+        borderRadius: 999, fontSize: 13, color: "#fdba74", fontWeight: 600, marginBottom: 28,
     },
     heroTitle: {
         fontSize: "clamp(2.4rem, 5vw, 4rem)", fontWeight: 900, lineHeight: 1.15,
-        margin: "0 0 24px", color: "#eef2f8",
+        margin: "0 0 24px", color: "#111827",
     },
     heroGradient: {
-        background: "linear-gradient(135deg, #22d3a5, #8b5cf6, #ec4899)",
+        background: "linear-gradient(135deg, #f97316, #f59e0b, #ec4899)",
         WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
     },
     heroDesc: {
-        fontSize: 18, color: "#b6c2d6", lineHeight: 1.7, maxWidth: 640,
+        fontSize: 18, color: "#4b5563", lineHeight: 1.7, maxWidth: 640,
         margin: "0 auto 40px",
     },
     heroActions: { display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap", marginBottom: 56 },
     ctaPrimary: {
-        padding: "15px 36px", background: "linear-gradient(135deg, #22d3a5, #10b981)",
+        padding: "15px 36px", background: "linear-gradient(135deg, #f97316, #ea580c)",
         color: "#fff", border: "none", borderRadius: 12, fontSize: 16, fontWeight: 700,
-        cursor: "pointer", boxShadow: "0 8px 24px rgba(16,185,129,0.4)", transition: "all 0.2s",
+        cursor: "pointer", boxShadow: "0 8px 24px rgba(234,88,12,0.4)", transition: "all 0.2s",
     },
     ctaSecondary: {
-        padding: "15px 36px", background: "rgba(255,255,255,0.05)",
-        color: "#e8edf5", border: "1px solid rgba(255,255,255,0.1)",
+        padding: "15px 36px", background: "rgba(17,24,39,0.06)",
+        color: "#111827", border: "1px solid rgba(17,24,39,0.12)",
         borderRadius: 12, fontSize: 16, fontWeight: 600, cursor: "pointer",
     },
     heroStats: { display: "flex", gap: 48, justifyContent: "center", flexWrap: "wrap" },
     statItem: { textAlign: "center" },
-    statVal: { fontSize: 28, fontWeight: 900, color: "#eef2f8" },
-    statLabel: { fontSize: 12, color: "#9aa7c2", marginTop: 4, textTransform: "uppercase", letterSpacing: "0.5px" },
-    section: { background: "#070a12", padding: "80px 60px" },
+    statVal: { fontSize: 28, fontWeight: 900, color: "#111827" },
+    statLabel: { fontSize: 12, color: "#6b7280", marginTop: 4, textTransform: "uppercase", letterSpacing: "0.5px" },
+    section: { background: "#f5f6f8", padding: "80px 60px" },
     sectionInner: { maxWidth: 1100, margin: "0 auto", textAlign: "center" },
     sectionBadge: {
         display: "inline-block", padding: "5px 14px",
-        background: "rgba(139,92,246,0.1)", border: "1px solid rgba(139,92,246,0.2)",
-        borderRadius: 20, fontSize: 12, color: "#a78bfa", fontWeight: 600,
+        background: "rgba(245,158,11,0.1)", border: "1px solid rgba(245,158,11,0.2)",
+        borderRadius: 20, fontSize: 12, color: "#fcd34d", fontWeight: 600,
         textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 20,
     },
-    sectionTitle: { fontSize: "clamp(1.6rem, 3vw, 2.4rem)", fontWeight: 800, color: "#eef2f8", margin: "0 0 48px" },
+    sectionTitle: { fontSize: "clamp(1.6rem, 3vw, 2.4rem)", fontWeight: 800, color: "#111827", margin: "0 0 48px" },
     pipeline: {
         display: "flex", alignItems: "center", justifyContent: "center",
         gap: 8, flexWrap: "wrap",
@@ -303,38 +303,38 @@ const s = {
     pipelineStep: { textAlign: "center" },
     pipelineIcon: {
         width: 56, height: 56, borderRadius: 14,
-        background: "#101728", border: "1px solid rgba(255,255,255,0.08)",
+        background: "#ffffff", border: "1px solid rgba(17,24,39,0.1)",
         display: "flex", alignItems: "center", justifyContent: "center",
         fontSize: 24, margin: "0 auto 8px",
     },
-    pipelineLabel: { fontSize: 11, color: "#b6c2d6", fontWeight: 600 },
-    pipelineArrow: { color: "#1b2740", fontSize: 20, margin: "0 4px", paddingBottom: 24 },
+    pipelineLabel: { fontSize: 11, color: "#4b5563", fontWeight: 600 },
+    pipelineArrow: { color: "#e2e6ee", fontSize: 20, margin: "0 4px", paddingBottom: 24 },
     featureGrid: {
         display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
         gap: 20, textAlign: "left",
     },
     featureCard: {
-        background: "#101728", borderRadius: 16, padding: 28,
-        border: "1px solid rgba(255,255,255,0.05)",
+        background: "#ffffff", borderRadius: 16, padding: 28,
+        border: "1px solid rgba(17,24,39,0.06)",
         transition: "transform 0.2s, border-color 0.2s",
     },
     featureIcon: { fontSize: 32, marginBottom: 16 },
-    featureTitle: { margin: "0 0 10px", fontSize: 18, fontWeight: 700, color: "#eef2f8" },
-    featureDesc: { margin: 0, fontSize: 14, color: "#b6c2d6", lineHeight: 1.7 },
+    featureTitle: { margin: "0 0 10px", fontSize: 18, fontWeight: 700, color: "#111827" },
+    featureDesc: { margin: 0, fontSize: 14, color: "#4b5563", lineHeight: 1.7 },
     ctaBanner: {
-        background: "linear-gradient(135deg, #1f2a44 0%, #241d3f 100%)",
+        background: "linear-gradient(135deg, #e2e6ee 0%, #e2e6ee 100%)",
         padding: "80px 60px", textAlign: "center",
-        borderTop: "1px solid rgba(255,255,255,0.05)",
+        borderTop: "1px solid rgba(17,24,39,0.06)",
     },
     footer: {
-        padding: "60px 60px 24px", borderTop: "1px solid rgba(255,255,255,0.05)",
+        padding: "60px 60px 24px", borderTop: "1px solid rgba(17,24,39,0.06)",
         background: "#070c18",
     },
     footerInner: { display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 40, marginBottom: 40, maxWidth: 1100, margin: "0 auto 40px" },
     footerBrand: { flexShrink: 0 },
     footerLinks: { display: "flex", gap: 60, flexWrap: "wrap" },
     footerCol: { minWidth: 140 },
-    footerColTitle: { fontSize: 12, fontWeight: 700, color: "#9aa7c2", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 14 },
-    footerLink: { fontSize: 13, color: "#1b2740", marginBottom: 8 },
+    footerColTitle: { fontSize: 12, fontWeight: 700, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 14 },
+    footerLink: { fontSize: 13, color: "#e2e6ee", marginBottom: 8 },
     footerBottom: { textAlign: "center", maxWidth: 1100, margin: "0 auto" },
 };

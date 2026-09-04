@@ -108,6 +108,7 @@ router.post("/signin", async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days — keep users signed in
     });
 
     return res.json({
@@ -184,6 +185,7 @@ router.post("/logout", (req, res) => {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
+    maxAge: 30 * 24 * 60 * 60 * 1000,
   });
   return res.json({ message: "Logged out successfully" });
 });

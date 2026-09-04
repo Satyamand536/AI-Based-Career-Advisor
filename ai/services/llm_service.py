@@ -361,8 +361,189 @@ Rule: When asked for structured data (like roadmaps), return valid JSON.
         return data['message']['content']
 
     def _call_mock(self, messages) -> str:
-        """Return a mock response."""
-        return "[MOCK AI] This is a mock response. Configure OPENROUTER_API_KEY to get real responses."
+        """Rule-based offline mentor fallback (no API key needed)."""
+        last = ""
+        for m in reversed(messages or []):
+            if isinstance(m, dict) and m.get("content"):
+                last = str(m.get("content"))
+                break
+        # The app prepends "Profile Context: ... User Question: <text>".
+        # Match only against the actual question, not the profile/system text.
+        marker = "User Question:"
+        if marker in last:
+            last = last.split(marker, 1)[1].strip()
+        return self._offline_mentor_reply(last)
+
+    @staticmethod
+    def _offline_mentor_reply(question: str) -> str:
+        """Keyword-driven career mentor answers for the no-API-key case."""
+        q = f" {question} ".lower()
+
+        def has(*words):
+            return any(w in q for w in words)
+
+        if has("react", "frontend", "front-end"):
+            return (
+                "**Frontend (React) learning path:**\n"
+                "1. HTML + CSS + flexbox/grid (2 wks)\n"
+                "2. JavaScript fundamentals: closures, promises, async/await (3 wks)\n"
+                "3. React core: components, props, state, hooks (3 wks)\n"
+                "4. React patterns: context, reducers, custom hooks, memo (2 wks)\n"
+                "5. Build 2-3 projects + one portfolio app\n"
+                "6. Add TypeScript, then Tailwind, then testing (Jest/RTL)\n"
+                "Aim for **3-4 months** at ~10 hrs/week. Interview prep: chrome devtools, rendering optimization, component design."
+            )
+        if has("python", "django", "flask"):
+            return (
+                "**Python backend learning path:**\n"
+                "1. Python core: data structures, OOP, decorators, generators (3 wks)\n"
+                "2. SQL + one ORM (SQLAlchemy/Django ORM) (2 wks)\n"
+                "3. Flask or FastAPI: REST APIs, auth, middleware (2 wks)\n"
+                "4. Databases: PostgreSQL, Redis basics, background jobs (2 wks)\n"
+                "5. Deploy: Docker, then AWS EC2/Render (1 wk)\n"
+                "Build a real CRUD + auth API service and an e-commerce-style backend. "
+                "Interview prep: REST design, DB indexing, authentication (JWT/sessions), rate limiting."
+            )
+        if has("machine learning", "ml", "deep learning", "data science", "pandas", "tensorflow"):
+            return (
+                "**ML / Data Science learning path:**\n"
+                "1. Python + NumPy + Pandas (2-3 wks)\n"
+                "2. Stats fundamentals: distributions, hypothesis testing (2 wks)\n"
+                "3. sklearn: regression, classification, clustering, evaluation (3 wks)\n"
+                "4. Deep learning: neural nets, CNNs, RNNs (PyTorch) (4 wks)\n"
+                "5. One end-to-end project: data cleaning → model → deployment (MLflow/FastAPI)\n"
+                "Interview prep: bias/variance, overfitting, loss functions, when to use which model."
+            )
+        if has("dsa", "data structure", "algorithm", "leetcode", "coding round"):
+            return (
+                "**DSA prep plan (for coding rounds):**\n"
+                "1. Arrays + Strings + Hashing (2 wks)\n"
+                "2. Two pointers, sliding window, binary search (2 wks)\n"
+                "3. Linked lists, stacks, queues (1.5 wks)\n"
+                "4. Trees + graphs + DFS/BFS (3 wks)\n"
+                "5. Recursion, backtracking, DP (3 wks)\n"
+                "Practice 3-4 problems/day, 1 contest/week (LeetCode/Codeforces). "
+                "Target: 150-250 problems covering the above patterns before interviews."
+            )
+        if has("system design"):
+            return (
+                "**System design interview prep:**\n"
+                "1. Learn the building blocks: load balancers, caching (Redis), queues (Kafka), DBs (SQL vs NoSQL), CDN\n"
+                "2. Practice the 4-step framework: requirements → estimation → high-level design → deep dive\n"
+                "3. Must-do problems: URL shortener, notification service, chat app, news feed, rate limiter\n"
+                "4. For frontend roles: focus on component architecture, state, performance, caching\n"
+                "Use Grokking System Design + a couple of mock interviews."
+            )
+        if has("resume"):
+            return (
+                "**Resume tips that get shortlisted:**\n"
+                "1. Lead with impact: 'Built X which improved Y by Z%' — quantify everything\n"
+                "2. Max 1 page for < 5 yrs experience; keep bullet points under 2 lines\n"
+                "3. Match keywords from the job description (ATS filters)\n"
+                "4. Skills section: top 6-10 genuinely used skills, not a laundry list\n"
+                "5. Add links: GitHub, portfolio, LinkedIn — make them clickable\n"
+                "Proofread twice and save as PDF (not Word)."
+            )
+        if has("interview"):
+            return (
+                "**Technical interview prep checklist:**\n"
+                "1. DSA: practice 2-3 problems daily, revise patterns weekly\n"
+                "2. Projects: rehearse the 3 stories — hardest bug, scaling decision, teamwork conflict\n"
+                "3. Fundamentals: OS, networking, DB, and your main language's internals\n"
+                "4. Do at least 2 mock interviews (peer or recording yourself)\n"
+                "5. Preparation beats memorization: speak while coding, ask clarifying questions first"
+            )
+        if has("salary", "negotiat", "offer"):
+            return (
+                "**Salary negotiation advice:**\n"
+                "1. Research market range (Glassdoor/Levels.fyi) for role + city + years\n"
+                "2. Never give a number first — ask for the budget band\n"
+                "3. Anchor slightly above midpoint; negotiate total comp, not just base\n"
+                "4. Get competing offers if possible, share numbers politely\n"
+                "5. Discuss sign-on bonus and stocks when base is capped\n"
+                "It costs them more to re-hire than to bump pay — be politely persistent."
+            )
+        if has("roadmap", "path", "learn"):
+            return (
+                "To give you a precise roadmap, tell me your **target role** (e.g., Frontend Developer, "
+                "Backend, Data Scientist) and your current skill level. As a starting point: "
+                "**1) pick one specialization 2) learn its core stack 3) build 2-3 portfolio projects "
+                "4) do DSA 1 hr daily 5) apply with a tailored resume.** I can break down any "
+                "specific stack — just ask (e.g., 'roadmap for React developer')."
+            )
+        if has("skill gap"):
+            return (
+                "To close skill gaps: **1) list the skills missing in your job matches** "
+                "2) rank them by how often they appear 3) learn the top 2-3 first via a course + project "
+                "4) re-upload your resume so your skill graph updates 5) let the recommender re-rank jobs. "
+                "Go to the **Skill Gap & Tests** tab — it generates tests per domain to measure progress."
+            )
+        if has("javascript", "node"):
+            return (
+                "**JavaScript/Node.js path:**\n"
+                "1. JS core: closures, event loop, promises, prototype chain (3 wks)\n"
+                "2. Node: modules, streams, buffers, child processes (2 wks)\n"
+                "3. Express/Fastify REST API + JWT auth + validation (2 wks)\n"
+                "4. MongoDB + Mongoose, then PostgreSQL (2 wks)\n"
+                "5. Dockerize and deploy (Render/Railway/EC2) (1 wk)\n"
+                "Interviews: event loop questions, async patterns, memory leaks, API design."
+            )
+        if has("java", "spring"):
+            return (
+                "**Java/Spring path:**\n"
+                "1. Java core: OOP, collections, streams, concurrency (3 wks)\n"
+                "2. Spring Boot basics: DI, REST, validation, JPA (3 wks)\n"
+                "3. Spring Security + JWT, then microservices basics (2 wks)\n"
+                "4. Testing: JUnit + Mockito; then Docker + CI (2 wks)\n"
+                "Interviews: JVM memory, GC, thread safety, Spring bean lifecycle."
+            )
+        if has("devops", "docker", "kubernetes", "aws", "cloud"):
+            return (
+                "**DevOps path:**\n"
+                "1. Linux + shell scripting + networking basics (2 wks)\n"
+                "2. Git + CI/CD (GitHub Actions) (1 wk)\n"
+                "3. Docker + docker-compose (2 wks)\n"
+                "4. Kubernetes fundamentals: pods, services, deployments (3 wks)\n"
+                "5. IaC: Terraform + AWS core (VPC, EC2, S3, IAM) (3 wks)\n"
+                "6. Monitoring: Prometheus + Grafana (1 wk)\n"
+                "Interview prep: containerization vs VMs, k8s scheduling, blue-green vs canary."
+            )
+        if has("sql", "database", "mongodb", "mysql", "postgres"):
+            return (
+                "**Databases — what to know:**\n"
+                "1. SQL: joins, aggregates, window functions, indexing (B-tree) (2 wks)\n"
+                "2. Normalization vs denormalization; when to use NoSQL (1 wk)\n"
+                "3. MongoDB: documents, indexes, aggregation pipeline (2 wks)\n"
+                "4. Transactions, ACID, isolation levels (1 wk)\n"
+                "Interview prep: query optimization (EXPLAIN), N+1 problem, indexing trade-offs."
+            )
+        if has("free", "open source", "beginner", "start", "fresher", "first job"):
+            return (
+                "**For your first tech job:**\n"
+                "1. Pick ONE stack and go deep — depth beats breadth for freshers\n"
+                "2. Build 2 solid projects that solve real problems (host them live)\n"
+                "3. Contribute to one open-source repo — great resume + GitHub signal\n"
+                "4. DSA 1 hr/day consistently (interviewer first filter)\n"
+                "5. Apply to 10-15 companies/week, tailor each resume, track in a sheet\n"
+                "6. Network: LinkedIn posts on your learnings + connect with recruiters\n"
+                "Expect 3-6 months of consistent prep for placement."
+            )
+        if has("hello", "hi ", "hey", "thanks", "thank"):
+            return (
+                "Hello! 👋 I'm your AI career mentor. I can help with:\n"
+                "• **Learning roadmaps** — ask 'roadmap for React/Python/ML...'\n"
+                "• **DSA & interview prep** — 'how to prepare for coding rounds'\n"
+                "• **Resume & salary** — 'resume tips', 'negotiate offer'\n"
+                "• **Skill gaps** — 'how to close skill gaps' (I use your profile)\n"
+                "What would you like to focus on?"
+            )
+        return (
+            "I'm running in **offline mentor mode** (no AI provider key configured yet), "
+            "but I can still answer from my built-in career playbooks. Try asking about: "
+            "**React/Python/DSA learning paths, system design, resume tips, interview prep, "
+            "salary negotiation, or closing skill gaps**. Want me to build you a roadmap "
+            "for a specific role? Tell me the role and your level."
+        )
 
     # --- CAREER AI HELPER FUNCTIONS ---
 

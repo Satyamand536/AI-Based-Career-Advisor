@@ -209,7 +209,7 @@ export default function TestPage() {
                                 <label key={idx} style={{ 
                                     padding: 10, border: "1px solid #ddd", borderRadius: 4, cursor: "pointer",
                                     background: answers[q._id] === idx ? "#e6f7ff" : "#fff",
-                                    borderColor: answers[q._id] === idx ? "#22d3a5" : "#ddd"
+                                    borderColor: answers[q._id] === idx ? "#f97316" : "#ddd"
                                 }}>
                                     <input 
                                         type="radio" 

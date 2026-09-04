@@ -153,7 +153,7 @@ export function MobileNav() {
 const styles = {
   sidebar: {
     position: "fixed", top: 0, left: 0, bottom: 0,
-    background: "#070a12",
+    background: "#f5f6f8",
     display: "flex", flexDirection: "column",
     transition: "width 0.25s ease",
     zIndex: 100,
@@ -168,14 +168,14 @@ const styles = {
   logoIcon: { fontSize: 28, flexShrink: 0 },
   logoText: {
     fontSize: 22, fontWeight: 800, color: "#fff",
-    background: "linear-gradient(135deg, #8b5cf6, #2dd4bf)",
+    background: "linear-gradient(135deg, #f59e0b, #f59e0b)",
     WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
     whiteSpace: "nowrap",
   },
   collapseBtn: {
     margin: "0 8px 8px", padding: "6px",
-    background: "rgba(255,255,255,0.06)", border: "none",
-    borderRadius: 6, color: "#b6c2d6", cursor: "pointer",
+    background: "rgba(17,24,39,0.06)", border: "none",
+    borderRadius: 6, color: "#4b5563", cursor: "pointer",
     fontSize: 12, transition: "all 0.2s",
   },
   nav: { flex: 1, padding: "8px 8px", display: "flex", flexDirection: "column", gap: 4, overflowY: "auto" },
@@ -183,37 +183,37 @@ const styles = {
     display: "flex", alignItems: "center", gap: 12,
     padding: "11px 12px", borderRadius: 10,
     border: "none", background: "transparent",
-    color: "#b6c2d6", cursor: "pointer",
+    color: "#4b5563", cursor: "pointer",
     fontSize: 14, fontWeight: 500,
     width: "100%", textAlign: "left",
     transition: "all 0.15s",
     position: "relative",
   },
   navItemActive: {
-    background: "linear-gradient(135deg, rgba(139,92,246,0.15), rgba(45,212,191,0.15))",
-    color: "#e8edf5",
-    borderLeft: "3px solid #8b5cf6",
+    background: "linear-gradient(135deg, rgba(245,158,11,0.15), rgba(245,158,11,0.15))",
+    color: "#111827",
+    borderLeft: "3px solid #f59e0b",
   },
   navIcon: { fontSize: 20, flexShrink: 0 },
   navLabel: { whiteSpace: "nowrap", overflow: "hidden" },
   activeIndicator: {
     position: "absolute", right: 12,
     width: 6, height: 6, borderRadius: "50%",
-    background: "#8b5cf6",
+    background: "#f59e0b",
   },
-  userSection: { padding: "8px", borderTop: "1px solid rgba(255,255,255,0.08)" },
+  userSection: { padding: "8px", borderTop: "1px solid rgba(17,24,39,0.1)" },
   userCard: {
     display: "flex", alignItems: "center", gap: 10,
     borderRadius: 10, marginBottom: 4,
   },
   avatar: {
     width: 36, height: 36, borderRadius: "50%",
-    background: "linear-gradient(135deg, #8b5cf6, #2dd4bf)",
+    background: "linear-gradient(135deg, #f59e0b, #f59e0b)",
     display: "flex", alignItems: "center", justifyContent: "center",
     fontSize: 13, fontWeight: 700, color: "#fff", flexShrink: 0,
   },
-  userName: { fontSize: 13, fontWeight: 600, color: "#e8edf5", whiteSpace: "nowrap", overflow: "hidden" },
-  userEmail: { fontSize: 11, color: "#9aa7c2", whiteSpace: "nowrap", overflow: "hidden" },
+  userName: { fontSize: 13, fontWeight: 600, color: "#111827", whiteSpace: "nowrap", overflow: "hidden" },
+  userEmail: { fontSize: 11, color: "#6b7280", whiteSpace: "nowrap", overflow: "hidden" },
   logoutBtn: {
     display: "flex", alignItems: "center", gap: 10,
     padding: "10px 12px", borderRadius: 8,
@@ -224,20 +224,20 @@ const styles = {
   },
   mobileNav: {
     position: "fixed", bottom: 0, left: 0, right: 0,
-    background: "#070a12",
+    background: "#f5f6f8",
     display: "none",
     justifyContent: "space-around",
     padding: "8px 0 max(8px, env(safe-area-inset-bottom))",
-    borderTop: "1px solid rgba(255,255,255,0.1)",
+    borderTop: "1px solid rgba(17,24,39,0.12)",
     zIndex: 100,
     "@media (max-width: 768px)": { display: "flex" }
   },
   mobileNavItem: {
     display: "flex", flexDirection: "column", alignItems: "center",
     padding: "6px 12px", border: "none", background: "transparent",
-    color: "#9aa7c2", cursor: "pointer", borderRadius: 8,
+    color: "#6b7280", cursor: "pointer", borderRadius: 8,
   },
-  mobileNavItemActive: { color: "#8b5cf6" },
+  mobileNavItemActive: { color: "#f59e0b" },
   modalOverlay: {
     position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
     backgroundColor: "rgba(15, 23, 42, 0.75)",
@@ -247,7 +247,7 @@ const styles = {
   },
   modalContent: {
     background: "linear-gradient(145deg, rgba(30,41,59,0.9), rgba(15,23,42,0.95))",
-    border: "1px solid rgba(255,255,255,0.1)",
+    border: "1px solid rgba(17,24,39,0.12)",
     borderRadius: 20, padding: 32, width: "90%", maxWidth: 400,
     boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.6)",
     display: "flex", flexDirection: "column", alignItems: "center", textCenter: "center",
@@ -259,17 +259,17 @@ const styles = {
     display: "flex", alignItems: "center", justifyContent: "center",
   },
   modalTitle: {
-    margin: "0 0 12px", fontSize: 24, fontWeight: 700, color: "#eef2f8",
+    margin: "0 0 12px", fontSize: 24, fontWeight: 700, color: "#111827",
   },
   modalText: {
-    margin: "0 0 24px", fontSize: 15, color: "#b6c2d6", textAlign: "center", lineHeight: 1.5,
+    margin: "0 0 24px", fontSize: 15, color: "#4b5563", textAlign: "center", lineHeight: 1.5,
   },
   modalActions: {
     display: "flex", gap: 12, width: "100%", justifyContent: "center",
   },
   modalBtnCancel: {
     flex: 1, padding: "12px 16px", borderRadius: 12, fontSize: 14, fontWeight: 600,
-    background: "rgba(255,255,255,0.05)", color: "#d7e0ec", border: "1px solid rgba(255,255,255,0.1)",
+    background: "rgba(17,24,39,0.06)", color: "#d7e0ec", border: "1px solid rgba(17,24,39,0.12)",
     cursor: "pointer", transition: "all 0.2s",
   },
   modalBtnConfirm: {

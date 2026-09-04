@@ -33,12 +33,12 @@ export default function SigninModal({ close, openSignup, onLoginSuccess }) {
       if (res.status === 200) {
         toast.success("Welcome back! Login successful.", {
           style: {
-            border: '1px solid #22d3a5',
+            border: '1px solid #f97316',
             padding: '16px',
-            color: '#22d3a5',
+            color: '#f97316',
           },
           iconTheme: {
-            primary: '#22d3a5',
+            primary: '#f97316',
             secondary: '#FFFAEE',
           },
         });

@@ -128,7 +128,7 @@ export default function ChatPage() {
                 <style>{`
                     @keyframes pulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
                     @keyframes bounce { 0%,80%,100% { transform: scale(0); } 40% { transform: scale(1); } }
-                    .thinking-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #22d3a5; margin: 0 2px; animation: bounce 1.4s infinite ease-in-out both; }
+                    .thinking-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #f97316; margin: 0 2px; animation: bounce 1.4s infinite ease-in-out both; }
                     .thinking-dot:nth-child(1) { animation-delay: -0.32s; }
                     .thinking-dot:nth-child(2) { animation-delay: -0.16s; }
                 `}</style>
@@ -147,27 +147,27 @@ function formatMessage(text) {
         try {
             const parsed = JSON.parse(json.trim());
             const lines = Object.entries(parsed).map(([k, v]) =>
-                `<div style="margin:4px 0"><span style="color:#5eead4;font-weight:600">${k.replace(/_/g,' ')}:</span> <span style="color:#e8edf5">${Array.isArray(v) ? v.join(', ') : v}</span></div>`
+                `<div style="margin:4px 0"><span style="color:#fdba74;font-weight:600">${k.replace(/_/g,' ')}:</span> <span style="color:#111827">${Array.isArray(v) ? v.join(', ') : v}</span></div>`
             ).join('');
-            return `<div style="background:#070a12;border:1px solid #1b2740;border-radius:8px;padding:12px 16px;margin:8px 0;font-size:13px">${lines}</div>`;
-        } catch { return `<pre style="background:#070a12;padding:12px;border-radius:8px;overflow-x:auto;font-size:12px;color:#a3e635">${json}</pre>`; }
+            return `<div style="background:#f5f6f8;border:1px solid #e2e6ee;border-radius:8px;padding:12px 16px;margin:8px 0;font-size:13px">${lines}</div>`;
+        } catch { return `<pre style="background:#f5f6f8;padding:12px;border-radius:8px;overflow-x:auto;font-size:12px;color:#a3e635">${json}</pre>`; }
     });
 
     // Inline code
-    text = text.replace(/`([^`]+)`/g, '<code style="background:#070a12;color:#a3e635;padding:2px 6px;border-radius:4px;font-size:13px">$1</code>');
+    text = text.replace(/`([^`]+)`/g, '<code style="background:#f5f6f8;color:#a3e635;padding:2px 6px;border-radius:4px;font-size:13px">$1</code>');
 
     // Bold
-    text = text.replace(/\*\*(.*?)\*\*/g, '<strong style="color:#eef2f8">$1</strong>');
+    text = text.replace(/\*\*(.*?)\*\*/g, '<strong style="color:#111827">$1</strong>');
 
     // Headers (##, ###)
-    text = text.replace(/^### (.+)$/gm, '<div style="font-size:15px;font-weight:700;color:#8b5cf6;margin:14px 0 6px">$1</div>');
-    text = text.replace(/^## (.+)$/gm, '<div style="font-size:17px;font-weight:800;color:#e8edf5;margin:16px 0 8px">$1</div>');
+    text = text.replace(/^### (.+)$/gm, '<div style="font-size:15px;font-weight:700;color:#f59e0b;margin:14px 0 6px">$1</div>');
+    text = text.replace(/^## (.+)$/gm, '<div style="font-size:17px;font-weight:800;color:#111827;margin:16px 0 8px">$1</div>');
 
     // Numbered list
-    text = text.replace(/^(\d+)\. (.+)$/gm, '<div style="display:flex;gap:8px;margin:4px 0"><span style="color:#5eead4;font-weight:700;min-width:20px">$1.</span><span style="color:#d7e0ec">$2</span></div>');
+    text = text.replace(/^(\d+)\. (.+)$/gm, '<div style="display:flex;gap:8px;margin:4px 0"><span style="color:#fdba74;font-weight:700;min-width:20px">$1.</span><span style="color:#d7e0ec">$2</span></div>');
 
     // Bullet list  
-    text = text.replace(/^[-*] (.+)$/gm, '<div style="display:flex;gap:8px;margin:4px 0"><span style="color:#5eead4">•</span><span style="color:#d7e0ec">$1</span></div>');
+    text = text.replace(/^[-*] (.+)$/gm, '<div style="display:flex;gap:8px;margin:4px 0"><span style="color:#fdba74">•</span><span style="color:#d7e0ec">$1</span></div>');
 
     // Newlines
     text = text.replace(/\n\n/g, '<div style="margin:8px 0"></div>');
@@ -177,7 +177,7 @@ function formatMessage(text) {
 }
 
 const layout = {
-    page: { display: "flex", minHeight: "100vh", background: "#070a12" },
+    page: { display: "flex", minHeight: "100vh", background: "#f5f6f8" },
     main: {
         flex: 1,
         marginLeft: 240,
@@ -191,12 +191,12 @@ const layout = {
 const styles = {
     header: {
         padding: "24px 36px 16px",
-        borderBottom: "1px solid rgba(255,255,255,0.05)",
-        background: "#070a12",
+        borderBottom: "1px solid rgba(17,24,39,0.06)",
+        background: "#f5f6f8",
         flexShrink: 0,
     },
-    h1: { margin: 0, fontSize: 24, color: "#eef2f8", fontWeight: 800 },
-    subtitle: { margin: "4px 0 0", color: "#9aa7c2", fontSize: 13 },
+    h1: { margin: 0, fontSize: 24, color: "#111827", fontWeight: 800 },
+    subtitle: { margin: "4px 0 0", color: "#6b7280", fontSize: 13 },
     chatWindow: {
         flex: 1,
         overflowY: "auto",
@@ -213,20 +213,20 @@ const styles = {
     },
     userBubble: {
         padding: "14px 20px",
-        background: "linear-gradient(135deg, #22d3a5, #10b981)",
+        background: "linear-gradient(135deg, #f97316, #ea580c)",
         borderRadius: "16px 16px 4px 16px",
         color: "#fff",
         fontSize: 15,
         lineHeight: 1.6,
         maxWidth: "80%",
-        boxShadow: "0 4px 12px rgba(16,185,129,0.3)",
+        boxShadow: "0 4px 12px rgba(234,88,12,0.3)",
     },
     aiAvatar: {
         width: 36,
         height: 36,
         borderRadius: "50%",
-        background: "linear-gradient(135deg, #101728, #1b2740)",
-        border: "1px solid rgba(255,255,255,0.1)",
+        background: "linear-gradient(135deg, #ffffff, #e2e6ee)",
+        border: "1px solid rgba(17,24,39,0.12)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -235,35 +235,35 @@ const styles = {
     },
     bubbleText: {
         padding: "14px 18px",
-        background: "#101728",
+        background: "#ffffff",
         borderRadius: "4px 16px 16px 16px",
-        color: "#e8edf5",
+        color: "#111827",
         fontSize: 15,
         lineHeight: 1.7,
-        border: "1px solid rgba(255,255,255,0.05)",
+        border: "1px solid rgba(17,24,39,0.06)",
         flex: 1,
     },
     thinkingDots: {
         padding: "14px 18px",
-        background: "#101728",
+        background: "#ffffff",
         borderRadius: "4px 16px 16px 16px",
-        color: "#22d3a5",
+        color: "#f97316",
         fontSize: 22,
         letterSpacing: 4,
-        border: "1px solid rgba(255,255,255,0.05)",
+        border: "1px solid rgba(17,24,39,0.06)",
         animation: "pulse 1.5s infinite",
     },
     inputArea: {
         padding: "16px 36px 24px",
-        borderTop: "1px solid rgba(255,255,255,0.05)",
-        background: "#070a12",
+        borderTop: "1px solid rgba(17,24,39,0.06)",
+        background: "#f5f6f8",
         flexShrink: 0,
     },
     inputWrapper: {
         display: "flex",
         gap: 12,
         alignItems: "flex-end",
-        background: "#101728",
+        background: "#ffffff",
         borderRadius: 16,
         border: "1px solid rgba(255,255,255,0.07)",
         padding: "12px 16px",
@@ -273,7 +273,7 @@ const styles = {
     textarea: {
         flex: 1,
         background: "transparent",
-        color: "#e8edf5",
+        color: "#111827",
         border: "none",
         outline: "none",
         fontFamily: "Inter, sans-serif",
@@ -288,7 +288,7 @@ const styles = {
     sendBtn: {
         padding: "0 16px",
         height: 38,
-        background: "linear-gradient(135deg, #22d3a5, #10b981)",
+        background: "linear-gradient(135deg, #f97316, #ea580c)",
         color: "#fff",
         border: "none",
         borderRadius: 10,
@@ -297,7 +297,7 @@ const styles = {
         fontWeight: 700,
         flexShrink: 0,
         transition: "all 0.2s",
-        boxShadow: "0 4px 10px rgba(16,185,129,0.3)",
+        boxShadow: "0 4px 10px rgba(234,88,12,0.3)",
     },
     inputHint: {
         margin: "8px 0 0",
