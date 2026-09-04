@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import SigninModal from "../components/Signin";
 import SignupModal from "../components/Signup";
+import { checkLogin, getCachedSession } from "../auth";
 
 const FEATURES = [
     { icon: "🧠", title: "Profile Intelligence", desc: "AI parses your resume and builds a deep skill intelligence graph with experience scoring." },
@@ -30,16 +31,16 @@ export default function HomePage() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const checkLogin = async () => {
-            try {
-                const res = await fetch("/api/user/check-login", { credentials: "include" });
-                const data = await res.json();
-                if (data.loggedIn) {
-                    setUser(data.user?.fullName || data.user?.name || "User");
-                }
-            } catch (err) { /* silent */ }
+        const checkLoginState = async () => {
+            const auth = await checkLogin();
+            if (auth.loggedIn) {
+                setUser(auth.user?.fullName || auth.user?.name || "User");
+            } else if (auth.transient) {
+                const cached = getCachedSession();
+                if (cached) setUser(cached.fullName || cached.name || "User");
+            }
         };
-        checkLogin();
+        checkLoginState();
     }, []);
 
     const handleGetStarted = () => {
@@ -53,7 +54,10 @@ export default function HomePage() {
             sessionStorage.clear(); // Ensure cache is zeroed out
             setUser(null);
             toast.success("Logged out");
-        } catch (_) {}
+        } catch (_) {
+            sessionStorage.clear();
+            setUser(null);
+        }
     };
 
     return (
@@ -231,7 +235,7 @@ const s = {
     },
     navbar: {
         display: "flex", justifyContent: "space-between", alignItems: "center",
-        padding: "20px 60px", background: "rgba(15,22,38,0.92)", backdropFilter: "blur(16px)",
+        padding: "clamp(14px, 3vw, 20px) clamp(16px, 6vw, 60px)", background: "rgba(255,255,255,0.92)", backdropFilter: "blur(16px)",
         borderBottom: "1px solid rgba(17,24,39,0.06)", position: "sticky", top: 0, zIndex: 100,
     },
     logo: { fontSize: 22, fontWeight: 800, color: "#111827", letterSpacing: "-0.5px" },
@@ -252,7 +256,7 @@ const s = {
         border: "none", borderRadius: 10, fontWeight: 500, fontSize: 14, cursor: "pointer",
     },
     hero: {
-        padding: "100px 60px 80px", maxWidth: 900, margin: "0 auto", textAlign: "center",
+        padding: "clamp(56px, 10vw, 100px) clamp(16px, 6vw, 60px) clamp(48px, 8vw, 80px)", maxWidth: 900, margin: "0 auto", textAlign: "center",
         position: "relative",
     },
     heroBadge: {
@@ -287,7 +291,7 @@ const s = {
     statItem: { textAlign: "center" },
     statVal: { fontSize: 28, fontWeight: 900, color: "#111827" },
     statLabel: { fontSize: 12, color: "#6b7280", marginTop: 4, textTransform: "uppercase", letterSpacing: "0.5px" },
-    section: { background: "#f5f6f8", padding: "80px 60px" },
+    section: { background: "#f5f6f8", padding: "clamp(48px, 8vw, 80px) clamp(16px, 6vw, 60px)" },
     sectionInner: { maxWidth: 1100, margin: "0 auto", textAlign: "center" },
     sectionBadge: {
         display: "inline-block", padding: "5px 14px",
@@ -323,18 +327,18 @@ const s = {
     featureDesc: { margin: 0, fontSize: 14, color: "#4b5563", lineHeight: 1.7 },
     ctaBanner: {
         background: "linear-gradient(135deg, #e2e6ee 0%, #e2e6ee 100%)",
-        padding: "80px 60px", textAlign: "center",
+        padding: "clamp(48px, 8vw, 80px) clamp(16px, 6vw, 60px)", textAlign: "center",
         borderTop: "1px solid rgba(17,24,39,0.06)",
     },
     footer: {
         padding: "60px 60px 24px", borderTop: "1px solid rgba(17,24,39,0.06)",
-        background: "#070c18",
+        background: "#ffffff",
     },
     footerInner: { display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 40, marginBottom: 40, maxWidth: 1100, margin: "0 auto 40px" },
     footerBrand: { flexShrink: 0 },
     footerLinks: { display: "flex", gap: 60, flexWrap: "wrap" },
     footerCol: { minWidth: 140 },
     footerColTitle: { fontSize: 12, fontWeight: 700, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: 14 },
-    footerLink: { fontSize: 13, color: "#e2e6ee", marginBottom: 8 },
+    footerLink: { fontSize: 13, color: "#4b5563", marginBottom: 8 },
     footerBottom: { textAlign: "center", maxWidth: 1100, margin: "0 auto" },
 };

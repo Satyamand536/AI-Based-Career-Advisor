@@ -2,7 +2,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import Sidebar from "../components/Sidebar";
+import Sidebar, { MobileNav } from "../components/Sidebar";
+import { checkLogin, getCachedSession } from "../auth";
 
 const PROGRESS_STEPS = [
   "🔍 Loading your skill profile...",
@@ -33,25 +34,29 @@ export default function TechJobMatch() {
   }, []);
 
   const checkProfile = async () => {
-    try {
-      const res = await fetch("/api/user/check-login", { credentials: "include" });
-      const data = await res.json();
-      if (!data.loggedIn) { navigate("/"); return; }
-
-      if (data.user?.resume_url) {
+    const auth = await checkLogin();
+    // Transient backend error: keep the cached session instead of logging out.
+    if (auth.transient) {
+      const cached = getCachedSession();
+      if (cached?.resume_url) {
         setHasResume(true);
-        // Get saved skills for skill comparison
-        try {
-          const sr = await fetch("/api/resume/skills", { credentials: "include" });
-          if (sr.ok) {
-            const sd = await sr.json();
-            if (sd.ok && sd.skills) setProfileSkills(sd.skills.map(s => s.toLowerCase()));
-          }
-        } catch (_) {}
         loadJobs();
       }
-    } catch (err) {
-      toast.error("Failed to check profile");
+      return;
+    }
+    if (!auth.loggedIn) { navigate("/"); return; }
+
+    if (auth.user?.resume_url) {
+      setHasResume(true);
+      // Get saved skills for skill comparison
+      try {
+        const sr = await fetch("/api/resume/skills", { credentials: "include" });
+        if (sr.ok) {
+          const sd = await sr.json();
+          if (sd.ok && sd.skills) setProfileSkills(sd.skills.map(s => s.toLowerCase()));
+        }
+      } catch (_) {}
+      loadJobs();
     }
   };
 
@@ -148,6 +153,7 @@ export default function TechJobMatch() {
   return (
     <div style={layout.page}>
       <Sidebar />
+      <MobileNav />
       <main style={layout.main}>
 
         {/* Header */}
@@ -220,7 +226,7 @@ export default function TechJobMatch() {
 
         {/* Job Cards Grid */}
         {!loading && filteredJobs.length > 0 && (
-          <div style={styles.jobsGrid}>
+          <div className="ca-jobs-grid" style={styles.jobsGrid}>
             {filteredJobs.map((job, idx) => {
               const matchPct = getMatchPct(job);
               const matchColor = getMatchColor(matchPct);
@@ -452,7 +458,7 @@ const styles = {
   filterRow: { display: "flex", gap: 8, marginBottom: 20 },
   filterBtn: { padding: "8px 16px", borderRadius: 8, border: "1px solid #e2e6ee", background: "#ffffff", color: "#6b7280", cursor: "pointer", fontSize: 13, fontWeight: 500 },
   filterBtnActive: { background: "rgba(245,158,11,0.15)", color: "#f59e0b", borderColor: "#f59e0b" },
-  jobsGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(480px, 1fr))", gap: 16 },
+  jobsGrid: { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(340px, 100%), 1fr))", gap: 16 },
   jobCard: {
     background: "#ffffff", borderRadius: 16, padding: "20px",
     border: "1px solid", position: "relative",

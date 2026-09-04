@@ -2,7 +2,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import Sidebar from "../components/Sidebar";
+import Sidebar, { MobileNav } from "../components/Sidebar";
+import { checkLogin, getCachedSession } from "../auth";
 
 const SKILL_CATEGORIES = {
   "Frontend":  { color: "#f59e0b", skills: ["React","Vue","Angular","HTML","CSS","TypeScript","Next.js","Redux"] },
@@ -26,18 +27,18 @@ export default function ProfileIntelligence() {
   useEffect(() => { loadProfile(); }, []);
 
   const loadProfile = async () => {
-    try {
-      const res = await fetch("/api/user/check-login", { credentials: "include" });
-      const data = await res.json();
-      if (!data.loggedIn) { navigate("/"); return; }
-      setProfile(data.user);
+    const auth = await checkLogin();
+    if (auth.transient) {
+      const cached = getCachedSession();
+      if (cached) setProfile(cached);
+      return;
+    }
+    if (!auth.loggedIn) { navigate("/"); return; }
+    setProfile(auth.user);
 
-      // Load resume skills if available
-      if (data.user.resume_url) {
-        loadSkillGraph(data.user._id);
-      }
-    } catch (err) {
-      toast.error("Failed to load profile");
+    // Load resume skills if available
+    if (auth.user.resume_url) {
+      loadSkillGraph(auth.user._id);
     }
   };
 
@@ -135,6 +136,7 @@ export default function ProfileIntelligence() {
   return (
     <div style={layout.page}>
       <Sidebar />
+      <MobileNav />
       <main style={layout.main}>
 
         <div style={styles.header}>

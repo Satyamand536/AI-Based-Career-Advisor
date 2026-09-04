@@ -51,6 +51,7 @@ export default function SigninModal({ close, openSignup, onLoginSuccess }) {
           const chk = await fetch("/api/user/check-login", { credentials: "include" });
           const chkData = await chk.json();
           if (chkData.loggedIn) {
+            sessionStorage.setItem("cai_session", JSON.stringify(chkData.user));
             onLoginSuccess(chkData.user.fullName || chkData.user.email);
           } else {
             onLoginSuccess(email);

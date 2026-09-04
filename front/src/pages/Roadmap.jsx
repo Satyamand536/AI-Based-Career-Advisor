@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import Sidebar from "../components/Sidebar";
+import Sidebar, { MobileNav } from "../components/Sidebar";
 
 export default function RoadmapPage() {
   const [roadmap, setRoadmap] = useState(null);
@@ -83,6 +83,7 @@ export default function RoadmapPage() {
     return (
       <div style={layout.page}>
         <Sidebar />
+      <MobileNav />
         <main style={layout.main}>
           <div style={styles.loadingBox}>
             <div style={styles.spinner}>⚙️</div>

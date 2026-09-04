@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import Sidebar from "../components/Sidebar";
+import Sidebar, { MobileNav } from "../components/Sidebar";
 
 const DOMAINS = [
   { id: "React.js",        icon: "⚛️",  color: "#f59e0b" },
@@ -152,6 +152,7 @@ export default function SkillGapTests() {
   return (
     <div style={layout.page}>
       <Sidebar />
+      <MobileNav />
       <main style={layout.main}>
 
         {/* ─── SELECT VIEW ─── */}

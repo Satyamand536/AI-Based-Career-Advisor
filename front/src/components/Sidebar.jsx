@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
+import { checkLogin } from "../auth";
 
 const NAV_ITEMS = [
   { path: "/dashboard", icon: "⚡", label: "Dashboard",        shortLabel: "Home"    },
@@ -20,10 +21,7 @@ export default function Sidebar() {
   const location = useLocation();
 
   useEffect(() => {
-    fetch("/api/user/check-login", { credentials: "include" })
-      .then(r => r.json())
-      .then(d => { if (d.loggedIn) setUser(d.user); })
-      .catch(() => {});
+    checkLogin().then(d => { if (d.loggedIn) setUser(d.user); });
   }, []);
 
   const handleLogoutClick = () => {
@@ -32,7 +30,9 @@ export default function Sidebar() {
 
   const confirmLogout = async () => {
     setShowLogoutConfirm(false);
-    await fetch("/api/user/logout", { credentials: "include" });
+    try {
+      await fetch("/api/user/logout", { credentials: "include" });
+    } catch (_) {}
     sessionStorage.clear(); // Clear all cached user data
     toast.success("Logged out successfully");
     navigate("/");
@@ -44,7 +44,7 @@ export default function Sidebar() {
 
   return (
     <>
-    <aside style={{ ...styles.sidebar, width: collapsed ? 72 : 240 }}>
+    <aside className="ca-sidebar" style={{ ...styles.sidebar, width: collapsed ? 72 : 240 }}>
       {/* Logo */}
       <div style={styles.logo} onClick={() => navigate("/dashboard")}>
         <span style={styles.logoIcon}>⚡</span>
@@ -132,7 +132,7 @@ export function MobileNav() {
   const location = useLocation();
 
   return (
-    <nav style={styles.mobileNav}>
+    <nav className="ca-mobilenav" style={styles.mobileNav}>
       {NAV_ITEMS.map(item => {
         const active = location.pathname === item.path;
         return (

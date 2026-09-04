@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import Sidebar from "../components/Sidebar";
+import Sidebar, { MobileNav } from "../components/Sidebar";
 import { toast } from "react-hot-toast";
 
 export default function ChatPage() {
@@ -69,6 +69,7 @@ export default function ChatPage() {
     return (
         <div style={layout.page}>
             <Sidebar />
+      <MobileNav />
             <main style={layout.main}>
                 <div style={styles.header}>
                     <div>

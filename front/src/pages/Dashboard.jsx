@@ -1,7 +1,7 @@
 // src/pages/Dashboard.jsx — Overview Only (Career Intelligence Command Center)
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "../components/Sidebar";
+import Sidebar, { MobileNav } from "../components/Sidebar";
 
 const PIPELINE_STEPS = [
   { icon: "🧠", label: "Profile Intelligence", desc: "Resume + Skill Graph", path: "/profile", color: "#f59e0b" },
@@ -81,6 +81,7 @@ export default function Dashboard() {
   if (loading) return (
     <div style={layout.page}>
       <Sidebar />
+      <MobileNav />
       <main style={layout.main}>
         <div style={styles.loadingCenter}>
           <div style={styles.loadingSpinner}>⚡</div>

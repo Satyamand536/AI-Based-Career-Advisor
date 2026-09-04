@@ -39,3 +39,9 @@ uploads/
 # Common
 .DS_Store
 Thumbs.db
+
+# runtime artifacts
+.hoplite/.keeper.pid
+*.png
+mongostart.js
+.hoplite/archive/

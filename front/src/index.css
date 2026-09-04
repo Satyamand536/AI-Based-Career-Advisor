@@ -96,3 +96,35 @@ button { font-family: inherit; }
 }
 
 .ca-enter { animation: ca-fade-up 0.5s ease both; }
+
+/* ============================================================
+   Responsive — tablets & phones
+   ============================================================ */
+.ca-mobilenav { display: none; }
+
+@media (max-width: 1024px) {
+  /* Tablet: keep the sidebar, just tighten main padding */
+  main { padding: 28px 24px !important; }
+}
+
+@media (max-width: 768px) {
+  /* Hide the desktop sidebar; the bottom mobile nav takes over */
+  .ca-sidebar { display: none !important; }
+  .ca-mobilenav { display: flex !important; }
+
+  main {
+    margin-left: 0 !important;
+    padding: 20px 16px 96px !important; /* 96px clears the fixed bottom nav */
+  }
+
+  h1 { font-size: 24px !important; }
+  h2 { font-size: 20px !important; }
+
+  /* Job cards / grids fill the phone width */
+  .ca-jobs-grid { grid-template-columns: 1fr !important; }
+}
+
+@media (max-width: 480px) {
+  main { padding: 16px 12px !important; }
+}
+
