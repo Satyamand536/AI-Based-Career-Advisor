@@ -230,7 +230,6 @@ const styles = {
     padding: "8px 0 max(8px, env(safe-area-inset-bottom))",
     borderTop: "1px solid rgba(17,24,39,0.12)",
     zIndex: 100,
-    "@media (max-width: 768px)": { display: "flex" }
   },
   mobileNavItem: {
     display: "flex", flexDirection: "column", alignItems: "center",
@@ -240,17 +239,17 @@ const styles = {
   mobileNavItemActive: { color: "#f59e0b" },
   modalOverlay: {
     position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
-    backgroundColor: "rgba(15, 23, 42, 0.75)",
+    backgroundColor: "rgba(15, 23, 42, 0.5)",
     backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)",
     zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center",
     animation: "fadeIn 0.2s ease-out",
   },
   modalContent: {
-    background: "linear-gradient(145deg, rgba(30,41,59,0.9), rgba(15,23,42,0.95))",
+    background: "#ffffff",
     border: "1px solid rgba(17,24,39,0.12)",
     borderRadius: 20, padding: 32, width: "90%", maxWidth: 400,
-    boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.6)",
-    display: "flex", flexDirection: "column", alignItems: "center", textCenter: "center",
+    boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+    display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center",
   },
   modalIcon: {
     fontSize: 48, marginBottom: 16,
@@ -269,7 +268,7 @@ const styles = {
   },
   modalBtnCancel: {
     flex: 1, padding: "12px 16px", borderRadius: 12, fontSize: 14, fontWeight: 600,
-    background: "rgba(17,24,39,0.06)", color: "#d7e0ec", border: "1px solid rgba(17,24,39,0.12)",
+    background: "#ffffff", color: "#4b5563", border: "1px solid rgba(17,24,39,0.2)",
     cursor: "pointer", transition: "all 0.2s",
   },
   modalBtnConfirm: {

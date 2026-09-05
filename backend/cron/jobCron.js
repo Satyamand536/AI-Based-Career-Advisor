@@ -28,7 +28,11 @@ async function runOnce() {
 }
 
 // Schedule: every 6 hours
+let cronStarted = false;
 function startJobCron() {
+  if (cronStarted) return; // idempotent across DB reconnects
+  cronStarted = true;
+
   // Run once immediately (after 5s delay to allow DB connection)
   setTimeout(runOnce, 5000);
 

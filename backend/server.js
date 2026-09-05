@@ -61,13 +61,35 @@ app.use(express.static(path.resolve('./public')));
 
 // ===== DB CONNECTION =====
 if (process.env.MONGO_URL) {
-  mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => {
-      console.log('MongoDB connected!');
-      // Start job ingestion CRON after DB connects
-      try { startJobCron(); } catch(e) { console.warn('[CRON] Failed to start:', e.message); }
-    })
-    .catch(err => console.error('MongoDB error:', err.message));
+  // Fail fast instead of buffering 10s per query when Mongo restarts, and
+  // reconnect automatically so the backend recovers on its own after the
+  // keeper brings Mongo back.
+  mongoose.set("bufferCommands", false);
+  let dbConnecting = false;
+  const connectDB = () => {
+    if (dbConnecting) return;
+    if (mongoose.connection.readyState === 1) return; // already connected
+    dbConnecting = true;
+    mongoose
+      .connect(process.env.MONGO_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        serverSelectionTimeoutMS: 5000,
+      })
+      .then(() => {
+        dbConnecting = false;
+        console.log("MongoDB connected!");
+        // Start job ingestion CRON after DB connects
+        try { startJobCron(); } catch(e) { console.warn('[CRON] Failed to start:', e.message); }
+      })
+      .catch(err => { dbConnecting = false; console.error("MongoDB error:", err.message); });
+  };
+  connectDB();
+  mongoose.connection.on("disconnected", () => {
+    console.warn("[DB] Disconnected — reconnecting in 2s");
+    setTimeout(connectDB, 2000);
+  });
+  mongoose.connection.on("error", err => console.error("[DB] Connection error:", err.message));
 } else {
   console.warn('[WARN] MONGO_URL not set. DB features will fail until you configure it.');
 }

@@ -8,7 +8,7 @@ import { checkLogin, getCachedSession } from "../auth";
 const SKILL_CATEGORIES = {
   "Frontend":  { color: "#f59e0b", skills: ["React","Vue","Angular","HTML","CSS","TypeScript","Next.js","Redux"] },
   "Backend":   { color: "#f59e0b", skills: ["Node.js","Express","Python","Django","Flask","Java","Spring","FastAPI"] },
-  "Database":  { color: "#34d399", skills: ["MongoDB","PostgreSQL","MySQL","Redis","Firebase","DynamoDB"] },
+  "Database":  { color: "#f59e0b", skills: ["MongoDB","PostgreSQL","MySQL","Redis","Firebase","DynamoDB"] },
   "DevOps":    { color: "#fb923c", skills: ["Docker","Kubernetes","AWS","GCP","Azure","CI/CD","Terraform","Linux"] },
   "AI / ML":   { color: "#f472b6", skills: ["Python","TensorFlow","PyTorch","scikit-learn","pandas","OpenAI API","LangChain"] },
   "Mobile":    { color: "#fcd34d", skills: ["React Native","Flutter","Swift","Kotlin","Android","iOS"] },

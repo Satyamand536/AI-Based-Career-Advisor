@@ -151,11 +151,11 @@ function formatMessage(text) {
                 `<div style="margin:4px 0"><span style="color:#fdba74;font-weight:600">${k.replace(/_/g,' ')}:</span> <span style="color:#111827">${Array.isArray(v) ? v.join(', ') : v}</span></div>`
             ).join('');
             return `<div style="background:#f5f6f8;border:1px solid #e2e6ee;border-radius:8px;padding:12px 16px;margin:8px 0;font-size:13px">${lines}</div>`;
-        } catch { return `<pre style="background:#f5f6f8;padding:12px;border-radius:8px;overflow-x:auto;font-size:12px;color:#a3e635">${json}</pre>`; }
+        } catch { return `<pre style="background:#f5f6f8;padding:12px;border-radius:8px;overflow-x:auto;font-size:12px;color:#b45309">${json}</pre>`; }
     });
 
     // Inline code
-    text = text.replace(/`([^`]+)`/g, '<code style="background:#f5f6f8;color:#a3e635;padding:2px 6px;border-radius:4px;font-size:13px">$1</code>');
+    text = text.replace(/`([^`]+)`/g, '<code style="background:#f5f6f8;color:#b45309;padding:2px 6px;border-radius:4px;font-size:13px">$1</code>');
 
     // Bold
     text = text.replace(/\*\*(.*?)\*\*/g, '<strong style="color:#111827">$1</strong>');
@@ -165,10 +165,10 @@ function formatMessage(text) {
     text = text.replace(/^## (.+)$/gm, '<div style="font-size:17px;font-weight:800;color:#111827;margin:16px 0 8px">$1</div>');
 
     // Numbered list
-    text = text.replace(/^(\d+)\. (.+)$/gm, '<div style="display:flex;gap:8px;margin:4px 0"><span style="color:#fdba74;font-weight:700;min-width:20px">$1.</span><span style="color:#d7e0ec">$2</span></div>');
+    text = text.replace(/^(\d+)\. (.+)$/gm, '<div style="display:flex;gap:8px;margin:4px 0"><span style="color:#ea580c;font-weight:700;min-width:20px">$1.</span><span style="color:#4b5563">$2</span></div>');
 
     // Bullet list  
-    text = text.replace(/^[-*] (.+)$/gm, '<div style="display:flex;gap:8px;margin:4px 0"><span style="color:#fdba74">•</span><span style="color:#d7e0ec">$1</span></div>');
+    text = text.replace(/^[-*] (.+)$/gm, '<div style="display:flex;gap:8px;margin:4px 0"><span style="color:#f59e0b">•</span><span style="color:#4b5563">$1</span></div>');
 
     // Newlines
     text = text.replace(/\n\n/g, '<div style="margin:8px 0"></div>');

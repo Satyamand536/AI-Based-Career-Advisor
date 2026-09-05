@@ -6,7 +6,7 @@ import Sidebar, { MobileNav } from "../components/Sidebar";
 const PIPELINE_STEPS = [
   { icon: "🧠", label: "Profile Intelligence", desc: "Resume + Skill Graph", path: "/profile", color: "#f59e0b" },
   { icon: "🎯", label: "Tech Job Match",        desc: "Top 10 matched jobs",  path: "/jobs",    color: "#f59e0b" },
-  { icon: "📊", label: "Skill Gap & Tests",     desc: "Identify & close gaps", path: "/skills", color: "#34d399" },
+  { icon: "📊", label: "Skill Gap & Tests",     desc: "Identify & close gaps", path: "/skills", color: "#f59e0b" },
   { icon: "🗺️", label: "Roadmap",              desc: "Adaptive learning path", path: "/roadmap", color: "#fb923c" },
   { icon: "🤖", label: "AI Assistant",          desc: "Career mentor chat",   path: "/chat",    color: "#f472b6" },
 ];

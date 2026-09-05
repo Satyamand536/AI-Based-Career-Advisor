@@ -201,7 +201,7 @@ export default function RoadmapPage() {
                             <div style={styles.sectionLabel}>Daily Execution</div>
                             <ul style={{ margin: 0, paddingLeft: 20 }}>
                               {(week.daily_tasks || week.tasks || []).map((task, t) => (
-                                <li key={t} style={{ marginBottom: 5, color: "#d7e0ec", fontSize: 14 }}>{task}</li>
+                                <li key={t} style={{ marginBottom: 5, color: "#4b5563", fontSize: 14 }}>{task}</li>
                               ))}
                             </ul>
                           </div>
@@ -210,7 +210,7 @@ export default function RoadmapPage() {
                             {week.practical_task && (
                               <div style={styles.practicalBox}>
                                 <div style={styles.practicalLabel}>🛠️ PRACTICAL TASK</div>
-                                <div style={{ fontSize: 13, color: "#a3e635" }}>{week.practical_task}</div>
+                                <div style={{ fontSize: 13, color: "#b45309" }}>{week.practical_task}</div>
                               </div>
                             )}
                             {week.interview_question && (
@@ -328,7 +328,7 @@ function WorkflowStep({ icon, label, done, active, onClick }) {
       }}>
         {done ? "✅" : icon}
       </div>
-      <span style={{ fontSize: 11, color: active ? "#fdba74" : done ? "#34d399" : "#6b7280", fontWeight: active || done ? "bold" : "normal" }}>
+      <span style={{ fontSize: 11, color: active ? "#ea580c" : done ? "#f59e0b" : "#6b7280", fontWeight: active || done ? "bold" : "normal" }}>
         {label}
       </span>
     </div>

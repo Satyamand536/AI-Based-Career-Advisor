@@ -45,3 +45,4 @@ Thumbs.db
 *.png
 mongostart.js
 .hoplite/archive/
+.hoplite/.keeper.lock

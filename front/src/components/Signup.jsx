@@ -140,7 +140,7 @@ export default function SignupModal({ close, openSignin, onSignupSuccess }) {
 
   const renderCheck = (flag) =>
     flag ? (
-      <span style={{ color: "green", fontWeight: "bold" }}>✔</span>
+      <span style={{ color: "#ea580c", fontWeight: "bold" }}>✔</span>
     ) : (
       <span style={{ color: "red", fontWeight: "bold" }}>✘</span>
     );
