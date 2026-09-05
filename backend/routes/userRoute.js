@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
 const { validateToken } = require("../services/authentication");
+const { isDbConnectionError } = require("../services/dbGuard");
 
 // ----------------------------
 // VALIDATION REGEX
@@ -108,6 +109,7 @@ router.post("/signin", async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days — keep users signed in
     });
 
     return res.json({
@@ -171,7 +173,12 @@ router.get("/check-login", async (req, res) => {
       },
     });
   } catch (err) {
-    console.error("Check login error:", err);
+    console.error("Check login error:", err.message);
+    // Mongo restart / brief network blip is NOT a logout: tell the frontend
+    // the verdict is unknown (503) so it keeps the cached session.
+    if (isDbConnectionError(err)) {
+      return res.status(503).json({ loggedIn: null, error: "db_unavailable" });
+    }
     return res.status(401).json({ loggedIn: false });
   }
 });
@@ -184,6 +191,7 @@ router.post("/logout", (req, res) => {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
+    maxAge: 30 * 24 * 60 * 60 * 1000,
   });
   return res.json({ message: "Logged out successfully" });
 });

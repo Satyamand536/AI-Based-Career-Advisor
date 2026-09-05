@@ -13,20 +13,15 @@ Modules:
 - explainability: Human-readable explanations
 - resume_parser: Document parsing
 
-Author: AI Career Advisor System
+IMPORTANT: This package must stay import-light. Heavy dependencies
+(torch / sentence-transformers) are only imported inside the service
+modules when they are actually used, so the Flask process boots small.
+Do not add eager imports here.
 """
-
-from services.embedding_service import EmbeddingService, build_profile_text, build_job_text
-from services.classifier_service import ClassifierService
-from services.recommender_engine import RecommenderEngine
-from services.career_path_analyzer import CareerPathAnalyzer
-from services.skill_gap_analyzer import SkillGapAnalyzer
-from services.explainability import ExplainabilityModule
-from services.resume_parser import parse_resume_file
 
 __all__ = [
     'EmbeddingService',
-    'ClassifierService', 
+    'ClassifierService',
     'RecommenderEngine',
     'CareerPathAnalyzer',
     'SkillGapAnalyzer',

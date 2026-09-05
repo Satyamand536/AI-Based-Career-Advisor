@@ -15,7 +15,6 @@ Author: AI Career Advisor System
 
 import numpy as np
 from typing import Dict, List, Tuple, Optional
-from sentence_transformers import util
 import logging
 
 from services.embedding_service import EmbeddingService

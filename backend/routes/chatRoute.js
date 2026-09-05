@@ -33,6 +33,44 @@ function isTechRelated(message) {
     return TECH_TOPICS.some(topic => lower.includes(topic));
 }
 
+// Minimal offline mentor used when the AI service is unreachable, so chat
+// never returns a hard error. Mirrors the Python-side fallback behavior.
+function offlineMentorReply(question = "") {
+    const q = ` ${question} `.toLowerCase();
+    const has = (...words) => words.some(w => q.includes(w));
+    if (has("react", "frontend", "front-end")) {
+        return "**Frontend (React) path:** HTML/CSS (2 wks) → JS fundamentals (3 wks) → React core + hooks (3 wks) → 2-3 projects (3 wks) → TypeScript + testing. Aim for ~3 months at 10 hrs/week.";
+    }
+    if (has("python", "django", "flask")) {
+        return "**Python backend path:** Python core (3 wks) → SQL + ORM (2 wks) → Flask/FastAPI REST APIs (2 wks) → PostgreSQL + Redis (2 wks) → Docker + deploy (1 wk). Build a CRUD API service as your project.";
+    }
+    if (has("machine learning", "ml", "data science", "tensorflow", "pandas")) {
+        return "**ML/Data Science path:** Python + NumPy/Pandas (2-3 wks) → stats (2 wks) → sklearn models (3 wks) → deep learning basics with PyTorch (4 wks) → one end-to-end project (cleaning → model → API).";
+    }
+    if (has("dsa", "data structure", "algorithm", "leetcode", "coding round")) {
+        return "**DSA prep:** Arrays/strings/hashing (2 wks) → two pointers/binary search (2 wks) → linked lists/stacks/queues (1.5 wks) → trees/graphs (3 wks) → recursion/DP (3 wks). Practice 3-4 problems/day + 1 contest/week.";
+    }
+    if (has("system design")) {
+        return "**System design:** Learn building blocks (load balancers, caching, queues, SQL vs NoSQL, CDN) → use the 4-step framework (requirements → estimation → high-level → deep dive) → practice URL shortener, chat app, news feed, rate limiter.";
+    }
+    if (has("resume")) {
+        return "**Resume tips:** lead with quantified impact ('built X → improved Y by Z%'), keep to 1 page, mirror ATS keywords from the job post, top 6-10 real skills, add GitHub/portfolio links, export as PDF.";
+    }
+    if (has("interview")) {
+        return "**Interview prep:** 2-3 DSA problems daily, rehearse 3 project stories (hardest bug, scaling, conflict), review OS/networking/DB fundamentals, and do 2+ mock interviews.";
+    }
+    if (has("salary", "negotiat", "offer")) {
+        return "**Salary negotiation:** research the band (Levels.fyi/Glassdoor), avoid giving a number first, anchor slightly above midpoint, negotiate total comp (base + equity + sign-on), and share competing offers politely.";
+    }
+    if (has("roadmap", "path", "learn")) {
+        return "Tell me your **target role** (Frontend, Backend, Data, DevOps…) and I'll break down a week-by-week path. Rule of thumb: pick one stack → learn its core → build 2-3 projects → DSA daily → apply with a tailored resume.";
+    }
+    if (has("hello", "hi ", "hey", "thanks", "thank")) {
+        return "Hello! 👋 I'm your career mentor. Ask me about **learning roadmaps (React/Python/ML/Java/DevOps), DSA prep, system design, resume tips, salary negotiation, or closing skill gaps**.";
+    }
+    return "I'm in offline mentor mode (no AI provider reachable), but I can still help from my built-in career playbooks. Try asking about learning paths, DSA prep, system design, resume tips, salary negotiation, or skill gaps.";
+}
+
 // Chat with AI Mentor
 router.post("/send", checkForAuthenticationCookie("token"), async (req, res) => {
     try {
@@ -117,7 +155,8 @@ YOUR RULES (MANDATORY):
 
         } catch (aiErr) {
             console.error("AI Service Error:", aiErr.message);
-            return res.status(500).json({ error: "Failed to reach AI capabilities." });
+            // Offline fallback so chat never hard-fails (sandbox/service restarts).
+            return res.json({ ok: true, reply: offlineMentorReply(message) });
         }
 
     } catch (err) {

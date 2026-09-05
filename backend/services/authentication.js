@@ -10,6 +10,10 @@ function getJWTSecret() {
   return secret;
 }
 
+// Sessions are long-lived so users are not logged out mid-use; the cookie
+// maxAge in routes/userRoute.js mirrors this same window.
+const SESSION_TTL = "30d";
+
 function createTokenForUser(user) {
   const payload = {
     _id: user._id,
@@ -19,7 +23,7 @@ function createTokenForUser(user) {
     role: user.role,
   };
 
-  const token = JWT.sign(payload, getJWTSecret());
+  const token = JWT.sign(payload, getJWTSecret(), { expiresIn: SESSION_TTL });
   return token;
 }
 

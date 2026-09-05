@@ -1,0 +1,36 @@
+fix: keep sessions alive, real jobs, responsive UI, light AI service
+
+Session/stability:
+- front/src/auth.js: shared checkLogin treats network/5xx errors as
+  transient, never logs the user out; only explicit loggedIn:false does
+- Home/TechJobMatch/ProfileIntelligence/Sidebar/Navbar/Signin use the
+  robust check, cache session in sessionStorage, clear on logout
+- backend chatRoute: offline rule-based mentor fallback so chat never
+  hard-fails when the AI service is restarting
+
+Root cause of recurring 'session expired': the sandbox memory guard was
+killing the AI service (torch ~900MB at boot, ~1GB after embeddings).
+Fixes:
+- ai/services/__init__.py no longer eagerly imports the whole stack
+  (boot RSS 903MB -> 53MB)
+- classifier_service drops unused sentence_transformers import
+- embedding_service: embeddings computed in a short-lived subprocess,
+  Flask parent stays ~70-190MB; batch path uses one worker call
+- .hoplite/stack_keeper.sh + run.sh: detached keeper restarts MongoDB/
+  backend/AI within ~8s; frontend auto-restarts on exit
+
+Jobs/keys:
+- backend/.env.example documents Adzuna/Jooble key slots
+- ai/.env.example documents all AI provider keys (OpenRouter, Gemini,
+  Ollama); load_dotenv picks them up automatically
+
+Responsive (verified via headless Chrome computed styles):
+- index.css breakpoints: 1024 tablet, 768 phone (sidebar hidden, bottom
+  mobile nav shown, main margin 0, 96px bottom clearance), 480 phone
+- MobileNav now rendered on all six authed pages (was exported but never
+  used); desktop sidebar gets ca-sidebar class
+- TechJobMatch grid minmax(min(340px,100%),1fr); Home paddings -> clamp()
+
+Verification: login (30-day cookie) -> dashboard -> 10 real jobs from The
+Muse (Capital One, Walmart) with match %; chat returns mentor reply;
+mobile probe: sidebar none / nav flex / mainMargin 0 at <768px.

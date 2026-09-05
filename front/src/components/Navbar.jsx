@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import SigninModal from "./Signin";
 import SignupModal from "./Signup";
+import { checkLogin, clearCachedSession } from "../auth";
 import "./Home.css";
 
 export default function Navbar() {
@@ -19,27 +20,23 @@ export default function Navbar() {
   }, []);
 
   const checkLoginStatus = async () => {
-    try {
-      const res = await fetch("/api/user/check-login", { 
-        credentials: "include" 
-      });
-      const data = await res.json();
-      if (data.loggedIn && data.user) {
-        setUser(data.user.fullName || data.user.email);
-      }
-    } catch (err) {
-      console.error("Check login error:", err);
+    const auth = await checkLogin();
+    if (auth.loggedIn && auth.user) {
+      setUser(auth.user.fullName || auth.user.email);
     }
   };
 
   const handleLogout = async () => {
     try {
       await fetch("/api/user/logout", { credentials: "include" });
+      clearCachedSession();
       setUser(null);
       toast.success("Logged out");
       navigate("/");
-    } catch (err) {
-      console.error("Logout error:", err);
+    } catch {
+      clearCachedSession();
+      setUser(null);
+      navigate("/");
     }
   };
 

@@ -33,12 +33,12 @@ export default function SigninModal({ close, openSignup, onLoginSuccess }) {
       if (res.status === 200) {
         toast.success("Welcome back! Login successful.", {
           style: {
-            border: '1px solid #1890ff',
+            border: '1px solid #f97316',
             padding: '16px',
-            color: '#1890ff',
+            color: '#f97316',
           },
           iconTheme: {
-            primary: '#1890ff',
+            primary: '#f97316',
             secondary: '#FFFAEE',
           },
         });
@@ -51,6 +51,7 @@ export default function SigninModal({ close, openSignup, onLoginSuccess }) {
           const chk = await fetch("/api/user/check-login", { credentials: "include" });
           const chkData = await chk.json();
           if (chkData.loggedIn) {
+            sessionStorage.setItem("cai_session", JSON.stringify(chkData.user));
             onLoginSuccess(chkData.user.fullName || chkData.user.email);
           } else {
             onLoginSuccess(email);

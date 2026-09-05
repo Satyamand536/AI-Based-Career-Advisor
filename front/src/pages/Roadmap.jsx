@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import Sidebar from "../components/Sidebar";
+import Sidebar, { MobileNav } from "../components/Sidebar";
 
 export default function RoadmapPage() {
   const [roadmap, setRoadmap] = useState(null);
@@ -77,16 +77,17 @@ export default function RoadmapPage() {
     }
   };
 
-  const phaseColors = ["#52c41a", "#1890ff", "#722ed1", "#fa8c16", "#eb2f96"];
+  const phaseColors = ["#52c41a", "#f97316", "#722ed1", "#fa8c16", "#eb2f96"];
 
   if (loading) {
     return (
       <div style={layout.page}>
         <Sidebar />
+      <MobileNav />
         <main style={layout.main}>
           <div style={styles.loadingBox}>
             <div style={styles.spinner}>⚙️</div>
-            <p style={{ color: "#94a3b8", marginTop: 12 }}>Loading your roadmap...</p>
+            <p style={{ color: "#4b5563", marginTop: 12 }}>Loading your roadmap...</p>
           </div>
         </main>
       </div>
@@ -170,11 +171,11 @@ export default function RoadmapPage() {
                       <span style={{ ...styles.levelBadge, color: phaseColors[i % phaseColors.length] }}>
                         PHASE {phase.level || i + 1}
                       </span>
-                      <h2 style={{ margin: "5px 0 0", fontSize: 22, color: "#f1f5f9" }}>{phase.name}</h2>
+                      <h2 style={{ margin: "5px 0 0", fontSize: 22, color: "#111827" }}>{phase.name}</h2>
                     </div>
                     <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                       <span style={styles.durationBadge}>{phase.duration || "Self-paced"}</span>
-                      <span style={{ fontSize: 20, color: "#94a3b8" }}>
+                      <span style={{ fontSize: 20, color: "#4b5563" }}>
                         {expandedPhase === i ? "▲" : "▼"}
                       </span>
                     </div>
@@ -187,7 +188,7 @@ export default function RoadmapPage() {
                         <div key={w} style={styles.weekCard}>
                           <div style={styles.weekHeader}>
                             <span style={styles.weekNum}>{week.week_number || week.week || w + 1}</span>
-                            <h4 style={{ margin: 0, fontSize: 17, color: "#f1f5f9" }}>{week.topic}</h4>
+                            <h4 style={{ margin: 0, fontSize: 17, color: "#111827" }}>{week.topic}</h4>
                           </div>
 
                           {week.why_it_matters && (
@@ -200,7 +201,7 @@ export default function RoadmapPage() {
                             <div style={styles.sectionLabel}>Daily Execution</div>
                             <ul style={{ margin: 0, paddingLeft: 20 }}>
                               {(week.daily_tasks || week.tasks || []).map((task, t) => (
-                                <li key={t} style={{ marginBottom: 5, color: "#cbd5e1", fontSize: 14 }}>{task}</li>
+                                <li key={t} style={{ marginBottom: 5, color: "#4b5563", fontSize: 14 }}>{task}</li>
                               ))}
                             </ul>
                           </div>
@@ -209,13 +210,13 @@ export default function RoadmapPage() {
                             {week.practical_task && (
                               <div style={styles.practicalBox}>
                                 <div style={styles.practicalLabel}>🛠️ PRACTICAL TASK</div>
-                                <div style={{ fontSize: 13, color: "#a3e635" }}>{week.practical_task}</div>
+                                <div style={{ fontSize: 13, color: "#b45309" }}>{week.practical_task}</div>
                               </div>
                             )}
                             {week.interview_question && (
                               <div style={styles.interviewBox}>
                                 <div style={styles.interviewLabel}>🎤 INTERVIEW Q</div>
-                                <div style={{ fontSize: 13, fontStyle: "italic", color: "#60a5fa" }}>"{week.interview_question}"</div>
+                                <div style={{ fontSize: 13, fontStyle: "italic", color: "#fdba74" }}>"{week.interview_question}"</div>
                               </div>
                             )}
                           </div>
@@ -247,8 +248,8 @@ export default function RoadmapPage() {
             {roadmap.milestone_project && (
               <div style={styles.milestoneCard}>
                 <div style={styles.milestoneLabel}>🏆 MILESTONE PROJECT</div>
-                <h3 style={{ margin: "0 0 8px 0", fontSize: 20, color: "#f1f5f9" }}>{roadmap.milestone_project.title}</h3>
-                <p style={{ margin: "0 0 12px 0", color: "#94a3b8", fontSize: 14 }}>
+                <h3 style={{ margin: "0 0 8px 0", fontSize: 20, color: "#111827" }}>{roadmap.milestone_project.title}</h3>
+                <p style={{ margin: "0 0 12px 0", color: "#4b5563", fontSize: 14 }}>
                   {roadmap.milestone_project.description}
                 </p>
                 {roadmap.milestone_project.tech_stack && (
@@ -275,7 +276,7 @@ export default function RoadmapPage() {
           <div style={styles.emptyCard}>
             <div style={{ fontSize: 60, marginBottom: 20 }}>🗺️</div>
             <h3 style={{ fontSize: 24, marginBottom: 12 }}>No Active Roadmap</h3>
-            <p style={{ color: "#94a3b8", fontSize: 15, maxWidth: 500, margin: "0 auto 30px" }}>
+            <p style={{ color: "#4b5563", fontSize: 15, maxWidth: 500, margin: "0 auto 30px" }}>
               Your personalized career progression path is generated using proprietary AI analysis of your skills and test results.
               Upload a resume and take assessments to build your profile.
             </p>
@@ -295,7 +296,7 @@ export default function RoadmapPage() {
 }
 
 const layout = {
-  page: { display: "flex", minHeight: "100vh", background: "#0f172a" },
+  page: { display: "flex", minHeight: "100vh", background: "#f5f6f8" },
   main: { flex: 1, marginLeft: 240, padding: "36px 40px", overflowY: "auto" },
 };
 
@@ -317,17 +318,17 @@ function WorkflowStep({ icon, label, done, active, onClick }) {
         width: 42,
         height: 42,
         borderRadius: "50%",
-        background: done ? "#10b981" : active ? "#3b82f6" : "#1e293b",
+        background: done ? "#ea580c" : active ? "#f97316" : "#ffffff",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         fontSize: 18,
-        border: "1px solid rgba(255,255,255,0.1)",
-        boxShadow: active ? "0 0 0 4px rgba(59,130,246,0.2)" : done ? "0 0 0 4px rgba(16,185,129,0.2)" : "none"
+        border: "1px solid rgba(17,24,39,0.12)",
+        boxShadow: active ? "0 0 0 4px rgba(249,115,22,0.2)" : done ? "0 0 0 4px rgba(234,88,12,0.2)" : "none"
       }}>
         {done ? "✅" : icon}
       </div>
-      <span style={{ fontSize: 11, color: active ? "#60a5fa" : done ? "#34d399" : "#64748b", fontWeight: active || done ? "bold" : "normal" }}>
+      <span style={{ fontSize: 11, color: active ? "#ea580c" : done ? "#f59e0b" : "#6b7280", fontWeight: active || done ? "bold" : "normal" }}>
         {label}
       </span>
     </div>
@@ -336,72 +337,72 @@ function WorkflowStep({ icon, label, done, active, onClick }) {
 
 const styles = {
   header: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 30, flexWrap: "wrap", gap: 16 },
-  title: { margin: 0, fontSize: "clamp(1.6rem, 3vw, 2rem)", color: "#f8fafc" },
-  subtitle: { margin: "6px 0 0", color: "#94a3b8", fontSize: 14 },
+  title: { margin: 0, fontSize: "clamp(1.6rem, 3vw, 2rem)", color: "#111827" },
+  subtitle: { margin: "6px 0 0", color: "#4b5563", fontSize: 14 },
   primaryBtn: {
     padding: "12px 24px",
-    background: "linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)",
+    background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
     color: "#fff", border: "none", borderRadius: 8,
     cursor: "pointer", fontWeight: "bold", fontSize: 14,
-    boxShadow: "0 4px 12px rgba(37,99,235,0.25)", transition: "all 0.2s"
+    boxShadow: "0 4px 12px rgba(234,88,12,0.25)", transition: "all 0.2s"
   },
   secondaryBtn: {
     padding: "12px 24px", background: "rgba(30,30,30,0.5)",
-    color: "#e2e8f0", border: "1px solid rgba(255,255,255,0.1)",
+    color: "#111827", border: "1px solid rgba(17,24,39,0.12)",
     borderRadius: 8, cursor: "pointer", fontWeight: "bold", fontSize: 14,
     transition: "all 0.2s", backdropFilter: "blur(10px)"
   },
   workflowBar: {
     display: "flex", alignItems: "center", justifyContent: "center",
-    padding: "20px 30px", background: "#1e293b",
-    borderRadius: 12, border: "1px solid rgba(255,255,255,0.05)",
+    padding: "20px 30px", background: "#ffffff",
+    borderRadius: 12, border: "1px solid rgba(17,24,39,0.06)",
     boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
     marginBottom: 32, gap: 8, flexWrap: "wrap"
   },
-  workflowLine: { flex: 1, height: 2, background: "rgba(255,255,255,0.1)", maxWidth: 60 },
+  workflowLine: { flex: 1, height: 2, background: "rgba(17,24,39,0.12)", maxWidth: 60 },
   heroCard: {
-    background: "linear-gradient(135deg, #1e3a8a 0%, #312e81 100%)",
+    background: "linear-gradient(135deg, #e2e6ee 0%, #e2e6ee 100%)",
     padding: "30px 28px", borderRadius: 16, marginBottom: 30,
     color: "#fff", position: "relative", overflow: "hidden",
-    boxShadow: "0 10px 30px rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.1)"
+    boxShadow: "0 10px 30px rgba(0,0,0,0.5)", border: "1px solid rgba(17,24,39,0.12)"
   },
   heroOverlay: {
     position: "absolute", top: -20, right: -10,
     fontSize: 120, opacity: 0.06, fontWeight: "bold", pointerEvents: "none"
   },
   phaseCard: {
-    background: "#1e293b", padding: 24, borderRadius: 16,
-    border: "1px solid rgba(255,255,255,0.05)", borderLeft: "8px solid #3b82f6",
+    background: "#ffffff", padding: 24, borderRadius: 16,
+    border: "1px solid rgba(17,24,39,0.06)", borderLeft: "8px solid #f97316",
     boxShadow: "0 10px 30px rgba(0,0,0,0.5)", transition: "all 0.3s"
   },
   phaseHeader: { display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer" },
   levelBadge: { fontSize: 11, fontWeight: "bold", textTransform: "uppercase", letterSpacing: "1px" },
-  durationBadge: { padding: "4px 12px", background: "rgba(255,255,255,0.05)", borderRadius: 20, fontSize: 13, color: "#94a3b8" },
+  durationBadge: { padding: "4px 12px", background: "rgba(17,24,39,0.06)", borderRadius: 20, fontSize: 13, color: "#4b5563" },
   weekCard: {
-    padding: 18, background: "#0f172a",
-    borderRadius: 10, border: "1px solid rgba(255,255,255,0.05)"
+    padding: 18, background: "#f5f6f8",
+    borderRadius: 10, border: "1px solid rgba(17,24,39,0.06)"
   },
   weekHeader: { display: "flex", alignItems: "center", gap: 10, marginBottom: 12 },
   weekNum: {
     width: 28, height: 28, borderRadius: "50%",
-    background: "#3b82f6", color: "#fff",
+    background: "#f97316", color: "#fff",
     display: "flex", alignItems: "center", justifyContent: "center",
     fontSize: 12, fontWeight: "bold", flexShrink: 0,
-    boxShadow: "0 0 10px rgba(59,130,246,0.3)"
+    boxShadow: "0 0 10px rgba(249,115,22,0.3)"
   },
   whyBox: {
     marginBottom: 12, padding: "8px 12px",
-    background: "rgba(139, 92, 246, 0.1)", borderLeft: "3px solid #8b5cf6",
-    borderRadius: 4, fontSize: 13, color: "#e2e8f0"
+    background: "rgba(139, 92, 246, 0.1)", borderLeft: "3px solid #f59e0b",
+    borderRadius: 4, fontSize: 13, color: "#111827"
   },
-  sectionLabel: { fontSize: 12, fontWeight: "bold", color: "#64748b", marginBottom: 8, textTransform: "uppercase" },
+  sectionLabel: { fontSize: 12, fontWeight: "bold", color: "#6b7280", marginBottom: 8, textTransform: "uppercase" },
   practicalBox: { padding: 12, background: "rgba(34, 197, 94, 0.1)", border: "1px solid rgba(34, 197, 94, 0.2)", borderRadius: 8 },
-  practicalLabel: { fontSize: 11, fontWeight: "bold", color: "#4ade80", marginBottom: 4 },
-  interviewBox: { padding: 12, background: "rgba(59, 130, 246, 0.1)", border: "1px solid rgba(59, 130, 246, 0.2)", borderRadius: 8 },
-  interviewLabel: { fontSize: 11, fontWeight: "bold", color: "#60a5fa", marginBottom: 4 },
+  practicalLabel: { fontSize: 11, fontWeight: "bold", color: "#fdba74", marginBottom: 4 },
+  interviewBox: { padding: 12, background: "rgba(34, 211, 165, 0.1)", border: "1px solid rgba(34, 211, 165, 0.2)", borderRadius: 8 },
+  interviewLabel: { fontSize: 11, fontWeight: "bold", color: "#fdba74", marginBottom: 4 },
   resourceLink: {
-    fontSize: 12, color: "#e2e8f0", textDecoration: "none",
-    padding: "6px 12px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)",
+    fontSize: 12, color: "#111827", textDecoration: "none",
+    padding: "6px 12px", background: "rgba(17,24,39,0.06)", border: "1px solid rgba(17,24,39,0.12)",
     borderRadius: 6, transition: "all 0.2s"
   },
   milestoneCard: {
@@ -411,21 +412,21 @@ const styles = {
   },
   milestoneLabel: { fontSize: 12, fontWeight: "bold", color: "#facc15", textTransform: "uppercase", letterSpacing: "1px", marginBottom: 8 },
   techBadge: {
-    padding: "4px 12px", background: "rgba(255,255,255,0.05)",
+    padding: "4px 12px", background: "rgba(17,24,39,0.06)",
     border: "1px solid rgba(234, 179, 8, 0.3)", borderRadius: 6,
     fontSize: 12, color: "#facc15", fontWeight: "bold"
   },
   ctaRow: { marginTop: 30, display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" },
   ctaBtn: {
     padding: "14px 28px",
-    background: "linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)",
+    background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
     color: "#fff", border: "none", borderRadius: 10,
     cursor: "pointer", fontWeight: "bold", fontSize: 15,
-    boxShadow: "0 4px 15px rgba(37, 99, 235, 0.3)", transition: "all 0.2s"
+    boxShadow: "0 4px 15px rgba(16, 185, 129, 0.3)", transition: "all 0.2s"
   },
   emptyCard: {
-    padding: 60, background: "#1e293b", borderRadius: 16,
-    textAlign: "center", border: "1px dashed rgba(255,255,255,0.1)", boxShadow: "0 10px 30px rgba(0,0,0,0.5)"
+    padding: 60, background: "#ffffff", borderRadius: 16,
+    textAlign: "center", border: "1px dashed rgba(17,24,39,0.12)", boxShadow: "0 10px 30px rgba(0,0,0,0.5)"
   },
   loadingBox: { padding: 80, textAlign: "center" },
   spinner: { fontSize: 48, animation: "spin 2s linear infinite", display: "inline-block" }
